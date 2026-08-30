@@ -6,6 +6,9 @@
 <title>North Hall Park Field Guide</title>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css" />
 <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/1.5.3/MarkerCluster.css" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/1.5.3/MarkerCluster.Default.css" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/1.5.3/leaflet.markercluster.js"></script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
@@ -157,6 +160,98 @@
   }
 
   .how-to strong { color: var(--parchment); }
+
+  .about-details {
+    border-bottom: 1px solid rgba(255,255,255,0.15);
+    padding-bottom: 14px;
+  }
+
+  .about-details summary {
+    cursor: pointer;
+    font-size: 0.78rem;
+    text-transform: uppercase;
+    letter-spacing: 0.07em;
+    font-weight: 600;
+    color: #dbe4d3;
+    padding: 4px 0;
+    list-style: none;
+  }
+
+  .about-details summary::-webkit-details-marker { display: none; }
+
+  .about-details summary::before {
+    content: '+ ';
+    color: #a9baa1;
+  }
+
+  .about-details[open] summary::before {
+    content: '\2212 ';
+  }
+
+  .about-content {
+    padding-top: 10px;
+    font-size: 0.85rem;
+    line-height: 1.55;
+    color: #d3ddcb;
+  }
+
+  .about-content p { margin: 0 0 12px 0; }
+
+  .visit-info {
+    margin: 0;
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 6px 10px;
+    font-size: 0.82rem;
+  }
+
+  .visit-info dt {
+    font-weight: 600;
+    color: #dbe4d3;
+  }
+
+  .visit-info dd {
+    margin: 0;
+    color: #d3ddcb;
+  }
+
+  .visit-info a { color: #b7c4ae; }
+
+  .sightings-sub-filters {
+    display: none;
+    flex-direction: column;
+    gap: 2px;
+    margin: 4px 0 8px 24px;
+  }
+
+  .sightings-sub-filters.visible { display: flex; }
+
+  .filter-check {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.84rem;
+    color: #d3ddcb;
+    padding: 3px 0;
+    cursor: pointer;
+  }
+
+  .filter-check input {
+    width: 14px;
+    height: 14px;
+    accent-color: var(--parchment);
+    cursor: pointer;
+  }
+
+  .sightings-note {
+    font-size: 0.78rem;
+    line-height: 1.5;
+    color: #a9baa1;
+    font-style: italic;
+    margin: 6px 0 0 0;
+  }
+
+  .sightings-note.is-error { color: #e0a58f; }
 
   .main {
     display: flex;
@@ -340,22 +435,6 @@
     font-weight: 500;
   }
 
-  .sightings-status {
-    background: var(--card);
-    color: var(--ink);
-    font-family: 'Inter', sans-serif;
-    font-size: 0.82rem;
-    padding: 8px 14px;
-    border-radius: 6px;
-    box-shadow: 0 4px 14px rgba(20,38,29,0.22);
-    margin-top: 8px;
-    max-width: 220px;
-  }
-
-  .sightings-status.is-error {
-    color: #9a3b1f;
-  }
-
   .leaflet-control-layers {
     border: none !important;
     border-radius: 6px !important;
@@ -516,6 +595,8 @@
     .species-row { padding: 11px 10px 11px 26px; }
     .category-head { padding: 9px 0 10px 0; }
     .category-head input { width: 18px; height: 18px; }
+    .filter-check { padding: 7px 0; }
+    .filter-check input { width: 17px; height: 17px; }
   }
 </style>
 </head>
@@ -540,9 +621,46 @@
       <p class="subtitle">An interactive record of the trees, plants, and animals found along the trails of North Hall Park, Gainesville, GA.</p>
     </div>
 
+    <details class="about-details">
+      <summary>About &amp; Visiting Info</summary>
+      <div class="about-content">
+        <p>North Hall Park is a 123-acre Hall County park and recreation complex in the Appalachian foothills north of Gainesville. Alongside its ballfields, walking track, and community center, the park's multi-use hiking trails wind through mixed hardwood forest, edge habitat, and wetland areas \u2014 home to the plants, trees, and animals featured on this map.</p>
+        <dl class="visit-info">
+          <dt>Address</dt>
+          <dd>4175 Nopone Road, Gainesville, GA 30506 &mdash; <a href="https://www.google.com/maps/search/?api=1&query=4175+Nopone+Road,+Gainesville,+GA+30506" target="_blank" rel="noopener">Get directions</a></dd>
+          <dt>Phone</dt>
+          <dd>(770) 535-8280</dd>
+          <dt>Park &amp; Center Hours</dt>
+          <dd>Mon\u2013Fri 7am\u20138pm &middot; Sat 8am\u20135pm &middot; Sun 1pm\u20136pm</dd>
+          <dt>Pets</dt>
+          <dd>Leashed pets are welcome on the trails</dd>
+        </dl>
+      </div>
+    </details>
+
     <hr class="divider">
 
     <div id="sidebar-categories"></div>
+
+    <hr class="divider">
+
+    <div class="category-block" id="sightings-block">
+      <label class="category-head">
+        <input type="checkbox" id="sightings-master-toggle">
+        <span class="dot" style="background:#3d6b8a"></span>
+        <span class="label">Community Sightings</span>
+      </label>
+      <div class="sightings-sub-filters" id="sightings-sub-filters">
+        <label class="filter-check"><input type="checkbox" checked data-bucket="plants"> Plants</label>
+        <label class="filter-check"><input type="checkbox" checked data-bucket="fungi"> Fungi &amp; Lichens</label>
+        <label class="filter-check"><input type="checkbox" checked data-bucket="birds"> Birds</label>
+        <label class="filter-check"><input type="checkbox" checked data-bucket="mammals"> Mammals</label>
+        <label class="filter-check"><input type="checkbox" checked data-bucket="herps"> Reptiles &amp; Amphibians</label>
+        <label class="filter-check"><input type="checkbox" checked data-bucket="insects"> Insects &amp; Spiders</label>
+        <label class="filter-check"><input type="checkbox" checked data-bucket="other"> Other Wildlife</label>
+      </div>
+      <p class="sightings-note" id="sightings-note">Real sightings logged by naturalists near the park, via iNaturalist.</p>
+    </div>
 
     <hr class="divider">
 
@@ -673,31 +791,70 @@
   // near the park, pulled live from iNaturalist's public API. This is kept
   // distinct from the curated species pins above -- iNaturalist records are
   // individual sightings (photo + date + observer), not field-guide writeups.
-  // Loads only once, the first time the checkbox is switched on.
-  const sightingsLayer = L.layerGroup();
+  // Loads only once, the first time the "Community Sightings" checkbox in
+  // the sidebar is switched on. Nearby pins group into a numbered cluster at
+  // lower zoom levels so the map doesn't get overwhelmed with dots.
+  const sightingsLayer = L.markerClusterGroup({
+    maxClusterRadius: 50,
+    iconCreateFunction: function (cluster) {
+      const count = cluster.getChildCount();
+      return L.divIcon({
+        className: '',
+        html: `<div style="
+          width: 34px; height: 34px;
+          background: #3d6b8a;
+          color: #faf7ef;
+          border-radius: 50%;
+          border: 2.5px solid #faf7ef;
+          display: flex; align-items: center; justify-content: center;
+          font-family: 'Inter', sans-serif; font-weight: 600; font-size: 0.85rem;
+          box-shadow: 0 2px 6px rgba(0,0,0,0.35);
+        ">${count}</div>`,
+        iconSize: [34, 34]
+      });
+    }
+  });
+  sightingsLayer.addTo(map);
+
   let sightingsLoaded = false;
+  let sightingsEnabled = false;
 
   // Bounding box around the park's pin cluster, with a buffer to catch
   // sightings anywhere on the property.
   const PARK_BBOX = { swlat: 34.401, swlng: -83.810, nelat: 34.419, nelng: -83.789 };
 
-  const sightingsStatus = L.control({ position: 'topright' });
-  sightingsStatus.onAdd = function () {
-    const div = L.DomUtil.create('div', 'sightings-status');
-    div.style.display = 'none';
-    return div;
-  };
-  sightingsStatus.addTo(map);
+  // Buckets used to let visitors filter sightings by broad taxon group.
+  // iNaturalist's "iconic taxon" is more granular than this (e.g. separate
+  // fish, mollusk, and generic-animal categories) -- anything not covered
+  // by a specific bucket below falls into "other".
+  const sightingBucketState = { plants: true, fungi: true, birds: true, mammals: true, herps: true, insects: true, other: true };
+  const sightingMarkersByBucket = { plants: [], fungi: [], birds: [], mammals: [], herps: [], insects: [], other: [] };
+
+  function bucketForIconicTaxon(name) {
+    switch (name) {
+      case 'Aves': return 'birds';
+      case 'Mammalia': return 'mammals';
+      case 'Reptilia':
+      case 'Amphibia': return 'herps';
+      case 'Insecta':
+      case 'Arachnida': return 'insects';
+      case 'Plantae': return 'plants';
+      case 'Fungi': return 'fungi';
+      default: return 'other';
+    }
+  }
+
+  const sightingsNoteEl = document.getElementById('sightings-note');
+  const SIGHTINGS_DEFAULT_NOTE = sightingsNoteEl.textContent;
 
   function showStatus(message, isError) {
-    const el = sightingsStatus.getContainer();
-    el.textContent = message;
-    el.style.display = 'block';
-    el.classList.toggle('is-error', !!isError);
+    sightingsNoteEl.textContent = message;
+    sightingsNoteEl.classList.toggle('is-error', !!isError);
   }
 
   function hideStatus() {
-    sightingsStatus.getContainer().style.display = 'none';
+    sightingsNoteEl.textContent = SIGHTINGS_DEFAULT_NOTE;
+    sightingsNoteEl.classList.remove('is-error');
   }
 
   function makeSightingIcon() {
@@ -738,6 +895,18 @@
     `;
   }
 
+  // Re-applies the current on/off state and per-bucket checkboxes to the
+  // map without re-fetching -- all sightings are kept in memory once loaded.
+  function applySightingFilters() {
+    sightingsLayer.clearLayers();
+    if (!sightingsEnabled) return;
+    Object.keys(sightingBucketState).forEach(bucket => {
+      if (sightingBucketState[bucket]) {
+        sightingMarkersByBucket[bucket].forEach(m => sightingsLayer.addLayer(m));
+      }
+    });
+  }
+
   function fetchCommunitySightings() {
     showStatus('Loading community sightings\u2026');
 
@@ -756,15 +925,16 @@
           const [lng, lat] = coords;
           const marker = L.marker([lat, lng], { icon: makeSightingIcon() })
             .bindPopup(sightingPopupHTML(obs));
-          sightingsLayer.addLayer(marker);
+          const bucket = bucketForIconicTaxon(obs.taxon?.iconic_taxon_name);
+          sightingMarkersByBucket[bucket].push(marker);
         });
         sightingsLoaded = true;
+        applySightingFilters();
         if (results.length === 0) {
           showStatus('No research-grade sightings found nearby yet.');
-          setTimeout(hideStatus, 4000);
         } else {
           showStatus(`Loaded ${results.length} community sighting${results.length === 1 ? '' : 's'}.`);
-          setTimeout(hideStatus, 3000);
+          setTimeout(hideStatus, 3500);
         }
       })
       .catch(err => {
@@ -772,18 +942,31 @@
       });
   }
 
-  map.on('overlayadd', (e) => {
-    if (e.layer === sightingsLayer && !sightingsLoaded) {
+  const sightingsMasterToggle = document.getElementById('sightings-master-toggle');
+  const sightingsSubFilters = document.getElementById('sightings-sub-filters');
+
+  sightingsMasterToggle.addEventListener('change', (e) => {
+    sightingsEnabled = e.target.checked;
+    sightingsSubFilters.classList.toggle('visible', sightingsEnabled);
+    if (sightingsEnabled && !sightingsLoaded) {
       fetchCommunitySightings();
+    } else {
+      applySightingFilters();
+      if (!sightingsEnabled) hideStatus();
     }
+  });
+
+  sightingsSubFilters.querySelectorAll('input[type="checkbox"]').forEach(cb => {
+    cb.addEventListener('change', (e) => {
+      sightingBucketState[e.target.dataset.bucket] = e.target.checked;
+      applySightingFilters();
+    });
   });
 
   L.control.layers({
     "Satellite": L.layerGroup([satelliteLayer, satelliteLabels]),
     "Street map": streetLayer
-  }, {
-    "Community Sightings (iNaturalist)": sightingsLayer
-  }, { position: 'topright', collapsed: window.matchMedia('(max-width: 760px)').matches }).addTo(map);
+  }, null, { position: 'topright', collapsed: window.matchMedia('(max-width: 760px)').matches }).addTo(map);
 
   // ---- MOBILE DRAWER / BOTTOM SHEET ----
   const sidebarEl = document.querySelector('.sidebar');
