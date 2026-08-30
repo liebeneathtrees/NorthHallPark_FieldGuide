@@ -112,6 +112,22 @@
     color: #a9baa1;
   }
 
+  .filter-section-title {
+    font-size: 0.78rem;
+    text-transform: uppercase;
+    letter-spacing: 0.07em;
+    font-weight: 600;
+    color: #dbe4d3;
+    padding: 6px 0 8px 0;
+  }
+
+  .habitat-filters {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    margin-bottom: 4px;
+  }
+
   .species-list {
     display: flex;
     flex-direction: column;
@@ -365,7 +381,16 @@
     font-style: italic;
     font-size: 0.92rem;
     color: #6b6355;
-    margin: 0 0 12px 0;
+    margin: 0 0 10px 0;
+  }
+
+  .habitat-badge {
+    display: inline-block;
+    font-size: 0.74rem;
+    font-weight: 600;
+    padding: 3px 11px;
+    border-radius: 999px;
+    margin-bottom: 14px;
   }
 
   .info-content p {
@@ -667,6 +692,13 @@
 
     <hr class="divider">
 
+    <div class="category-block" id="habitat-block">
+      <div class="filter-section-title">Habitat</div>
+      <div class="habitat-filters" id="habitat-filters"></div>
+    </div>
+
+    <hr class="divider">
+
     <div class="category-block" id="sightings-block">
       <label class="category-head">
         <input type="checkbox" id="sightings-master-toggle" autocomplete="off">
@@ -710,6 +742,7 @@
   //                 for plants, or a real danger for animals like a venomous snake).
   //                 Leave it out entirely for things like birds or rabbits.
   //   funFact    -- optional, shown at the bottom of Overview
+  //   habitat    -- one of habitatMeta's keys below; where in the park it's typically found
   const species = [
     {
       id: "s1",
@@ -718,6 +751,7 @@
       sciName: "Albizia julibrissin",
       lat: 34.410265,
       lng: -83.800230,
+      habitat: "trailEdge",
       overview: "A small-to-medium tree with fern-like, feathery, doubly-compound leaves and fluffy pink-and-white powder-puff flowers. Bark is smooth and grayish-brown. Often found along trail edges, clearings, and sunny disturbed ground.",
       ecology: "Native to Asia (from Iran to Japan), introduced to the U.S. in the 1700s as an ornamental. It's now naturalized across the Southeast and is listed as invasive in Georgia \u2014 it spreads aggressively from long-lived seed pods and resprouts vigorously when cut, often outcompeting native trees along stream banks and forest edges. That said, its flowers are a strong nectar source for hummingbirds, bees, and butterflies during summer.",
       edible: "The flowers are edible and can be eaten raw, tossed in salads, or dried for tea. They have a mildly sweet, slightly astringent flavor.",
@@ -732,6 +766,7 @@
       sciName: "Elaeagnus umbellata",
       lat: 34.409749,
       lng: -83.796749,
+      habitat: "trailEdge",
       overview: "A deciduous shrub with silvery-scaled undersides on its oval leaves, small pale-yellow tubular flowers in spring, and clusters of small red berries speckled with tiny silver dots. Common along sunny trail margins and disturbed ground.",
       ecology: "Native to East Asia, introduced to the U.S. in the 1830s and widely planted through the mid-1900s for erosion control and wildlife food plots. It's now classified as invasive in Georgia: its roots fix nitrogen in the soil, which changes soil chemistry in ways that favor more invasion, and birds spread its seeds widely after eating the berries \u2014 letting it outcompete native shrubs in open and edge habitats.",
       edible: "The ripe (fully red, slightly soft) berries are edible raw and are notably high in lycopene \u2014 by some measurements more concentrated than tomatoes. They're tart-sweet and commonly made into jam, fruit leather, or sauce. Unripe berries are green-silver and very astringent; they aren't toxic, just unpleasant, and soften and sweeten as they ripen.",
@@ -746,6 +781,7 @@
       sciName: "Morus rubra",
       lat: 34.410594,
       lng: -83.799753,
+      habitat: "uplandForest",
       overview: "A medium-to-large tree with alternate leaves that vary from simple heart shapes to mitten- or hand-shaped lobes, even on the same branch. Leaf surfaces have a rough, sandpapery texture. Fruit resembles an elongated blackberry, ripening from green to red to a deep purple-black.",
       ecology: "Red mulberry is native to the eastern U.S. and is an important food source for more than 30 species of birds and numerous mammals when fruiting. It's worth noting that native red mulberry is increasingly hybridizing with the introduced white mulberry (Morus alba), which some conservationists see as a long-term concern for the genetic distinctiveness of native populations.",
       edible: "Ripe (dark purple-black) fruit is sweet and safe to eat raw, and is popular in pies, jams, and homemade wine. Young, tender leaves can also be cooked and eaten as a green in some culinary traditions, and are the primary food source for silkworms.",
@@ -761,6 +797,7 @@
       sciName: "Ardea alba",
       lat: 34.407635,
       lng: -83.796981,
+      habitat: "wetland",
       overview: "A tall, all-white wading bird (also called the Great Egret) with a long S-curved neck, a long yellow bill, and dark legs and feet. Stands 3\u20134 feet tall with a wingspan over 4 feet. Look for it standing motionless near water, waiting to strike.",
       ecology: "As a top predator of small aquatic life \u2014 fish, frogs, crayfish, and large insects \u2014 the Great Egret is considered an indicator species for wetland health: their presence generally signals a healthy population of prey species and reasonably clean water. They were hunted nearly to extinction in the late 1800s and early 1900s for their long breeding plumes, prized for women's hats; public outcry over this drove the founding of the National Audubon Society and helped spur some of the earliest U.S. wildlife protection laws.",
       funFact: "The Great Egret's comeback from near-extinction is considered one of the earliest major success stories of the American conservation movement \u2014 it's the symbol still used in the National Audubon Society's logo.",
@@ -772,6 +809,13 @@
     tree:   { label: "Trees",               color: "#4f7a4a" },
     plant:  { label: "Plants & Wildflowers", color: "#b8862b" },
     animal: { label: "Animals",             color: "#a0522d" }
+  };
+
+  const habitatMeta = {
+    wetland:      { label: "Wetland & Creek",         color: "#3d6b8a" },
+    uplandForest: { label: "Upland Forest",           color: "#3f5e3f" },
+    trailEdge:    { label: "Trail Edge & Clearing",   color: "#c17f3b" },
+    openField:    { label: "Open Field",              color: "#7a8f4f" }
   };
 
   // ---- MAP SETUP ----
@@ -1057,6 +1101,28 @@
   // ---- SIDEBAR BUILD ----
   const container = document.getElementById('sidebar-categories');
 
+  // Two independent, cross-cutting filters: category (tree/plant/animal) and
+  // habitat (wetland/upland forest/trail edge/open field). A pin only shows
+  // when BOTH its category and its habitat are currently checked.
+  const categoryState = {};
+  const habitatState = {};
+  Object.keys(categoryMeta).forEach(cat => { categoryState[cat] = true; });
+  Object.keys(habitatMeta).forEach(hab => { habitatState[hab] = true; });
+
+  function applyCombinedFilters() {
+    species.forEach(s => {
+      const visible = categoryState[s.category] && habitatState[s.habitat];
+      if (visible) {
+        markerById[s.id].addTo(map);
+        rowById[s.id].style.display = '';
+      } else {
+        map.removeLayer(markerById[s.id]);
+        rowById[s.id].style.display = 'none';
+        if (activeId === s.id) clearSelection();
+      }
+    });
+  }
+
   Object.keys(categoryMeta).forEach(cat => {
     const meta = categoryMeta[cat];
     const items = species.filter(s => s.category === cat);
@@ -1067,7 +1133,7 @@
     const head = document.createElement('label');
     head.className = 'category-head';
     head.innerHTML = `
-      <input type="checkbox" checked data-category="${cat}">
+      <input type="checkbox" checked autocomplete="off" data-category="${cat}">
       <span class="dot" style="background:${meta.color}"></span>
       <span class="label">${meta.label}</span>
       <span class="count">${items.length}</span>
@@ -1092,19 +1158,28 @@
     container.appendChild(block);
 
     head.querySelector('input').addEventListener('change', (e) => {
-      const visible = e.target.checked;
-      items.forEach(s => {
-        if (visible) {
-          markerById[s.id].addTo(map);
-        } else {
-          map.removeLayer(markerById[s.id]);
-        }
-      });
-      list.style.display = visible ? 'flex' : 'none';
-      if (!visible && activeId && species.find(s => s.id === activeId)?.category === cat) {
-        clearSelection();
-      }
+      categoryState[cat] = e.target.checked;
+      applyCombinedFilters();
     });
+  });
+
+  // ---- HABITAT FILTER BUILD ----
+  const habitatFiltersContainer = document.getElementById('habitat-filters');
+
+  Object.keys(habitatMeta).forEach(hab => {
+    const meta = habitatMeta[hab];
+    const label = document.createElement('label');
+    label.className = 'filter-check';
+    label.innerHTML = `
+      <input type="checkbox" checked autocomplete="off" data-habitat="${hab}">
+      <span class="dot" style="background:${meta.color}"></span>
+      ${meta.label}
+    `;
+    label.querySelector('input').addEventListener('change', (e) => {
+      habitatState[hab] = e.target.checked;
+      applyCombinedFilters();
+    });
+    habitatFiltersContainer.appendChild(label);
   });
 
   // ---- SELECTION / INFO PANEL ----
@@ -1196,6 +1271,7 @@
         <div class="category-tag" style="color:${meta.color}">${meta.label.replace(/s$/, '')}</div>
         <h2>${s.name}</h2>
         <p class="sci-name">${s.sciName}</p>
+        <div class="habitat-badge" style="background:${habitatMeta[s.habitat].color}22; color:${habitatMeta[s.habitat].color};">${habitatMeta[s.habitat].label}</div>
         <div class="info-tabs">${tabButtons}</div>
         <div class="info-tab-body">${tabPanels}</div>
       </div>
