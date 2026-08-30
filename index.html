@@ -290,6 +290,72 @@
 
   .leaflet-div-icon { background: none; border: none; }
 
+  .leaflet-popup-content-wrapper {
+    background: var(--card);
+    border-radius: 6px;
+    box-shadow: 0 6px 20px rgba(20,38,29,0.25);
+  }
+
+  .popup-card { min-width: 200px; max-width: 240px; }
+
+  .popup-card .category {
+    font-size: 0.72rem;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    font-weight: 600;
+    margin-bottom: 4px;
+  }
+
+  .popup-card h3 {
+    font-family: 'Fraunces', serif;
+    font-size: 1.05rem;
+    margin: 0 0 2px 0;
+    color: var(--forest-deep);
+  }
+
+  .popup-card .sci-name {
+    font-style: italic;
+    font-size: 0.8rem;
+    color: #6b6355;
+    margin: 0 0 8px 0;
+  }
+
+  .popup-card p {
+    font-size: 0.85rem;
+    line-height: 1.45;
+    margin: 0 0 6px 0;
+    color: var(--ink);
+  }
+
+  .popup-card .season {
+    font-size: 0.8rem;
+    border-top: 1px solid var(--line);
+    padding-top: 8px;
+    margin-top: 6px;
+  }
+
+  .popup-card .season a {
+    color: #3d6b8a;
+    text-decoration: none;
+    font-weight: 500;
+  }
+
+  .sightings-status {
+    background: var(--card);
+    color: var(--ink);
+    font-family: 'Inter', sans-serif;
+    font-size: 0.82rem;
+    padding: 8px 14px;
+    border-radius: 6px;
+    box-shadow: 0 4px 14px rgba(20,38,29,0.22);
+    margin-top: 8px;
+    max-width: 220px;
+  }
+
+  .sightings-status.is-error {
+    color: #9a3b1f;
+  }
+
   .leaflet-control-layers {
     border: none !important;
     border-radius: 6px !important;
@@ -462,10 +528,122 @@
   satelliteLayer.addTo(map);
   satelliteLabels.addTo(map);
 
+  // ---- COMMUNITY SIGHTINGS (iNaturalist) ----
+  // A separate, optional overlay of real community-submitted observations
+  // near the park, pulled live from iNaturalist's public API. This is kept
+  // distinct from the curated species pins above -- iNaturalist records are
+  // individual sightings (photo + date + observer), not field-guide writeups.
+  // Loads only once, the first time the checkbox is switched on.
+  const sightingsLayer = L.layerGroup();
+  let sightingsLoaded = false;
+
+  // Bounding box around the park's pin cluster, with a buffer to catch
+  // sightings anywhere on the property.
+  const PARK_BBOX = { swlat: 34.401, swlng: -83.810, nelat: 34.419, nelng: -83.789 };
+
+  const sightingsStatus = L.control({ position: 'topright' });
+  sightingsStatus.onAdd = function () {
+    const div = L.DomUtil.create('div', 'sightings-status');
+    div.style.display = 'none';
+    return div;
+  };
+  sightingsStatus.addTo(map);
+
+  function showStatus(message, isError) {
+    const el = sightingsStatus.getContainer();
+    el.textContent = message;
+    el.style.display = 'block';
+    el.classList.toggle('is-error', !!isError);
+  }
+
+  function hideStatus() {
+    sightingsStatus.getContainer().style.display = 'none';
+  }
+
+  function makeSightingIcon() {
+    return L.divIcon({
+      className: '',
+      html: `<div style="
+        width: 16px; height: 16px;
+        background: #3d6b8a;
+        border: 2px solid #faf7ef;
+        border-radius: 50%;
+        box-shadow: 0 2px 5px rgba(0,0,0,0.35);
+      "></div>`,
+      iconSize: [16, 16],
+      iconAnchor: [8, 8],
+      popupAnchor: [0, -8]
+    });
+  }
+
+  function sightingPopupHTML(obs) {
+    const common = obs.taxon?.preferred_common_name || obs.species_guess || 'Unidentified organism';
+    const sci = obs.taxon?.name || '';
+    const dateStr = obs.observed_on_string || obs.observed_on || 'Date unknown';
+    const observer = obs.user?.login || 'iNaturalist user';
+    const obsUrl = obs.uri || `https://www.inaturalist.org/observations/${obs.id}`;
+    const photo = obs.photos && obs.photos[0]
+      ? obs.photos[0].url.replace('square', 'medium')
+      : null;
+
+    return `
+      <div class="popup-card">
+        <div class="category" style="color:#3d6b8a">Community Sighting</div>
+        <h3>${common}</h3>
+        ${sci ? `<p class="sci-name">${sci}</p>` : ''}
+        ${photo ? `<img src="${photo}" alt="${common}" style="width:100%;border-radius:4px;margin-bottom:8px;">` : ''}
+        <p>Observed ${dateStr} by ${observer}.</p>
+        <div class="season"><a href="${obsUrl}" target="_blank" rel="noopener">View on iNaturalist \u2197</a></div>
+      </div>
+    `;
+  }
+
+  function fetchCommunitySightings() {
+    showStatus('Loading community sightings\u2026');
+
+    const url = `https://api.inaturalist.org/v1/observations?swlat=${PARK_BBOX.swlat}&swlng=${PARK_BBOX.swlng}&nelat=${PARK_BBOX.nelat}&nelng=${PARK_BBOX.nelng}&quality_grade=research&captive=false&per_page=100&order=desc&order_by=observed_on`;
+
+    fetch(url)
+      .then(res => {
+        if (!res.ok) throw new Error('Network response was not ok');
+        return res.json();
+      })
+      .then(data => {
+        const results = data.results || [];
+        results.forEach(obs => {
+          const coords = obs.geojson && obs.geojson.coordinates;
+          if (!coords) return;
+          const [lng, lat] = coords;
+          const marker = L.marker([lat, lng], { icon: makeSightingIcon() })
+            .bindPopup(sightingPopupHTML(obs));
+          sightingsLayer.addLayer(marker);
+        });
+        sightingsLoaded = true;
+        if (results.length === 0) {
+          showStatus('No research-grade sightings found nearby yet.');
+          setTimeout(hideStatus, 4000);
+        } else {
+          showStatus(`Loaded ${results.length} community sighting${results.length === 1 ? '' : 's'}.`);
+          setTimeout(hideStatus, 3000);
+        }
+      })
+      .catch(err => {
+        showStatus('Could not load community sightings \u2014 check your connection and try again.', true);
+      });
+  }
+
+  map.on('overlayadd', (e) => {
+    if (e.layer === sightingsLayer && !sightingsLoaded) {
+      fetchCommunitySightings();
+    }
+  });
+
   L.control.layers({
     "Satellite": L.layerGroup([satelliteLayer, satelliteLabels]),
     "Street map": streetLayer
-  }, null, { position: 'topright', collapsed: false }).addTo(map);
+  }, {
+    "Community Sightings (iNaturalist)": sightingsLayer
+  }, { position: 'topright', collapsed: false }).addTo(map);
 
   function makeIcon(category, active) {
     const color = categoryMeta[category].color;
