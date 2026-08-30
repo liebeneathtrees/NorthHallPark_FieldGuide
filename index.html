@@ -377,25 +377,165 @@
     gap: 6px;
   }
 
+  .mobile-topbar { display: none; }
+  .drawer-backdrop { display: none; }
+  .sidebar-mobile-header { display: none; }
+  .info-close-btn { display: none; }
+
   @media (max-width: 760px) {
+    html, body { height: 100%; }
+
     .layout {
-      grid-template-columns: 1fr;
-      grid-template-rows: auto 1fr;
+      display: block;
+      position: relative;
       height: 100vh;
+      height: 100svh;
+      overflow: hidden;
     }
+
+    .main {
+      height: 100%;
+      padding-top: 52px;
+    }
+
+    #map { height: 100%; }
+
+    /* Sidebar becomes a full-screen slide-in drawer, closed by default so
+       the map is the first thing visitors see. */
     .sidebar {
-      max-height: 40vh;
+      position: fixed;
+      inset: 0;
+      max-height: none;
+      height: 100vh;
+      height: 100svh;
+      transform: translateX(-100%);
+      transition: transform 0.28s ease;
+      z-index: 1000;
+      padding-top: 18px;
     }
-    .main { min-height: 0; }
-    .info-panel { max-height: 260px; }
+
+    .sidebar.open { transform: translateX(0); }
+
+    .sidebar-title-block { display: none; }
+
+    .sidebar-mobile-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding-bottom: 14px;
+      margin-bottom: 6px;
+      border-bottom: 1px solid rgba(255,255,255,0.15);
+    }
+
+    .sidebar-mobile-header span {
+      font-family: 'Fraunces', serif;
+      font-size: 1.15rem;
+      font-weight: 600;
+    }
+
+    /* Info card becomes a bottom sheet that slides up over the map instead
+       of permanently occupying screen space. */
+    .info-panel {
+      position: fixed;
+      left: 0; right: 0; bottom: 0;
+      max-height: 55vh;
+      transform: translateY(100%);
+      transition: transform 0.28s ease;
+      z-index: 950;
+      border-radius: 16px 16px 0 0;
+      box-shadow: 0 -8px 24px rgba(20,38,29,0.35);
+      padding-top: 40px;
+    }
+
+    .info-panel.open { transform: translateY(0); }
+
+    .info-close-btn {
+      display: block;
+      position: absolute;
+      top: 8px; right: 12px;
+      background: none;
+      border: none;
+      font-family: 'Inter', sans-serif;
+      font-size: 0.82rem;
+      color: #8a8272;
+      cursor: pointer;
+      padding: 8px;
+    }
+
+    .mobile-topbar {
+      display: flex;
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 900;
+      background: var(--forest);
+      color: var(--parchment);
+      align-items: center;
+      justify-content: space-between;
+      padding: 12px 16px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.25);
+    }
+
+    .mobile-topbar .mobile-title {
+      font-family: 'Fraunces', serif;
+      font-size: 1.05rem;
+      font-weight: 600;
+    }
+
+    .mobile-btn {
+      font-family: 'Inter', sans-serif;
+      font-size: 0.82rem;
+      font-weight: 500;
+      background: rgba(255,255,255,0.14);
+      color: var(--parchment);
+      border: none;
+      border-radius: 6px;
+      padding: 8px 12px;
+      cursor: pointer;
+    }
+
+    .drawer-backdrop {
+      display: block;
+      position: fixed;
+      inset: 0;
+      background: rgba(20,38,29,0.5);
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.25s ease;
+      z-index: 990;
+    }
+
+    .drawer-backdrop.visible {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    /* Push the map's built-in controls below the fixed top bar */
+    .leaflet-top.leaflet-right { margin-top: 64px; }
+
+    /* Bigger tap targets */
+    .species-row { padding: 11px 10px 11px 26px; }
+    .category-head { padding: 9px 0 10px 0; }
+    .category-head input { width: 18px; height: 18px; }
   }
 </style>
 </head>
 <body>
 
+<div class="mobile-topbar">
+  <span class="mobile-title">North Hall Park</span>
+  <button type="button" id="open-list-btn" class="mobile-btn">Species List</button>
+</div>
+
+<div class="drawer-backdrop" id="drawer-backdrop"></div>
+
 <div class="layout">
   <aside class="sidebar">
-    <div>
+    <div class="sidebar-mobile-header">
+      <span>Field Guide</span>
+      <button type="button" id="close-list-btn" class="mobile-btn">Close &#10005;</button>
+    </div>
+
+    <div class="sidebar-title-block">
       <h1>North Hall Park<br>Field Guide</h1>
       <p class="subtitle">An interactive record of the trees, plants, and animals found along the trails of North Hall Park, Gainesville, GA.</p>
     </div>
@@ -643,7 +783,27 @@
     "Street map": streetLayer
   }, {
     "Community Sightings (iNaturalist)": sightingsLayer
-  }, { position: 'topright', collapsed: false }).addTo(map);
+  }, { position: 'topright', collapsed: window.matchMedia('(max-width: 760px)').matches }).addTo(map);
+
+  // ---- MOBILE DRAWER / BOTTOM SHEET ----
+  const sidebarEl = document.querySelector('.sidebar');
+  const backdropEl = document.getElementById('drawer-backdrop');
+  const openListBtn = document.getElementById('open-list-btn');
+  const closeListBtn = document.getElementById('close-list-btn');
+
+  function openSidebarDrawer() {
+    sidebarEl.classList.add('open');
+    backdropEl.classList.add('visible');
+  }
+
+  function closeSidebarDrawer() {
+    sidebarEl.classList.remove('open');
+    backdropEl.classList.remove('visible');
+  }
+
+  openListBtn.addEventListener('click', openSidebarDrawer);
+  closeListBtn.addEventListener('click', closeSidebarDrawer);
+  backdropEl.addEventListener('click', closeSidebarDrawer);
 
   function makeIcon(category, active) {
     const color = categoryMeta[category].color;
@@ -738,6 +898,7 @@
       rowById[activeId].classList.remove('active');
     }
     activeId = null;
+    infoPanel.classList.remove('open');
     infoPanel.innerHTML = '<p class="info-empty">Select a pin on the map or a species from the list to see its field notes here.</p>';
   }
 
@@ -755,6 +916,8 @@
 
     map.panTo([s.lat, s.lng]);
     renderInfoPanel(s);
+    closeSidebarDrawer();
+    infoPanel.classList.add('open');
   }
 
   function renderInfoPanel(s) {
@@ -810,6 +973,7 @@
 
     infoPanel.innerHTML = `
       <div class="info-content">
+        <button type="button" class="info-close-btn" id="info-close-btn">Close &#10005;</button>
         <div class="category-tag" style="color:${meta.color}">${meta.label.replace(/s$/, '')}</div>
         <h2>${s.name}</h2>
         <p class="sci-name">${s.sciName}</p>
@@ -817,6 +981,8 @@
         <div class="info-tab-body">${tabPanels}</div>
       </div>
     `;
+
+    infoPanel.querySelector('#info-close-btn').addEventListener('click', clearSelection);
 
     infoPanel.querySelectorAll('.info-tab-btn').forEach(btn => {
       btn.addEventListener('click', () => {
