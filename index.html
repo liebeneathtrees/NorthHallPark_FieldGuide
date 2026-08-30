@@ -177,6 +177,21 @@
 
   .how-to strong { color: var(--parchment); }
 
+  /* Applies to every link inside the sidebar (About, story sections, and
+     anything added later) so nothing relies on the browser's default blue,
+     which has poor contrast against the dark green background. */
+  .sidebar a {
+    color: #e0ac4f;
+    text-decoration: underline;
+    text-decoration-color: rgba(224,172,79,0.45);
+    text-underline-offset: 2px;
+  }
+
+  .sidebar a:hover,
+  .sidebar a:focus {
+    color: #f0c06a;
+  }
+
   .about-details {
     border-bottom: 1px solid rgba(255,255,255,0.15);
     padding-bottom: 14px;
@@ -230,8 +245,6 @@
     margin: 0;
     color: #d3ddcb;
   }
-
-  .visit-info a { color: #b7c4ae; }
 
   .status-legend {
     display: flex;
