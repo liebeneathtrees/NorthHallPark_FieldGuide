@@ -1,0 +1,463 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>North Hall Park Field Guide</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --forest: #1f3a2e;
+    --forest-deep: #14261d;
+    --parchment: #ede6d6;
+    --card: #faf7ef;
+    --ink: #2b241b;
+    --tree-color: #4f7a4a;
+    --plant-color: #b8862b;
+    --animal-color: #a0522d;
+    --line: #d8cfba;
+  }
+
+  * { box-sizing: border-box; }
+
+  html, body {
+    margin: 0;
+    height: 100%;
+    font-family: 'Inter', sans-serif;
+    color: var(--ink);
+    background: var(--parchment);
+  }
+
+  .layout {
+    display: grid;
+    grid-template-columns: 320px 1fr;
+    grid-template-rows: 100vh;
+    height: 100vh;
+  }
+
+  .sidebar {
+    background: var(--forest);
+    color: var(--parchment);
+    padding: 26px 24px;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .sidebar h1 {
+    font-family: 'Fraunces', serif;
+    font-size: 1.55rem;
+    line-height: 1.2;
+    margin: 0 0 6px 0;
+    font-weight: 600;
+  }
+
+  .sidebar .subtitle {
+    font-size: 0.86rem;
+    color: #cfd9c9;
+    margin: 0;
+    line-height: 1.5;
+  }
+
+  .divider {
+    height: 1px;
+    background: rgba(255,255,255,0.15);
+    border: none;
+    margin: 0;
+  }
+
+  .category-block { display: flex; flex-direction: column; gap: 2px; }
+
+  .category-head {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    padding: 6px 0 8px 0;
+    cursor: pointer;
+    user-select: none;
+  }
+
+  .category-head input {
+    width: 15px;
+    height: 15px;
+    accent-color: var(--parchment);
+    cursor: pointer;
+  }
+
+  .dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+
+  .category-head .label {
+    font-size: 0.78rem;
+    text-transform: uppercase;
+    letter-spacing: 0.07em;
+    font-weight: 600;
+    color: #dbe4d3;
+  }
+
+  .category-head .count {
+    margin-left: auto;
+    font-size: 0.78rem;
+    color: #a9baa1;
+  }
+
+  .species-list {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    margin-bottom: 4px;
+  }
+
+  .species-row {
+    display: block;
+    width: 100%;
+    text-align: left;
+    background: none;
+    border: none;
+    border-radius: 5px;
+    padding: 8px 10px 8px 24px;
+    cursor: pointer;
+    color: var(--parchment);
+    font-family: inherit;
+  }
+
+  .species-row:hover {
+    background: rgba(255,255,255,0.08);
+  }
+
+  .species-row.active {
+    background: rgba(255,255,255,0.16);
+  }
+
+  .species-row .common {
+    font-size: 0.92rem;
+    display: block;
+  }
+
+  .species-row .sci {
+    font-size: 0.76rem;
+    font-style: italic;
+    color: #b7c4ae;
+    display: block;
+    margin-top: 1px;
+  }
+
+  .how-to {
+    font-size: 0.82rem;
+    line-height: 1.55;
+    color: #d3ddcb;
+  }
+
+  .how-to strong { color: var(--parchment); }
+
+  .main {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    min-width: 0;
+  }
+
+  #map {
+    flex: 1 1 auto;
+    min-height: 0;
+    width: 100%;
+  }
+
+  .info-panel {
+    flex: 0 0 auto;
+    background: var(--card);
+    border-top: 3px solid var(--forest);
+    padding: 20px 28px;
+    max-height: 240px;
+    overflow-y: auto;
+  }
+
+  .info-empty {
+    color: #8a8272;
+    font-size: 0.95rem;
+    font-style: italic;
+  }
+
+  .info-content .category-tag {
+    font-size: 0.72rem;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    font-weight: 600;
+    margin-bottom: 4px;
+  }
+
+  .info-content h2 {
+    font-family: 'Fraunces', serif;
+    font-size: 1.4rem;
+    margin: 0 0 2px 0;
+    color: var(--forest-deep);
+  }
+
+  .info-content .sci-name {
+    font-style: italic;
+    font-size: 0.92rem;
+    color: #6b6355;
+    margin: 0 0 12px 0;
+  }
+
+  .info-content p {
+    font-size: 0.95rem;
+    line-height: 1.55;
+    margin: 0 0 10px 0;
+    max-width: 640px;
+  }
+
+  .info-content .season {
+    font-size: 0.85rem;
+    color: #6b6355;
+    border-top: 1px solid var(--line);
+    padding-top: 10px;
+    margin-top: 4px;
+  }
+
+  .leaflet-div-icon { background: none; border: none; }
+
+  @media (max-width: 760px) {
+    .layout {
+      grid-template-columns: 1fr;
+      grid-template-rows: auto 1fr;
+      height: 100vh;
+    }
+    .sidebar {
+      max-height: 40vh;
+    }
+    .main { min-height: 0; }
+    .info-panel { max-height: 200px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="layout">
+  <aside class="sidebar">
+    <div>
+      <h1>North Hall Park<br>Field Guide</h1>
+      <p class="subtitle">An interactive record of the trees, plants, and animals found along the trails of North Hall Park, Gainesville, GA.</p>
+    </div>
+
+    <hr class="divider">
+
+    <div id="sidebar-categories"></div>
+
+    <hr class="divider">
+
+    <p class="how-to"><strong>How to use:</strong> Tap a pin on the map or a species name here to open its field notes below the map.</p>
+  </aside>
+
+  <div class="main">
+    <div id="map"></div>
+    <div class="info-panel" id="info-panel">
+      <p class="info-empty">Select a pin on the map or a species from the list to see its field notes here.</p>
+    </div>
+  </div>
+</div>
+
+<script>
+  // ---- SPECIES DATA ----
+  // Add new entries here as coordinates come in. Each needs a unique id,
+  // category: "tree" | "plant" | "animal", name, sciName, lat, lng,
+  // description, and season.
+  const species = [
+    {
+      id: "s1",
+      category: "tree",
+      name: "Mimosa Tree",
+      sciName: "Albizia julibrissin",
+      lat: 34.410265,
+      lng: -83.800230,
+      description: "Recognizable by its fern-like, feathery leaves and fluffy pink-and-white puffball flowers. Often found along trail edges and clearings.",
+      season: "Blooms mid-summer; seed pods persist into winter."
+    },
+    {
+      id: "s2",
+      category: "plant",
+      name: "Autumn Olive",
+      sciName: "Elaeagnus umbellata",
+      lat: 34.409749,
+      lng: -83.796749,
+      description: "A shrub with silvery-green leaves and small, speckled red berries. Common along sunny trail margins and disturbed ground.",
+      season: "Flowers in spring; berries ripen and are most visible in fall."
+    },
+    {
+      id: "s3",
+      category: "tree",
+      name: "Mulberry Tree",
+      sciName: "Morus rubra",
+      lat: 34.410594,
+      lng: -83.799753,
+      description: "Has broad, sometimes lobed leaves with a rough, sandpapery texture. Produces blackberry-like fruit that draws birds and other wildlife.",
+      season: "Fruit ripens late spring into early summer."
+    },
+    {
+      id: "s4",
+      category: "animal",
+      name: "White Egret",
+      sciName: "Ardea alba",
+      lat: 34.407635,
+      lng: -83.796981,
+      description: "A tall, all-white wading bird with a long yellow bill and dark legs. Look for it standing motionless near water, hunting for fish and frogs.",
+      season: "Present year-round in Georgia; most active hunting at dawn and dusk."
+    }
+  ];
+
+  const categoryMeta = {
+    tree:   { label: "Trees",               color: "#4f7a4a" },
+    plant:  { label: "Plants & Wildflowers", color: "#b8862b" },
+    animal: { label: "Animals",             color: "#a0522d" }
+  };
+
+  // ---- MAP SETUP ----
+  // Centered on the real North Hall Park pin cluster.
+  const map = L.map('map', { zoomControl: false }).setView([34.4096, -83.7984], 16);
+  L.control.zoom({ position: 'bottomright' }).addTo(map);
+
+  // Standard OpenStreetMap tiles. NOTE: these tile servers reject requests
+  // that have no "referer" header, which happens when this file is opened
+  // directly by double-clicking it (file://). Serve it from a local server
+  // instead -- e.g. run `python3 -m http.server` in this folder, then visit
+  // http://localhost:8000/north-hall-park-map.html -- and the tiles will
+  // load normally. This will also be a non-issue once the site is hosted
+  // online for real.
+  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    maxZoom: 19,
+    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+  }).addTo(map);
+
+  function makeIcon(category, active) {
+    const color = categoryMeta[category].color;
+    const size = active ? 28 : 22;
+    return L.divIcon({
+      className: '',
+      html: `<div style="
+        width: ${size}px; height: ${size}px;
+        background: ${color};
+        border: 2.5px solid #faf7ef;
+        border-radius: 50% 50% 50% 0;
+        transform: rotate(-45deg);
+        box-shadow: 0 2px 6px rgba(0,0,0,0.35);
+      "></div>`,
+      iconSize: [size, size],
+      iconAnchor: [size / 2, size],
+      popupAnchor: [0, -size]
+    });
+  }
+
+  const markerById = {};
+  const rowById = {};
+  let activeId = null;
+
+  species.forEach(s => {
+    const marker = L.marker([s.lat, s.lng], { icon: makeIcon(s.category, false) });
+    marker.on('click', () => selectSpecies(s.id));
+    marker.addTo(map);
+    markerById[s.id] = marker;
+  });
+
+  // ---- SIDEBAR BUILD ----
+  const container = document.getElementById('sidebar-categories');
+
+  Object.keys(categoryMeta).forEach(cat => {
+    const meta = categoryMeta[cat];
+    const items = species.filter(s => s.category === cat);
+
+    const block = document.createElement('div');
+    block.className = 'category-block';
+
+    const head = document.createElement('label');
+    head.className = 'category-head';
+    head.innerHTML = `
+      <input type="checkbox" checked data-category="${cat}">
+      <span class="dot" style="background:${meta.color}"></span>
+      <span class="label">${meta.label}</span>
+      <span class="count">${items.length}</span>
+    `;
+    block.appendChild(head);
+
+    const list = document.createElement('div');
+    list.className = 'species-list';
+    list.id = `list-${cat}`;
+
+    items.forEach(s => {
+      const row = document.createElement('button');
+      row.className = 'species-row';
+      row.type = 'button';
+      row.innerHTML = `<span class="common">${s.name}</span><span class="sci">${s.sciName}</span>`;
+      row.addEventListener('click', () => selectSpecies(s.id));
+      rowById[s.id] = row;
+      list.appendChild(row);
+    });
+
+    block.appendChild(list);
+    container.appendChild(block);
+
+    head.querySelector('input').addEventListener('change', (e) => {
+      const visible = e.target.checked;
+      items.forEach(s => {
+        if (visible) {
+          markerById[s.id].addTo(map);
+        } else {
+          map.removeLayer(markerById[s.id]);
+        }
+      });
+      list.style.display = visible ? 'flex' : 'none';
+      if (!visible && activeId && species.find(s => s.id === activeId)?.category === cat) {
+        clearSelection();
+      }
+    });
+  });
+
+  // ---- SELECTION / INFO PANEL ----
+  const infoPanel = document.getElementById('info-panel');
+
+  function clearSelection() {
+    if (activeId) {
+      const prev = species.find(s => s.id === activeId);
+      markerById[activeId].setIcon(makeIcon(prev.category, false));
+      rowById[activeId].classList.remove('active');
+    }
+    activeId = null;
+    infoPanel.innerHTML = '<p class="info-empty">Select a pin on the map or a species from the list to see its field notes here.</p>';
+  }
+
+  function selectSpecies(id) {
+    if (activeId === id) return;
+    if (activeId) {
+      const prev = species.find(s => s.id === activeId);
+      markerById[activeId].setIcon(makeIcon(prev.category, false));
+      rowById[activeId].classList.remove('active');
+    }
+    const s = species.find(sp => sp.id === id);
+    activeId = id;
+    markerById[id].setIcon(makeIcon(s.category, true));
+    rowById[id].classList.add('active');
+
+    map.panTo([s.lat, s.lng]);
+
+    const meta = categoryMeta[s.category];
+    infoPanel.innerHTML = `
+      <div class="info-content">
+        <div class="category-tag" style="color:${meta.color}">${meta.label.replace(/s$/, '')}</div>
+        <h2>${s.name}</h2>
+        <p class="sci-name">${s.sciName}</p>
+        <p>${s.description}</p>
+        <div class="season">\u{1F553} ${s.season}</div>
+      </div>
+    `;
+  }
+</script>
+
+</body>
+</html>
