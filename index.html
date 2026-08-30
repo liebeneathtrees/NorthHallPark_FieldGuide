@@ -233,6 +233,21 @@
 
   .visit-info a { color: #b7c4ae; }
 
+  .status-legend {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin: 4px 0 12px 0;
+  }
+
+  .legend-chip {
+    display: inline-block;
+    font-size: 0.76rem;
+    font-weight: 600;
+    padding: 3px 11px;
+    border-radius: 999px;
+  }
+
   .sightings-sub-filters {
     display: none;
     flex-direction: column;
@@ -384,13 +399,31 @@
     margin: 0 0 10px 0;
   }
 
+  .badge-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 14px;
+  }
+
   .habitat-badge {
     display: inline-block;
     font-size: 0.74rem;
     font-weight: 600;
     padding: 3px 11px;
     border-radius: 999px;
-    margin-bottom: 14px;
+    margin-bottom: 0;
+  }
+
+  .native-alt-box {
+    font-size: 0.88rem;
+    line-height: 1.5;
+    color: #1e4d2b;
+    background: #e7f0e4;
+    border-left: 3px solid #3f7d4f;
+    padding: 10px 12px;
+    border-radius: 3px;
+    margin-top: 12px;
   }
 
   .info-content p {
@@ -699,6 +732,29 @@
 
     <hr class="divider">
 
+    <div class="category-block" id="status-block">
+      <div class="filter-section-title">Native Status</div>
+      <div class="habitat-filters" id="status-filters"></div>
+    </div>
+
+    <hr class="divider">
+
+    <details class="about-details">
+      <summary>Native vs. Invasive at This Park</summary>
+      <div class="about-content">
+        <p>Like much of the Southeast, North Hall Park's woods carry the fingerprints of centuries of human movement. Species introduced from Asia and Europe \u2014 often planted intentionally for ornamental beauty or erosion control \u2014 found conditions here that let them spread far beyond where they were planted. Two of the most common trailside plants on this map, Mimosa and Autumn Olive, are both examples: attractive and resilient, but now classified as invasive in Georgia because they outcompete the native plants local wildlife evolved alongside.</p>
+        <p>That doesn't mean these species are without any value \u2014 Mimosa's flowers feed pollinators, and Autumn Olive's berries feed birds \u2014 but a landscape dominated by a few aggressive newcomers supports less overall biodiversity than one built on a full community of native species.</p>
+        <div class="status-legend">
+          <span class="legend-chip" style="background:#3f7d4f22; color:#3f7d4f;">Native</span>
+          <span class="legend-chip" style="background:#5a6b7a22; color:#5a6b7a;">Introduced</span>
+          <span class="legend-chip" style="background:#b8452f22; color:#b8452f;">Invasive</span>
+        </div>
+        <p>Look for this status badge on each species card, and a small warning dot on invasive species' map pins. Where relevant, we've noted a native alternative that fills a similar role. You can help track the spread of invasive species through Georgia's <a href="https://www.eddmaps.org/" target="_blank" rel="noopener">Early Detection &amp; Distribution Mapping System (EDDMapS)</a>.</p>
+      </div>
+    </details>
+
+    <hr class="divider">
+
     <div class="category-block" id="sightings-block">
       <label class="category-head">
         <input type="checkbox" id="sightings-master-toggle" autocomplete="off">
@@ -743,6 +799,8 @@
   //                 Leave it out entirely for things like birds or rabbits.
   //   funFact    -- optional, shown at the bottom of Overview
   //   habitat    -- one of habitatMeta's keys below; where in the park it's typically found
+  //   status     -- one of statusMeta's keys below: "native" | "introduced" | "invasive"
+  //   nativeAlternative -- ONLY for invasive species; a native species that fills a similar role
   const species = [
     {
       id: "s1",
@@ -752,6 +810,8 @@
       lat: 34.410265,
       lng: -83.800230,
       habitat: "trailEdge",
+      status: "invasive",
+      nativeAlternative: "For similarly showy blooms without the ecological downside, look to Eastern Redbud (Cercis canadensis) or American Fringetree (Chionanthus virginicus), both native small trees with striking spring flowers.",
       overview: "A small-to-medium tree with fern-like, feathery, doubly-compound leaves and fluffy pink-and-white powder-puff flowers. Bark is smooth and grayish-brown. Often found along trail edges, clearings, and sunny disturbed ground.",
       ecology: "Native to Asia (from Iran to Japan), introduced to the U.S. in the 1700s as an ornamental. It's now naturalized across the Southeast and is listed as invasive in Georgia \u2014 it spreads aggressively from long-lived seed pods and resprouts vigorously when cut, often outcompeting native trees along stream banks and forest edges. That said, its flowers are a strong nectar source for hummingbirds, bees, and butterflies during summer.",
       edible: "The flowers are edible and can be eaten raw, tossed in salads, or dried for tea. They have a mildly sweet, slightly astringent flavor.",
@@ -767,6 +827,8 @@
       lat: 34.409749,
       lng: -83.796749,
       habitat: "trailEdge",
+      status: "invasive",
+      nativeAlternative: "American Beautyberry (Callicarpa americana) or Elderberry (Sambucus canadensis) offer similarly bird-friendly berries from shrubs native to Georgia.",
       overview: "A deciduous shrub with silvery-scaled undersides on its oval leaves, small pale-yellow tubular flowers in spring, and clusters of small red berries speckled with tiny silver dots. Common along sunny trail margins and disturbed ground.",
       ecology: "Native to East Asia, introduced to the U.S. in the 1830s and widely planted through the mid-1900s for erosion control and wildlife food plots. It's now classified as invasive in Georgia: its roots fix nitrogen in the soil, which changes soil chemistry in ways that favor more invasion, and birds spread its seeds widely after eating the berries \u2014 letting it outcompete native shrubs in open and edge habitats.",
       edible: "The ripe (fully red, slightly soft) berries are edible raw and are notably high in lycopene \u2014 by some measurements more concentrated than tomatoes. They're tart-sweet and commonly made into jam, fruit leather, or sauce. Unripe berries are green-silver and very astringent; they aren't toxic, just unpleasant, and soften and sweeten as they ripen.",
@@ -782,6 +844,7 @@
       lat: 34.410594,
       lng: -83.799753,
       habitat: "uplandForest",
+      status: "native",
       overview: "A medium-to-large tree with alternate leaves that vary from simple heart shapes to mitten- or hand-shaped lobes, even on the same branch. Leaf surfaces have a rough, sandpapery texture. Fruit resembles an elongated blackberry, ripening from green to red to a deep purple-black.",
       ecology: "Red mulberry is native to the eastern U.S. and is an important food source for more than 30 species of birds and numerous mammals when fruiting. It's worth noting that native red mulberry is increasingly hybridizing with the introduced white mulberry (Morus alba), which some conservationists see as a long-term concern for the genetic distinctiveness of native populations.",
       edible: "Ripe (dark purple-black) fruit is sweet and safe to eat raw, and is popular in pies, jams, and homemade wine. Young, tender leaves can also be cooked and eaten as a green in some culinary traditions, and are the primary food source for silkworms.",
@@ -798,6 +861,7 @@
       lat: 34.407635,
       lng: -83.796981,
       habitat: "wetland",
+      status: "native",
       overview: "A tall, all-white wading bird (also called the Great Egret) with a long S-curved neck, a long yellow bill, and dark legs and feet. Stands 3\u20134 feet tall with a wingspan over 4 feet. Look for it standing motionless near water, waiting to strike.",
       ecology: "As a top predator of small aquatic life \u2014 fish, frogs, crayfish, and large insects \u2014 the Great Egret is considered an indicator species for wetland health: their presence generally signals a healthy population of prey species and reasonably clean water. They were hunted nearly to extinction in the late 1800s and early 1900s for their long breeding plumes, prized for women's hats; public outcry over this drove the founding of the National Audubon Society and helped spur some of the earliest U.S. wildlife protection laws.",
       funFact: "The Great Egret's comeback from near-extinction is considered one of the earliest major success stories of the American conservation movement \u2014 it's the symbol still used in the National Audubon Society's logo.",
@@ -816,6 +880,12 @@
     uplandForest: { label: "Upland Forest",           color: "#3f5e3f" },
     trailEdge:    { label: "Trail Edge & Clearing",   color: "#c17f3b" },
     openField:    { label: "Open Field",              color: "#7a8f4f" }
+  };
+
+  const statusMeta = {
+    native:     { label: "Native",     color: "#3f7d4f" },
+    introduced: { label: "Introduced", color: "#5a6b7a" },
+    invasive:   { label: "Invasive",   color: "#b8452f" }
   };
 
   // ---- MAP SETUP ----
@@ -1068,19 +1138,31 @@
   closeListBtn.addEventListener('click', closeSidebarDrawer);
   backdropEl.addEventListener('click', closeSidebarDrawer);
 
-  function makeIcon(category, active) {
+  function makeIcon(category, active, status) {
     const color = categoryMeta[category].color;
     const size = active ? 28 : 22;
+    const invasiveDot = status === 'invasive'
+      ? `<div style="
+          position: absolute; top: -2px; right: -2px;
+          width: 11px; height: 11px;
+          background: ${statusMeta.invasive.color};
+          border: 2px solid #faf7ef;
+          border-radius: 50%;
+        "></div>`
+      : '';
     return L.divIcon({
       className: '',
-      html: `<div style="
-        width: ${size}px; height: ${size}px;
-        background: ${color};
-        border: 2.5px solid #faf7ef;
-        border-radius: 50% 50% 50% 0;
-        transform: rotate(-45deg);
-        box-shadow: 0 2px 6px rgba(0,0,0,0.35);
-      "></div>`,
+      html: `<div style="position: relative; width: ${size}px; height: ${size}px;">
+        <div style="
+          width: 100%; height: 100%;
+          background: ${color};
+          border: 2.5px solid #faf7ef;
+          border-radius: 50% 50% 50% 0;
+          transform: rotate(-45deg);
+          box-shadow: 0 2px 6px rgba(0,0,0,0.35);
+        "></div>
+        ${invasiveDot}
+      </div>`,
       iconSize: [size, size],
       iconAnchor: [size / 2, size],
       popupAnchor: [0, -size]
@@ -1092,7 +1174,7 @@
   let activeId = null;
 
   species.forEach(s => {
-    const marker = L.marker([s.lat, s.lng], { icon: makeIcon(s.category, false) });
+    const marker = L.marker([s.lat, s.lng], { icon: makeIcon(s.category, false, s.status) });
     marker.on('click', () => selectSpecies(s.id));
     marker.addTo(map);
     markerById[s.id] = marker;
@@ -1101,17 +1183,20 @@
   // ---- SIDEBAR BUILD ----
   const container = document.getElementById('sidebar-categories');
 
-  // Two independent, cross-cutting filters: category (tree/plant/animal) and
-  // habitat (wetland/upland forest/trail edge/open field). A pin only shows
-  // when BOTH its category and its habitat are currently checked.
+  // Three independent, cross-cutting filters: category (tree/plant/animal),
+  // habitat (wetland/upland forest/trail edge/open field), and native status
+  // (native/introduced/invasive). A pin only shows when ALL THREE of its
+  // category, habitat, and status are currently checked.
   const categoryState = {};
   const habitatState = {};
+  const statusState = {};
   Object.keys(categoryMeta).forEach(cat => { categoryState[cat] = true; });
   Object.keys(habitatMeta).forEach(hab => { habitatState[hab] = true; });
+  Object.keys(statusMeta).forEach(st => { statusState[st] = true; });
 
   function applyCombinedFilters() {
     species.forEach(s => {
-      const visible = categoryState[s.category] && habitatState[s.habitat];
+      const visible = categoryState[s.category] && habitatState[s.habitat] && statusState[s.status];
       if (visible) {
         markerById[s.id].addTo(map);
         rowById[s.id].style.display = '';
@@ -1182,13 +1267,32 @@
     habitatFiltersContainer.appendChild(label);
   });
 
+  // ---- NATIVE STATUS FILTER BUILD ----
+  const statusFiltersContainer = document.getElementById('status-filters');
+
+  Object.keys(statusMeta).forEach(st => {
+    const meta = statusMeta[st];
+    const label = document.createElement('label');
+    label.className = 'filter-check';
+    label.innerHTML = `
+      <input type="checkbox" checked autocomplete="off" data-status="${st}">
+      <span class="dot" style="background:${meta.color}"></span>
+      ${meta.label}
+    `;
+    label.querySelector('input').addEventListener('change', (e) => {
+      statusState[st] = e.target.checked;
+      applyCombinedFilters();
+    });
+    statusFiltersContainer.appendChild(label);
+  });
+
   // ---- SELECTION / INFO PANEL ----
   const infoPanel = document.getElementById('info-panel');
 
   function clearSelection() {
     if (activeId) {
       const prev = species.find(s => s.id === activeId);
-      markerById[activeId].setIcon(makeIcon(prev.category, false));
+      markerById[activeId].setIcon(makeIcon(prev.category, false, prev.status));
       rowById[activeId].classList.remove('active');
     }
     activeId = null;
@@ -1200,12 +1304,12 @@
     if (activeId === id) return;
     if (activeId) {
       const prev = species.find(s => s.id === activeId);
-      markerById[activeId].setIcon(makeIcon(prev.category, false));
+      markerById[activeId].setIcon(makeIcon(prev.category, false, prev.status));
       rowById[activeId].classList.remove('active');
     }
     const s = species.find(sp => sp.id === id);
     activeId = id;
-    markerById[id].setIcon(makeIcon(s.category, true));
+    markerById[id].setIcon(makeIcon(s.category, true, s.status));
     rowById[id].classList.add('active');
 
     map.panTo([s.lat, s.lng]);
@@ -1233,10 +1337,14 @@
     });
 
     if (s.ecology) {
+      let ecologyHtml = `<p>${s.ecology}</p>`;
+      if (s.nativeAlternative) {
+        ecologyHtml += `<div class="native-alt-box"><strong>Native alternative:</strong> ${s.nativeAlternative}</div>`;
+      }
       tabs.push({
         key: 'ecology',
         label: 'Ecology',
-        html: `<p>${s.ecology}</p>`
+        html: ecologyHtml
       });
     }
 
@@ -1271,7 +1379,10 @@
         <div class="category-tag" style="color:${meta.color}">${meta.label.replace(/s$/, '')}</div>
         <h2>${s.name}</h2>
         <p class="sci-name">${s.sciName}</p>
-        <div class="habitat-badge" style="background:${habitatMeta[s.habitat].color}22; color:${habitatMeta[s.habitat].color};">${habitatMeta[s.habitat].label}</div>
+        <div class="badge-row">
+          <div class="habitat-badge" style="background:${habitatMeta[s.habitat].color}22; color:${habitatMeta[s.habitat].color};">${habitatMeta[s.habitat].label}</div>
+          <div class="habitat-badge" style="background:${statusMeta[s.status].color}22; color:${statusMeta[s.status].color};">${statusMeta[s.status].label}</div>
+        </div>
         <div class="info-tabs">${tabButtons}</div>
         <div class="info-tab-body">${tabPanels}</div>
       </div>
