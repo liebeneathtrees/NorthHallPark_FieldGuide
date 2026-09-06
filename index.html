@@ -2,14 +2,17 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <title>North Hall Park Field Guide</title>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css" />
 <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/1.5.3/MarkerCluster.css" />
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/1.5.3/MarkerCluster.Default.css" />
 <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/1.5.3/leaflet.markercluster.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet-locatecontrol/0.79.0/L.Control.Locate.min.css" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet-locatecontrol/0.79.0/L.Control.Locate.min.js"></script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
   :root {
@@ -29,7 +32,7 @@
   html, body {
     margin: 0;
     height: 100%;
-    font-family: 'Inter', sans-serif;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
     color: var(--ink);
     background: var(--parchment);
   }
@@ -51,12 +54,33 @@
     gap: 20px;
   }
 
-  .sidebar h1 {
-    font-family: 'Fraunces', serif;
-    font-size: 1.55rem;
-    line-height: 1.2;
-    margin: 0 0 6px 0;
+  .site-logo {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin: 0 0 10px 0;
+  }
+
+  .logo-icon { flex-shrink: 0; }
+
+  .logo-eyebrow {
+    display: block;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    font-size: 0.68rem;
+    letter-spacing: 0.22em;
+    color: #b7c4ae;
     font-weight: 600;
+    margin-bottom: 3px;
+  }
+
+  .logo-title {
+    display: block;
+    font-family: 'Fraunces', Georgia, 'Times New Roman', serif;
+    font-style: italic;
+    font-weight: 700;
+    font-size: 1.5rem;
+    color: var(--parchment);
+    line-height: 1.1;
   }
 
   .sidebar .subtitle {
@@ -85,16 +109,40 @@
   }
 
   .category-head input {
+    appearance: none;
+    -webkit-appearance: none;
     width: 15px;
     height: 15px;
-    accent-color: var(--parchment);
+    background: var(--parchment);
+    border: 1.5px solid rgba(0,0,0,0.3);
+    border-radius: 3px;
+    position: relative;
     cursor: pointer;
+    flex-shrink: 0;
+  }
+
+  .category-head input:checked::after {
+    content: '';
+    position: absolute;
+    left: 4px;
+    top: 1px;
+    width: 4px;
+    height: 8px;
+    border: solid #000;
+    border-width: 0 2px 2px 0;
+    transform: rotate(45deg);
   }
 
   .dot {
     width: 10px;
     height: 10px;
     border-radius: 50%;
+    flex-shrink: 0;
+  }
+
+  .category-icon {
+    display: flex;
+    align-items: center;
     flex-shrink: 0;
   }
 
@@ -192,6 +240,73 @@
     color: #f0c06a;
   }
 
+  .seasonal-widget {
+    background: rgba(224,172,79,0.12);
+    border: 1px solid rgba(224,172,79,0.35);
+    border-radius: 8px;
+    padding: 14px 16px;
+  }
+
+  .seasonal-title {
+    font-family: 'Fraunces', Georgia, 'Times New Roman', serif;
+    font-size: 0.98rem;
+    font-weight: 600;
+    color: var(--parchment);
+    margin-bottom: 8px;
+  }
+
+  .seasonal-empty {
+    font-size: 0.85rem;
+    line-height: 1.5;
+    color: #d3ddcb;
+    margin: 0;
+  }
+
+  .seasonal-items {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  .seasonal-item {
+    display: block;
+    width: 100%;
+    text-align: left;
+    background: none;
+    border: none;
+    border-radius: 5px;
+    padding: 6px 8px;
+    cursor: pointer;
+    color: var(--parchment);
+    font-family: inherit;
+    font-size: 0.9rem;
+  }
+
+  .seasonal-item:hover {
+    background: rgba(255,255,255,0.08);
+  }
+
+  .seasonal-label {
+    display: inline-block;
+    font-size: 0.72rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    color: #e0ac4f;
+    margin-right: 6px;
+  }
+
+  .in-season-badge {
+    display: inline-block;
+    font-size: 0.82rem;
+    font-weight: 600;
+    color: #6b5215;
+    background: #f5e6c4;
+    padding: 5px 12px;
+    border-radius: 999px;
+    margin-bottom: 12px;
+  }
+
   .about-details {
     border-bottom: 1px solid rgba(255,255,255,0.15);
     padding-bottom: 14px;
@@ -246,6 +361,31 @@
     color: #d3ddcb;
   }
 
+  .trails-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .trail-item {
+    padding: 8px 10px;
+    background: rgba(255,255,255,0.06);
+    border-radius: 6px;
+    border-left: 3px solid #39d353;
+  }
+
+  .trail-item .trail-name {
+    font-weight: 600;
+    color: var(--parchment);
+    font-size: 0.88rem;
+    margin-bottom: 3px;
+  }
+
+  .trail-item .trail-stats {
+    font-size: 0.78rem;
+    color: #a9baa1;
+  }
+
   .status-legend {
     display: flex;
     flex-wrap: wrap;
@@ -281,10 +421,28 @@
   }
 
   .filter-check input {
+    appearance: none;
+    -webkit-appearance: none;
     width: 14px;
     height: 14px;
-    accent-color: var(--parchment);
+    background: var(--parchment);
+    border: 1.5px solid rgba(0,0,0,0.3);
+    border-radius: 3px;
+    position: relative;
     cursor: pointer;
+    flex-shrink: 0;
+  }
+
+  .filter-check input:checked::after {
+    content: '';
+    position: absolute;
+    left: 3.5px;
+    top: 0.5px;
+    width: 3.5px;
+    height: 7px;
+    border: solid #000;
+    border-width: 0 2px 2px 0;
+    transform: rotate(45deg);
   }
 
   .sightings-note {
@@ -328,7 +486,7 @@
   }
 
   .info-tab-btn {
-    font-family: 'Inter', sans-serif;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
     font-size: 0.85rem;
     font-weight: 500;
     background: none;
@@ -355,7 +513,7 @@
   .info-tab-panel.active { display: block; }
 
   .info-tab-panel h4 {
-    font-family: 'Fraunces', serif;
+    font-family: 'Fraunces', Georgia, 'Times New Roman', serif;
     font-size: 0.98rem;
     margin: 14px 0 4px 0;
     color: var(--forest-deep);
@@ -399,7 +557,7 @@
   }
 
   .info-content h2 {
-    font-family: 'Fraunces', serif;
+    font-family: 'Fraunces', Georgia, 'Times New Roman', serif;
     font-size: 1.4rem;
     margin: 0 0 2px 0;
     color: var(--forest-deep);
@@ -439,6 +597,48 @@
     margin-top: 12px;
   }
 
+  .connections-list {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .connection-item {
+    display: block;
+    width: 100%;
+    text-align: left;
+    background: #f0ece0;
+    border: 1px solid var(--line);
+    border-radius: 6px;
+    padding: 10px 14px;
+    cursor: pointer;
+    font-family: inherit;
+    transition: background 0.15s ease;
+  }
+
+  .connection-item:hover {
+    background: #e7e0cf;
+  }
+
+  .connection-target {
+    font-family: 'Fraunces', Georgia, 'Times New Roman', serif;
+    font-size: 0.98rem;
+    font-weight: 600;
+    color: var(--forest-deep);
+    margin-bottom: 3px;
+  }
+
+  .connection-arrow {
+    color: #8a8272;
+    font-weight: 400;
+  }
+
+  .connection-desc {
+    font-size: 0.85rem;
+    line-height: 1.45;
+    color: #6b6355;
+  }
+
   .info-content p {
     font-size: 0.95rem;
     line-height: 1.55;
@@ -473,7 +673,7 @@
   }
 
   .popup-card h3 {
-    font-family: 'Fraunces', serif;
+    font-family: 'Fraunces', Georgia, 'Times New Roman', serif;
     font-size: 1.05rem;
     margin: 0 0 2px 0;
     color: var(--forest-deep);
@@ -506,11 +706,19 @@
     font-weight: 500;
   }
 
+  .leaflet-control-locate a {
+    background: var(--card) !important;
+  }
+
+  .leaflet-control-locate a:hover {
+    background: #f0ece0 !important;
+  }
+
   .leaflet-control-layers {
     border: none !important;
     border-radius: 6px !important;
     box-shadow: 0 4px 14px rgba(20,38,29,0.22) !important;
-    font-family: 'Inter', sans-serif;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
     background: var(--card) !important;
   }
 
@@ -546,6 +754,7 @@
     .main {
       height: 100%;
       padding-top: 68px;
+      padding-top: calc(68px + env(safe-area-inset-top, 0px));
     }
 
     #map { height: 100%; }
@@ -559,9 +768,13 @@
       height: 100vh;
       height: 100svh;
       transform: translateX(-100%);
-      transition: transform 0.28s ease;
+      transition: transform 0.24s cubic-bezier(0.16, 1, 0.3, 1);
       z-index: 1000;
       padding-top: 18px;
+      padding-top: calc(18px + env(safe-area-inset-top, 0px));
+      padding-bottom: env(safe-area-inset-bottom, 0px);
+      padding-left: calc(24px + env(safe-area-inset-left, 0px));
+      padding-right: calc(24px + env(safe-area-inset-right, 0px));
     }
 
     .sidebar.open { transform: translateX(0); }
@@ -578,7 +791,7 @@
     }
 
     .sidebar-mobile-header span {
-      font-family: 'Fraunces', serif;
+      font-family: 'Fraunces', Georgia, 'Times New Roman', serif;
       font-size: 1.15rem;
       font-weight: 600;
     }
@@ -590,11 +803,14 @@
       left: 0; right: 0; bottom: 0;
       max-height: 55vh;
       transform: translateY(100%);
-      transition: transform 0.28s ease;
+      transition: transform 0.24s cubic-bezier(0.16, 1, 0.3, 1);
       z-index: 950;
       border-radius: 16px 16px 0 0;
       box-shadow: 0 -8px 24px rgba(20,38,29,0.35);
       padding-top: 40px;
+      padding-bottom: calc(20px + env(safe-area-inset-bottom, 0px));
+      padding-left: calc(28px + env(safe-area-inset-left, 0px));
+      padding-right: calc(28px + env(safe-area-inset-right, 0px));
     }
 
     .info-panel.open { transform: translateY(0); }
@@ -605,7 +821,7 @@
       top: 8px; right: 12px;
       background: none;
       border: none;
-      font-family: 'Inter', sans-serif;
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
       font-size: 0.82rem;
       color: #8a8272;
       cursor: pointer;
@@ -622,18 +838,37 @@
       align-items: center;
       justify-content: space-between;
       padding: 12px 16px;
+      padding-top: calc(12px + env(safe-area-inset-top, 0px));
+      padding-left: calc(16px + env(safe-area-inset-left, 0px));
+      padding-right: calc(16px + env(safe-area-inset-right, 0px));
       box-shadow: 0 2px 10px rgba(0,0,0,0.25);
     }
 
+    .mobile-logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
     .mobile-topbar .mobile-title {
-      font-family: 'Fraunces', serif;
+      font-family: 'Fraunces', Georgia, 'Times New Roman', serif;
       font-size: 1.05rem;
       font-weight: 600;
       line-height: 1.3;
     }
 
+    .logo-title-sm {
+      display: block;
+      font-family: 'Fraunces', Georgia, 'Times New Roman', serif;
+      font-style: italic;
+      font-weight: 700;
+      font-size: 1.05rem;
+      color: var(--parchment);
+      line-height: 1.15;
+    }
+
     .mobile-btn {
-      font-family: 'Inter', sans-serif;
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
       font-size: 0.82rem;
       font-weight: 500;
       background: rgba(255,255,255,0.14);
@@ -671,7 +906,7 @@
       background: rgba(20,38,29,0.5);
       opacity: 0;
       pointer-events: none;
-      transition: opacity 0.25s ease;
+      transition: opacity 0.22s cubic-bezier(0.16, 1, 0.3, 1);
       z-index: 990;
     }
 
@@ -681,21 +916,37 @@
     }
 
     /* Push the map's built-in controls below the fixed top bar */
-    .leaflet-top.leaflet-right { margin-top: 78px; }
+    .leaflet-top.leaflet-right {
+      margin-top: 78px;
+      margin-top: calc(78px + env(safe-area-inset-top, 0px));
+    }
 
     /* Bigger tap targets */
     .species-row { padding: 11px 10px 11px 26px; }
     .category-head { padding: 9px 0 10px 0; }
     .category-head input { width: 18px; height: 18px; }
+    .category-head input:checked::after { left: 5px; top: 2px; width: 5px; height: 9px; }
     .filter-check { padding: 7px 0; }
     .filter-check input { width: 17px; height: 17px; }
+    .filter-check input:checked::after { left: 4.5px; top: 1.5px; width: 4.5px; height: 8px; }
   }
 </style>
 </head>
 <body>
 
 <div class="mobile-topbar">
-  <span class="mobile-title">North Hall Park<br>Field Guide</span>
+  <div class="mobile-logo">
+    <svg class="logo-icon-sm" width="20" height="22" viewBox="0 0 38 42" aria-hidden="true">
+      <rect x="16" y="34" width="6" height="7" fill="#e0ac4f"/>
+      <polygon points="19,2 30,20 8,20" fill="#e0ac4f"/>
+      <polygon points="19,11 32,27 6,27" fill="#e0ac4f"/>
+      <polygon points="19,19 34,36 4,36" fill="#e0ac4f"/>
+    </svg>
+    <span class="mobile-title">
+      <span class="logo-eyebrow">North Hall Park</span>
+      <span class="logo-title-sm">Field Guide</span>
+    </span>
+  </div>
   <button type="button" id="open-list-btn" class="mobile-btn mobile-hamburger" aria-label="Open menu">
     <span></span><span></span><span></span>
   </button>
@@ -711,9 +962,22 @@
     </div>
 
     <div class="sidebar-title-block">
-      <h1>North Hall Park<br>Field Guide</h1>
+      <h1 class="site-logo">
+        <svg class="logo-icon" width="34" height="38" viewBox="0 0 38 42" aria-hidden="true">
+          <rect x="16" y="34" width="6" height="7" fill="#e0ac4f"/>
+          <polygon points="19,2 30,20 8,20" fill="#e0ac4f"/>
+          <polygon points="19,11 32,27 6,27" fill="#e0ac4f"/>
+          <polygon points="19,19 34,36 4,36" fill="#e0ac4f"/>
+        </svg>
+        <span>
+          <span class="logo-eyebrow">North Hall Park</span>
+          <span class="logo-title">Field Guide</span>
+        </span>
+      </h1>
       <p class="subtitle">An interactive record of the trees, plants, and animals found along the trails of North Hall Park, Gainesville, GA.</p>
     </div>
+
+    <div class="seasonal-widget" id="seasonal-widget"></div>
 
     <details class="about-details">
       <summary>About &amp; Visiting Info</summary>
@@ -729,6 +993,22 @@
           <dt>Pets</dt>
           <dd>Leashed pets are welcome on the trails</dd>
         </dl>
+      </div>
+    </details>
+
+    <details class="about-details">
+      <summary>Trails</summary>
+      <div class="about-content">
+        <div class="trails-list" id="trails-list"></div>
+        <p style="margin-top: 12px;">Toggle any trail on or off from the map layers menu in the top-right corner of the map.</p>
+      </div>
+    </details>
+
+    <details class="about-details">
+      <summary>Areas</summary>
+      <div class="about-content">
+        <div class="trails-list" id="areas-list"></div>
+        <p style="margin-top: 12px;">Toggle any shaded area on or off from the map layers menu in the top-right corner of the map.</p>
       </div>
     </details>
 
@@ -802,18 +1082,30 @@
 <script>
   // ---- SPECIES DATA ----
   // Add new entries here as coordinates come in. Each needs:
-  //   id, category ("tree"|"plant"|"animal"), name, sciName, lat, lng, season
-  //   overview   -- identification notes (always shown)
-  //   ecology    -- ecological role / native-invasive status (optional but recommended)
+  //   id, category ("tree"|"plant"|"animal"|"landmark"), name, sciName, lat, lng
+  //   overview   -- identification notes / description (always shown)
+  //   habitat    -- one of habitatMeta's keys below; where in the park it's typically found.
+  //                 SPECIES ONLY -- omit for landmarks (a memorial bridge has no habitat).
+  //   status     -- one of statusMeta's keys below: "native" | "introduced" | "invasive"
+  //                 SPECIES ONLY -- omit for landmarks.
+  //   season     -- SPECIES ONLY, omit for landmarks (or anything without a meaningful season)
+  //   ecology    -- ecological role / native-invasive status (species only)
+  //   significance -- LANDMARKS ONLY -- history/meaning, shown in a "History" tab instead
+  //                   of the "Ecology" tab that ecology powers
   //   edible     -- edible uses, detailed (plants/trees only, omit if not edible)
   //   medicinal  -- medicinal/traditional uses, detailed (plants/trees only, omit if none)
   //   caution    -- ONLY include this if there's a genuine hazard (toxic parts/lookalikes
   //                 for plants, or a real danger for animals like a venomous snake).
   //                 Leave it out entirely for things like birds or rabbits.
   //   funFact    -- optional, shown at the bottom of Overview
-  //   habitat    -- one of habitatMeta's keys below; where in the park it's typically found
-  //   status     -- one of statusMeta's keys below: "native" | "introduced" | "invasive"
   //   nativeAlternative -- ONLY for invasive species; a native species that fills a similar role
+  //   connections -- optional array of { id, relationship }. Only include a connection
+  //                  when it's ecologically real (shared habitat, food source, competition,
+  //                  etc.) -- don't force a link between species that don't actually interact.
+  //   phenology  -- optional array of { months: [1-12,...], label }. Marks specific windows
+  //                 (flowering, fruiting, migration, etc.) used to power the "This Month"
+  //                 widget and in-season badge. Omit entirely for species without a
+  //                 meaningful seasonal spike (e.g. a bird present and active year-round).
   const species = [
     {
       id: "s1",
@@ -825,12 +1117,19 @@
       habitat: "trailEdge",
       status: "invasive",
       nativeAlternative: "For similarly showy blooms without the ecological downside, look to Eastern Redbud (Cercis canadensis) or American Fringetree (Chionanthus virginicus), both native small trees with striking spring flowers.",
+      connections: [
+        { id: "s2", relationship: "Both are introduced species that thrive in the same sunny trail-edge habitat, spreading through similar disturbed ground." },
+        { id: "s5", relationship: "This tree's summer flowers are a major nectar source for the honeybees kept in the hives near the pollinator garden." }
+      ],
       overview: "A small-to-medium tree with fern-like, feathery, doubly-compound leaves and fluffy pink-and-white powder-puff flowers. Bark is smooth and grayish-brown. Often found along trail edges, clearings, and sunny disturbed ground.",
       ecology: "Native to Asia (from Iran to Japan), introduced to the U.S. in the 1700s as an ornamental. It's now naturalized across the Southeast and is listed as invasive in Georgia \u2014 it spreads aggressively from long-lived seed pods and resprouts vigorously when cut, often outcompeting native trees along stream banks and forest edges. That said, its flowers are a strong nectar source for hummingbirds, bees, and butterflies during summer.",
       edible: "The flowers are edible and can be eaten raw, tossed in salads, or dried for tea. They have a mildly sweet, slightly astringent flavor.",
       medicinal: "In Traditional Chinese Medicine, the flower (he huan hua) and bark (he huan pi) are known as \"collective happiness bark\" and have long been used in teas and tinctures associated with easing occasional stress and supporting restful sleep. Modern herbalists still use it this way, though rigorous clinical research is limited \u2014 treat this as traditional use, not a medical claim.",
       funFact: "The leaflets fold up at night or when touched \u2014 the genus name Albizia and common nickname \"sleeping tree\" both nod to this movement.",
-      season: "Blooms mid-summer (June\u2013August); seed pods persist on the tree into winter."
+      season: "Blooms mid-summer (June\u2013August); seed pods persist on the tree into winter.",
+      phenology: [
+        { months: [6, 7, 8], label: "Flowering" }
+      ]
     },
     {
       id: "s2",
@@ -842,12 +1141,20 @@
       habitat: "trailEdge",
       status: "invasive",
       nativeAlternative: "American Beautyberry (Callicarpa americana) or Elderberry (Sambucus canadensis) offer similarly bird-friendly berries from shrubs native to Georgia.",
+      connections: [
+        { id: "s1", relationship: "Grows alongside Mimosa in trail-edge habitat \u2014 together these two invasive species dominate much of the park's disturbed edge." },
+        { id: "s3", relationship: "Competes with native Mulberry for the same fruit-eating birds, redirecting seed dispersal toward an invasive species instead of a native one." }
+      ],
       overview: "A deciduous shrub with silvery-scaled undersides on its oval leaves, small pale-yellow tubular flowers in spring, and clusters of small red berries speckled with tiny silver dots. Common along sunny trail margins and disturbed ground.",
       ecology: "Native to East Asia, introduced to the U.S. in the 1830s and widely planted through the mid-1900s for erosion control and wildlife food plots. It's now classified as invasive in Georgia: its roots fix nitrogen in the soil, which changes soil chemistry in ways that favor more invasion, and birds spread its seeds widely after eating the berries \u2014 letting it outcompete native shrubs in open and edge habitats.",
       edible: "The ripe (fully red, slightly soft) berries are edible raw and are notably high in lycopene \u2014 by some measurements more concentrated than tomatoes. They're tart-sweet and commonly made into jam, fruit leather, or sauce. Unripe berries are green-silver and very astringent; they aren't toxic, just unpleasant, and soften and sweeten as they ripen.",
       medicinal: "No well-established traditional medicinal use beyond being valued as an antioxidant-rich food source.",
       funFact: "One mature shrub can produce tens of thousands of berries in a single season \u2014 part of why it spreads so effectively once established.",
-      season: "Flowers in April\u2013May (fragrant); berries ripen and are most visible September\u2013October."
+      season: "Flowers in April\u2013May (fragrant); berries ripen and are most visible September\u2013October.",
+      phenology: [
+        { months: [4, 5], label: "Flowering" },
+        { months: [9, 10], label: "Berries ripening" }
+      ]
     },
     {
       id: "s3",
@@ -858,13 +1165,19 @@
       lng: -83.799753,
       habitat: "uplandForest",
       status: "native",
+      connections: [
+        { id: "s2", relationship: "Autumn Olive's berries ripen around a similar season and compete for the same birds that would otherwise feed on native Mulberry fruit." }
+      ],
       overview: "A medium-to-large tree with alternate leaves that vary from simple heart shapes to mitten- or hand-shaped lobes, even on the same branch. Leaf surfaces have a rough, sandpapery texture. Fruit resembles an elongated blackberry, ripening from green to red to a deep purple-black.",
       ecology: "Red mulberry is native to the eastern U.S. and is an important food source for more than 30 species of birds and numerous mammals when fruiting. It's worth noting that native red mulberry is increasingly hybridizing with the introduced white mulberry (Morus alba), which some conservationists see as a long-term concern for the genetic distinctiveness of native populations.",
       edible: "Ripe (dark purple-black) fruit is sweet and safe to eat raw, and is popular in pies, jams, and homemade wine. Young, tender leaves can also be cooked and eaten as a green in some culinary traditions, and are the primary food source for silkworms.",
       medicinal: "Various parts of mulberry trees have a history of use in folk medicine \u2014 for example, mulberry leaf tea has traditionally been used in parts of Asia as a mild digestive aid. Evidence for these uses is mostly traditional rather than clinical.",
       caution: "Unripe fruit (still green or red rather than dark purple) can cause mild stomach upset if eaten in quantity. The tree's milky white sap can also mildly irritate skin \u2014 wash your hands after handling broken stems or unripe fruit.",
       funFact: "Native red mulberry can be distinguished from introduced white mulberry by its rougher, more textured leaf surface and its fruit, which stays deep red-purple rather than turning pale white or pink.",
-      season: "Fruit ripens late spring into early summer (May\u2013June)."
+      season: "Fruit ripens late spring into early summer (May\u2013June).",
+      phenology: [
+        { months: [5, 6], label: "Fruit ripening" }
+      ]
     },
     {
       id: "s4",
@@ -877,15 +1190,81 @@
       status: "native",
       overview: "A tall, all-white wading bird (also called the Great Egret) with a long S-curved neck, a long yellow bill, and dark legs and feet. Stands 3\u20134 feet tall with a wingspan over 4 feet. Look for it standing motionless near water, waiting to strike.",
       ecology: "As a top predator of small aquatic life \u2014 fish, frogs, crayfish, and large insects \u2014 the Great Egret is considered an indicator species for wetland health: their presence generally signals a healthy population of prey species and reasonably clean water. They were hunted nearly to extinction in the late 1800s and early 1900s for their long breeding plumes, prized for women's hats; public outcry over this drove the founding of the National Audubon Society and helped spur some of the earliest U.S. wildlife protection laws.",
+      connections: [
+        { id: "s6", relationship: "The still, shallow pond behind this dam is exactly the kind of hunting ground egrets rely on for fish and frogs." }
+      ],
       funFact: "The Great Egret's comeback from near-extinction is considered one of the earliest major success stories of the American conservation movement \u2014 it's the symbol still used in the National Audubon Society's logo.",
       season: "Present year-round in Georgia; most active hunting at dawn and dusk."
+    },
+    {
+      id: "s5",
+      category: "animal",
+      name: "Honeybee",
+      sciName: "Apis mellifera",
+      lat: 34.407616,
+      lng: -83.798843,
+      habitat: "openField",
+      status: "introduced",
+      overview: "A fuzzy, golden-brown and black-striped insect usually seen visiting flowers in steady numbers near the hives kept beside the pollinator garden. Unlike solitary native bees, honeybees live in large colonies of tens of thousands, all descended from a single queen.",
+      ecology: "Honeybees aren't native to North America \u2014 they were brought over by European colonists in the 1600s for honey and wax, and have since become the continent's most widely managed pollinator. They're vital for pollinating a huge share of food crops, and flowers like Mimosa's growing nearby are an important nectar source for the hives kept here. Worth noting: honeybees can also compete with native, solitary bee species for the same flowers, since they forage in such large numbers.",
+      connections: [
+        { id: "s1", relationship: "Mimosa's summer flowers are a major nectar source for the honeybees kept in the hives here." }
+      ],
+      funFact: "A single hive can hold 20,000\u201360,000 bees. A healthy colony produces far more honey than it needs to survive winter \u2014 which is what allows beekeepers to harvest the surplus without harming the hive.",
+      season: "Most active spring through fall, especially during Mimosa's summer bloom; colonies cluster together inside the hive through winter rather than hibernating."
+    },
+    {
+      id: "s6",
+      category: "animal",
+      name: "American Beaver",
+      sciName: "Castor canadensis",
+      lat: 34.40723,
+      lng: -83.798012,
+      habitat: "wetland",
+      status: "native",
+      overview: "North America's largest rodent, recognized by a broad, flat, paddle-shaped tail and continuously growing orange-tinted incisors used for gnawing through wood. Beavers themselves are rarely seen \u2014 they're most active at dawn, dusk, and overnight \u2014 but their handiwork is unmistakable: this dam is built from felled branches, mud, and stones, raising the water level of the creek around their lodge.",
+      ecology: "Beavers are considered a keystone species and \"ecosystem engineer\": by damming streams, they create and maintain wetland ponds that dozens of other species depend on, from fish and amphibians to wading birds like the park's Great Egret, which hunts the slower, shallower water these dams create. Beaver-engineered wetlands also help filter sediment, recharge groundwater, and reduce downstream flooding.",
+      connections: [
+        { id: "s4", relationship: "The pond this dam creates provides the still, shallow water egrets need for hunting fish and frogs." }
+      ],
+      funFact: "A single beaver family can fell hundreds of trees in a year, and some dams are maintained and expanded by successive generations of beavers for decades.",
+      season: "Most active dawn, dusk, and overnight, year-round; dam maintenance is nearly constant."
+    },
+    {
+      id: "s7",
+      category: "landmark",
+      name: "Rainbow Bridge",
+      sciName: "Memorial Landmark",
+      lat: 34.407368,
+      lng: -83.797752,
+      overview: "A small wooden footbridge built as a place of remembrance for pets that have passed away. Many park visitors walk their dogs along this trail, and over time this spot has become a meaningful place to pause, reflect, and remember a pet who was once here.",
+      significance: "The name comes from \"Rainbow Bridge,\" a well-known piece of pet-loss folklore describing a peaceful meadow where pets are said to wait for their owners. Visitors sometimes pause here, leave a small token, or simply sit with a memory of a pet they've lost. Whether you're walking this trail with a dog of your own or without one, it's a quiet, respectful spot worth a moment's pause. If you'd like to leave something in memory of a pet, please keep it small and biodegradable out of respect for the park and other visitors."
+    },
+    {
+      id: "s8",
+      category: "plant",
+      name: "Scarlet Rosemallow",
+      sciName: "Hibiscus coccineus",
+      lat: 34.407185,
+      lng: -83.798676,
+      habitat: "wetland",
+      status: "native",
+      overview: "A tall herbaceous perennial with deep red, star-shaped flowers made of narrow, widely separated petals \u2014 quite different from the overlapping, rounded petals of many garden hibiscus. Leaves are green and palmately lobed, resembling a spread hand. Can reach 4\u20138 feet tall by late summer. Here, it grows wild at the water's edge in an area otherwise heavily overtaken by kudzu \u2014 its bright red flowers are one of the few visible signs of the native plant life still holding on underneath.",
+      ecology: "Native to marshes and wetland margins across the southeastern coastal plain, including Georgia. Its large, showy flowers are a strong draw for hummingbirds, swallowtail butterflies, and large native bees. Being herbaceous, it dies back completely to the ground each winter and re-sprouts from its rootstock the following spring. Its presence here, pushing up through a kudzu-dominated area, is a good reminder that even heavily invaded ground can still support native species holding their footing.",
+      edible: "The flower petals are edible and can be eaten fresh in salads or dried for a mild infusion. Note this is a different plant from Roselle (Hibiscus sabdariffa), the tropical hibiscus most commercial \"hibiscus tea\" is made from \u2014 this native rosemallow's petals give a milder, less tart result.",
+      funFact: "Its bold red, star-shaped bloom is why it's also commonly called \"Texas Star Hibiscus,\" even though it's native well beyond Texas, across southeastern wetlands.",
+      season: "Blooms mid-to-late summer (roughly July\u2013September); dies back to the ground in winter and re-emerges from the roots each spring.",
+      phenology: [
+        { months: [7, 8, 9], label: "Flowering" }
+      ]
     }
   ];
 
   const categoryMeta = {
-    tree:   { label: "Trees",               color: "#4f7a4a" },
-    plant:  { label: "Plants & Wildflowers", color: "#b8862b" },
-    animal: { label: "Animals",             color: "#a0522d" }
+    tree:   { label: "Trees",               color: "#4f7a4a", icon: '<svg width="14" height="14" viewBox="0 0 16 16" aria-hidden="true"><circle cx="8" cy="6" r="5" fill="#b7c4ae"/><rect x="7" y="10" width="2" height="5" fill="#b7c4ae"/></svg>' },
+    plant:  { label: "Plants & Wildflowers", color: "#b8862b", icon: '<svg width="14" height="14" viewBox="0 0 16 16" aria-hidden="true"><circle cx="8" cy="4" r="2" fill="#b7c4ae"/><circle cx="4.5" cy="7" r="2" fill="#b7c4ae"/><circle cx="11.5" cy="7" r="2" fill="#b7c4ae"/><circle cx="8" cy="8.5" r="2" fill="#b7c4ae"/><rect x="7.3" y="9" width="1.4" height="6" fill="#b7c4ae"/></svg>' },
+    animal: { label: "Animals",             color: "#a0522d", icon: '<svg width="14" height="14" viewBox="0 0 16 16" aria-hidden="true"><ellipse cx="8" cy="11" rx="4" ry="3.2" fill="#b7c4ae"/><ellipse cx="4" cy="6" rx="1.6" ry="2" fill="#b7c4ae"/><ellipse cx="8" cy="4.5" rx="1.6" ry="2" fill="#b7c4ae"/><ellipse cx="12" cy="6" rx="1.6" ry="2" fill="#b7c4ae"/></svg>' },
+    landmark: { label: "Landmarks",          color: "#8b6f9e", icon: '<svg width="14" height="14" viewBox="0 0 16 16" aria-hidden="true"><rect x="3" y="2" width="1.5" height="12" fill="#b7c4ae"/><path d="M4.5 2.5 L13 4.5 L4.5 7 Z" fill="#b7c4ae"/></svg>' }
   };
 
   const habitatMeta = {
@@ -901,10 +1280,77 @@
     invasive:   { label: "Invasive",   color: "#b8452f" }
   };
 
+  // ---- PHENOLOGY / SEASONAL HELPERS ----
+  const MONTH_NAMES = ["January", "February", "March", "April", "May", "June",
+    "July", "August", "September", "October", "November", "December"];
+
+  // Returns the label for whatever phenology window is active this month for
+  // a given species, or null if it doesn't have one (or has none active now).
+  function getCurrentPhenologyLabel(s) {
+    if (!s.phenology) return null;
+    const currentMonth = new Date().getMonth() + 1;
+    const match = s.phenology.find(p => p.months.includes(currentMonth));
+    return match ? match.label : null;
+  }
+
+  function buildSeasonalWidget() {
+    const currentMonth = new Date().getMonth() + 1;
+    const monthName = MONTH_NAMES[currentMonth - 1];
+    const widget = document.getElementById('seasonal-widget');
+
+    const matches = [];
+    species.forEach(s => {
+      const label = getCurrentPhenologyLabel(s);
+      if (label) matches.push({ id: s.id, name: s.name, label });
+    });
+
+    if (matches.length === 0) {
+      widget.innerHTML = `
+        <div class="seasonal-title">This Month at North Hall Park</div>
+        <p class="seasonal-empty">Nothing on the map is flagged as especially active in ${monthName} yet \u2014 explore the full field guide below.</p>
+      `;
+      return;
+    }
+
+    const itemsHtml = matches.map(m => `
+      <button type="button" class="seasonal-item" data-target="${m.id}">
+        <span class="seasonal-label">${m.label}</span>${m.name}
+      </button>
+    `).join('');
+
+    widget.innerHTML = `
+      <div class="seasonal-title">This Month at North Hall Park \u2014 ${monthName}</div>
+      <div class="seasonal-items">${itemsHtml}</div>
+    `;
+
+    widget.querySelectorAll('.seasonal-item').forEach(btn => {
+      btn.addEventListener('click', () => selectSpecies(btn.dataset.target));
+    });
+  }
+
   // ---- MAP SETUP ----
   // Centered on the real North Hall Park pin cluster.
   const map = L.map('map', { zoomControl: false }).setView([34.4096, -83.7984], 16);
   L.control.zoom({ position: 'bottomright' }).addTo(map);
+
+  // "Find me" / follow-mode location control. Requires HTTPS and browser
+  // location permission -- won't work over file:// or plain http://.
+  // GPS accuracy will vary under tree canopy, same as the recorded trails.
+  L.control.locate({
+    position: 'bottomright',
+    follow: true,
+    setView: 'untilPanOrZoom',
+    keepCurrentZoomLevel: true,
+    drawCircle: true,
+    drawMarker: true,
+    showPopup: false,
+    strings: {
+      title: "Show my location"
+    },
+    locateOptions: {
+      enableHighAccuracy: true
+    }
+  }).addTo(map);
 
   // Standard OpenStreetMap tiles. NOTE: these tile servers reject requests
   // that have no "referer" header, which happens when this file is opened
@@ -933,6 +1379,23 @@
     pane: 'shadowPane'
   });
 
+  // USGS's classic topographic quad-map style -- a free federal service,
+  // no key required. Recognizable to hikers as the traditional USGS topo look.
+  const usgsTopoLayer = L.tileLayer('https://basemap.nationalmap.gov/arcgis/rest/services/USGSTopo/MapServer/tile/{z}/{y}/{x}', {
+    maxZoom: 19,
+    maxNativeZoom: 16,
+    attribution: 'USGS The National Map'
+  });
+
+  // Hiker-oriented basemap built from OSM path data plus contour lines --
+  // shows mapped footpaths/trails as part of its normal styling, regardless
+  // of whether they're tagged as a formal "route." Best odds of showing
+  // North Hall's actual trails of any layer here.
+  const openTopoLayer = L.tileLayer('https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png', {
+    maxZoom: 17,
+    attribution: 'Map data: &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, <a href="http://viewfinderpanoramas.org">SRTM</a> | Map style: &copy; <a href="https://opentopomap.org">OpenTopoMap</a> (<a href="https://creativecommons.org/licenses/by-sa/3.0/">CC-BY-SA</a>)'
+  });
+
   satelliteLayer.addTo(map);
   satelliteLabels.addTo(map);
 
@@ -957,8 +1420,8 @@
           border-radius: 50%;
           border: 2.5px solid #faf7ef;
           display: flex; align-items: center; justify-content: center;
-          font-family: 'Inter', sans-serif; font-weight: 600; font-size: 0.85rem;
-          box-shadow: 0 2px 6px rgba(0,0,0,0.35);
+          font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; font-weight: 600; font-size: 0.85rem;
+          box-shadow: 0 0 0 2px rgba(255,255,255,0.9), 0 0 0 3.5px rgba(0,0,0,0.25), 0 3px 8px rgba(0,0,0,0.5);
         ">${count}</div>`,
         iconSize: [34, 34]
       });
@@ -1013,9 +1476,9 @@
       html: `<div style="
         width: 16px; height: 16px;
         background: #3d6b8a;
-        border: 2px solid #faf7ef;
+        border: 2.5px solid #faf7ef;
         border-radius: 50%;
-        box-shadow: 0 2px 5px rgba(0,0,0,0.35);
+        box-shadow: 0 0 0 1.5px rgba(0,0,0,0.25), 0 2px 6px rgba(0,0,0,0.45);
       "></div>`,
       iconSize: [16, 16],
       iconAnchor: [8, 8],
@@ -1126,8 +1589,10 @@
     });
   });
 
-  L.control.layers({
+  const layerControl = L.control.layers({
     "Satellite": L.layerGroup([satelliteLayer, satelliteLabels]),
+    "OpenTopoMap": openTopoLayer,
+    "USGS Topo": usgsTopoLayer,
     "Street map": streetLayer
   }, null, { position: 'topright', collapsed: window.matchMedia('(max-width: 760px)').matches }).addTo(map);
 
@@ -1161,6 +1626,7 @@
           background: ${statusMeta.invasive.color};
           border: 2px solid #faf7ef;
           border-radius: 50%;
+          box-shadow: 0 0 0 1px rgba(0,0,0,0.3);
         "></div>`
       : '';
     return L.divIcon({
@@ -1172,7 +1638,7 @@
           border: 2.5px solid #faf7ef;
           border-radius: 50% 50% 50% 0;
           transform: rotate(-45deg);
-          box-shadow: 0 2px 6px rgba(0,0,0,0.35);
+          box-shadow: 0 0 0 1.5px rgba(0,0,0,0.3), 0 3px 8px rgba(0,0,0,0.5);
         "></div>
         ${invasiveDot}
       </div>`,
@@ -1193,6 +1659,84 @@
     markerById[s.id] = marker;
   });
 
+  // ---- TRAIL TRACKS ----
+  // Real GPS tracks recorded on-site, drawn as trail lines. Add new trails
+  // here the same way as this one: a name, an array of [lat, lng] points,
+  // a color if you want it to differ from the default trail green, and
+  // distance/elevation stats computed from the GPX's recorded elevation data.
+  const trails = [
+    {
+      name: "Whippoorwill Trail",
+      color: "#39d353",
+      distance: "0.72 mi",
+      elevGain: "43 ft",
+      elevRange: "922\u2013948 ft",
+      coords: [[34.407394,-83.797844],[34.40743,-83.797874],[34.407467,-83.79792],[34.407497,-83.79796],[34.40753,-83.798],[34.407562,-83.798035],[34.407597,-83.79808],[34.40763,-83.79812],[34.40767,-83.798164],[34.407703,-83.7982],[34.407734,-83.79825],[34.407764,-83.79829],[34.407795,-83.79833],[34.407833,-83.79836],[34.407875,-83.798386],[34.407913,-83.79842],[34.407948,-83.79846],[34.407986,-83.79849],[34.408028,-83.79852],[34.408073,-83.79855],[34.40811,-83.79859],[34.408146,-83.79863],[34.408173,-83.798676],[34.408207,-83.79872],[34.408237,-83.79876],[34.408268,-83.798805],[34.408302,-83.79885],[34.40833,-83.79889],[34.408367,-83.79893],[34.408394,-83.79898],[34.40842,-83.79903],[34.408463,-83.79905],[34.408497,-83.79909],[34.408524,-83.79914],[34.408546,-83.79919],[34.408573,-83.79924],[34.4086,-83.799286],[34.408634,-83.79934],[34.40867,-83.79938],[34.40871,-83.79941],[34.408752,-83.79943],[34.4088,-83.79945],[34.408836,-83.79948],[34.40888,-83.79951],[34.40892,-83.79954],[34.408962,-83.79956],[34.409004,-83.79958],[34.409046,-83.799614],[34.409084,-83.79964],[34.40913,-83.79967],[34.409176,-83.7997],[34.40922,-83.79972],[34.409267,-83.79975],[34.40931,-83.79977],[34.40935,-83.79979],[34.40939,-83.79981],[34.409428,-83.79985],[34.409473,-83.79987],[34.409523,-83.79989],[34.40957,-83.79991],[34.409615,-83.799934],[34.40966,-83.79996],[34.409706,-83.79997],[34.40975,-83.79998],[34.40979,-83.80001],[34.40983,-83.80005],[34.409863,-83.80009],[34.409897,-83.80013],[34.40993,-83.80017],[34.409973,-83.8002],[34.41001,-83.80024],[34.410046,-83.80027],[34.41008,-83.80031],[34.41012,-83.80035],[34.410152,-83.800385],[34.41019,-83.800415],[34.410233,-83.800446],[34.410267,-83.80048],[34.410305,-83.800514],[34.410343,-83.800545],[34.410378,-83.80058],[34.41041,-83.80062],[34.410454,-83.80065],[34.410496,-83.80068],[34.41054,-83.80069],[34.410587,-83.80066],[34.41062,-83.80062],[34.410645,-83.80057],[34.410664,-83.800514],[34.41069,-83.80047],[34.410706,-83.800415],[34.41072,-83.800354],[34.410725,-83.80029],[34.41073,-83.80024],[34.410732,-83.80018],[34.41072,-83.800125],[34.410694,-83.80008],[34.41066,-83.80003],[34.41063,-83.799995],[34.4106,-83.79994],[34.410572,-83.7999],[34.410557,-83.79984],[34.410538,-83.79979],[34.41052,-83.79974],[34.410507,-83.79968],[34.41048,-83.79964],[34.410442,-83.79961],[34.410423,-83.799545],[34.41042,-83.799484],[34.410423,-83.79943],[34.410427,-83.79938],[34.410435,-83.799324],[34.410454,-83.79926],[34.41047,-83.79921],[34.410484,-83.79915],[34.410496,-83.79909],[34.41051,-83.79903],[34.41053,-83.79897],[34.410557,-83.79893],[34.410587,-83.79888],[34.4106,-83.79883],[34.410606,-83.798775],[34.410614,-83.79871],[34.41062,-83.79866],[34.41061,-83.79861],[34.4106,-83.798546],[34.410595,-83.79849],[34.410595,-83.79843],[34.410595,-83.79837],[34.410587,-83.79832],[34.410576,-83.79826],[34.410564,-83.7982],[34.410553,-83.79815],[34.41054,-83.79809],[34.410522,-83.798035],[34.410503,-83.79799],[34.41048,-83.79794],[34.410454,-83.7979],[34.41042,-83.79786],[34.410385,-83.79781],[34.41035,-83.797775],[34.410316,-83.79774],[34.410282,-83.7977],[34.41025,-83.79766],[34.41022,-83.797615],[34.41019,-83.79757],[34.41016,-83.79752],[34.410126,-83.79747],[34.41009,-83.79742],[34.41006,-83.79738],[34.410027,-83.79733],[34.409996,-83.79729],[34.40996,-83.79724],[34.40993,-83.797195],[34.409904,-83.79715],[34.409874,-83.797104],[34.40984,-83.79705],[34.409805,-83.797005],[34.409775,-83.79696],[34.409744,-83.79691],[34.40972,-83.79687],[34.409695,-83.79682],[34.40966,-83.79678],[34.409634,-83.79674],[34.409595,-83.7967],[34.409557,-83.79666],[34.409523,-83.796616],[34.409485,-83.796585],[34.40944,-83.79656],[34.409397,-83.79654],[34.409355,-83.79652],[34.40931,-83.79649],[34.409267,-83.79647],[34.40922,-83.79645],[34.409176,-83.79643],[34.409134,-83.796425],[34.40909,-83.79643],[34.40905,-83.79647],[34.409035,-83.796524],[34.409023,-83.79658],[34.409008,-83.79663],[34.40899,-83.79668],[34.40897,-83.79673],[34.408955,-83.79679],[34.40894,-83.796844],[34.40892,-83.7969],[34.408897,-83.79695],[34.408875,-83.797],[34.40884,-83.79704],[34.40883,-83.7971],[34.408813,-83.79716],[34.40879,-83.7972],[34.40876,-83.79725],[34.408733,-83.797295],[34.40872,-83.79735],[34.40869,-83.7974],[34.40866,-83.79744],[34.408627,-83.79748],[34.4086,-83.79753],[34.408577,-83.797585],[34.408554,-83.79763],[34.408527,-83.797676],[34.4085,-83.79773],[34.408474,-83.797775],[34.40845,-83.79782],[34.408424,-83.79787],[34.4084,-83.79792],[34.40838,-83.797966],[34.408348,-83.79801],[34.408318,-83.79806],[34.40829,-83.7981],[34.40826,-83.79816],[34.408237,-83.7982],[34.408207,-83.798256],[34.408184,-83.798294],[34.408142,-83.79835],[34.40811,-83.798386],[34.408077,-83.79842],[34.408043,-83.79847],[34.40802,-83.798515]]
+    },
+    {
+      name: "Grey Fox Trail",
+      color: "#39d353",
+      distance: "1.78 mi",
+      elevGain: "259 ft",
+      elevRange: "928\u20131,070 ft",
+      coords: [[34.409275,-83.79642],[34.40928,-83.796364],[34.409275,-83.7963],[34.40928,-83.79625],[34.40926,-83.796196],[34.409225,-83.79616],[34.409184,-83.79613],[34.409145,-83.7961],[34.409103,-83.796074],[34.409058,-83.79607],[34.40901,-83.79604],[34.408974,-83.79601],[34.40894,-83.79598],[34.408894,-83.79598],[34.408848,-83.79596],[34.408806,-83.79594],[34.40877,-83.7959],[34.408752,-83.795845],[34.408745,-83.79579],[34.40874,-83.79573],[34.408745,-83.79567],[34.408737,-83.795616],[34.408703,-83.79558],[34.408657,-83.79556],[34.408627,-83.79552],[34.40861,-83.79546],[34.408604,-83.79541],[34.408566,-83.795364],[34.40852,-83.79534],[34.40848,-83.79531],[34.40846,-83.795265],[34.40844,-83.79521],[34.40844,-83.79516],[34.408443,-83.7951],[34.40844,-83.79504],[34.408447,-83.794975],[34.408447,-83.79492],[34.40845,-83.79487],[34.40846,-83.79481],[34.408474,-83.794754],[34.408516,-83.794785],[34.408554,-83.794815],[34.40857,-83.79487],[34.408573,-83.79493],[34.408592,-83.794975],[34.408615,-83.79503],[34.40864,-83.79508],[34.408672,-83.79512],[34.408695,-83.79517],[34.408726,-83.79522],[34.408756,-83.795265],[34.408787,-83.79531],[34.40882,-83.79536],[34.40884,-83.79541],[34.408886,-83.795425],[34.408936,-83.79545],[34.40898,-83.79544],[34.40903,-83.795425],[34.409077,-83.79543],[34.40911,-83.79547],[34.40914,-83.79552],[34.409176,-83.795555],[34.40921,-83.79559],[34.409252,-83.79561],[34.4093,-83.79559],[34.409298,-83.79554],[34.409264,-83.7955],[34.409267,-83.79544],[34.409245,-83.79539],[34.409206,-83.79535],[34.409187,-83.795296],[34.409164,-83.79524],[34.409126,-83.795204],[34.40908,-83.795204],[34.409035,-83.79519],[34.409004,-83.79514],[34.408974,-83.795105],[34.40894,-83.79506],[34.408913,-83.79501],[34.4089,-83.79496],[34.408905,-83.7949],[34.408886,-83.794846],[34.40886,-83.7948],[34.408863,-83.79474],[34.40887,-83.794685],[34.40887,-83.79463],[34.40885,-83.79458],[34.408855,-83.794525],[34.408882,-83.79448],[34.408924,-83.79446],[34.40897,-83.79444],[34.409016,-83.79444],[34.409065,-83.79446],[34.40911,-83.79447],[34.409153,-83.794495],[34.4092,-83.79451],[34.40924,-83.79453],[34.409283,-83.79456],[34.409332,-83.79456],[34.409378,-83.79457],[34.409428,-83.79458],[34.409473,-83.794586],[34.40952,-83.7946],[34.40956,-83.79456],[34.4096,-83.79454],[34.409634,-83.794495],[34.40967,-83.79446],[34.409714,-83.79442],[34.40975,-83.79438],[34.409794,-83.79435],[34.409836,-83.79433],[34.40988,-83.794304],[34.409927,-83.79427],[34.40994,-83.79422],[34.40996,-83.794174],[34.41,-83.794136],[34.410046,-83.79411],[34.410088,-83.79408],[34.410126,-83.79405],[34.410168,-83.79403],[34.410213,-83.79402],[34.410263,-83.79403],[34.410305,-83.794044],[34.41035,-83.79406],[34.410404,-83.79405],[34.410446,-83.79403],[34.410484,-83.79401],[34.410534,-83.79399],[34.41058,-83.794],[34.410625,-83.794],[34.41059,-83.79395],[34.41055,-83.79394],[34.410503,-83.79394],[34.410454,-83.793945],[34.410408,-83.79395],[34.410374,-83.793915],[34.410393,-83.79386],[34.410435,-83.79383],[34.410473,-83.7938],[34.410522,-83.79381],[34.41057,-83.79381],[34.410614,-83.793816],[34.41066,-83.79381],[34.410706,-83.79382],[34.41075,-83.79383],[34.410797,-83.79383],[34.410847,-83.79382],[34.41089,-83.79379],[34.410934,-83.793785],[34.41098,-83.79381],[34.411026,-83.79383],[34.41107,-83.79383],[34.411118,-83.79382],[34.411163,-83.79384],[34.411213,-83.793846],[34.411255,-83.79383],[34.411297,-83.79381],[34.411346,-83.7938],[34.41139,-83.79382],[34.411427,-83.79385],[34.411457,-83.7939],[34.411495,-83.79393],[34.41153,-83.79397],[34.411568,-83.794],[34.411537,-83.79404],[34.41149,-83.79402],[34.411438,-83.794014],[34.41139,-83.79401],[34.411343,-83.79401],[34.411297,-83.79403],[34.411247,-83.79405],[34.411205,-83.79408],[34.411156,-83.7941],[34.41111,-83.794106],[34.411064,-83.79411],[34.41102,-83.79413],[34.410973,-83.794136],[34.41093,-83.7941],[34.410915,-83.79415],[34.41095,-83.79418],[34.41099,-83.794205],[34.411037,-83.79423],[34.411083,-83.79425],[34.41113,-83.794266],[34.411175,-83.79428],[34.411213,-83.79431],[34.411247,-83.79435],[34.41129,-83.794365],[34.411335,-83.79437],[34.411385,-83.79437],[34.41143,-83.79438],[34.411476,-83.7944],[34.411522,-83.7944],[34.411568,-83.79441],[34.41162,-83.7944],[34.411667,-83.794426],[34.411713,-83.79444],[34.41176,-83.794464],[34.411804,-83.79449],[34.41185,-83.79452],[34.411892,-83.79455],[34.411926,-83.794586],[34.4119,-83.79464],[34.41186,-83.79467],[34.411823,-83.7947],[34.41178,-83.794716],[34.411736,-83.794716],[34.41169,-83.79471],[34.411644,-83.7947],[34.4116,-83.794685],[34.41155,-83.79472],[34.41153,-83.79477],[34.411503,-83.794815],[34.41139,-83.79475],[34.411346,-83.79472],[34.4113,-83.79471],[34.411255,-83.79469],[34.4112,-83.79469],[34.41115,-83.794685],[34.411102,-83.794685],[34.411057,-83.794685],[34.411015,-83.7947],[34.410976,-83.79473],[34.41093,-83.79473],[34.41088,-83.79471],[34.41083,-83.79471],[34.410793,-83.79473],[34.410748,-83.79476],[34.410698,-83.79475],[34.410652,-83.79473],[34.41063,-83.79478],[34.410633,-83.79484],[34.410656,-83.79488],[34.410706,-83.79489],[34.410755,-83.79491],[34.4108,-83.79492],[34.410847,-83.79494],[34.410892,-83.79496],[34.41094,-83.79497],[34.410984,-83.79497],[34.41103,-83.794945],[34.411076,-83.79494],[34.411125,-83.79494],[34.41117,-83.79494],[34.411217,-83.794945],[34.411263,-83.794945],[34.41131,-83.79496],[34.41135,-83.795],[34.411392,-83.79502],[34.411438,-83.79504],[34.411476,-83.79507],[34.41152,-83.79509],[34.41156,-83.79512],[34.411583,-83.795166],[34.41161,-83.79522],[34.411644,-83.79526],[34.411655,-83.79532],[34.411644,-83.79537],[34.41162,-83.795425],[34.41161,-83.79548],[34.411602,-83.79554],[34.4116,-83.7956],[34.411613,-83.795654],[34.411633,-83.79571],[34.41166,-83.79576],[34.411697,-83.7958],[34.41173,-83.79584],[34.411762,-83.79588],[34.411785,-83.79594],[34.411797,-83.79599],[34.411793,-83.79604],[34.411762,-83.79609],[34.41175,-83.79614],[34.411743,-83.796196],[34.411747,-83.79626],[34.41175,-83.79631],[34.41173,-83.796364],[34.411705,-83.79641],[34.411682,-83.79646],[34.411694,-83.796524],[34.411705,-83.79658],[34.411686,-83.79664],[34.41167,-83.796684],[34.41165,-83.79674],[34.411648,-83.79679],[34.41165,-83.79685],[34.411648,-83.79691],[34.411648,-83.796974],[34.411613,-83.79701],[34.41157,-83.797035],[34.411526,-83.79701],[34.411503,-83.79697],[34.411488,-83.79691],[34.411476,-83.79686],[34.411434,-83.79683],[34.411392,-83.79685],[34.411373,-83.7969],[34.411346,-83.79695],[34.41132,-83.79699],[34.411285,-83.79703],[34.411263,-83.79708],[34.41125,-83.797134],[34.411247,-83.797195],[34.411247,-83.79725],[34.411232,-83.7973],[34.41121,-83.797356],[34.411186,-83.7974],[34.41114,-83.79741],[34.41113,-83.79735],[34.411114,-83.797295],[34.411106,-83.79724],[34.411118,-83.79719],[34.41111,-83.79713],[34.411118,-83.79707],[34.41111,-83.79701],[34.411083,-83.79697],[34.411053,-83.79692],[34.411015,-83.7969],[34.41097,-83.79688],[34.41093,-83.796844],[34.410904,-83.7968],[34.41089,-83.79674],[34.410877,-83.796684],[34.410873,-83.79662],[34.41089,-83.79656],[34.410923,-83.796524],[34.41094,-83.79648],[34.410934,-83.796425],[34.41094,-83.796364],[34.410965,-83.79632],[34.41098,-83.796265],[34.410988,-83.7962],[34.41098,-83.79615],[34.41097,-83.79609],[34.41093,-83.79605],[34.410885,-83.796036],[34.41084,-83.79602],[34.41079,-83.796005],[34.410736,-83.796005],[34.410698,-83.79604],[34.410667,-83.79608],[34.41063,-83.79611],[34.410583,-83.79612],[34.410538,-83.79613],[34.41049,-83.79613],[34.410442,-83.79612],[34.410416,-83.79607],[34.410408,-83.79601],[34.41042,-83.79596],[34.410416,-83.7959],[34.41037,-83.79591],[34.41033,-83.795944],[34.410305,-83.79598],[34.410294,-83.79604],[34.410286,-83.7961],[34.410286,-83.79615],[34.41029,-83.7962],[34.410324,-83.79625],[34.41036,-83.79628],[34.410374,-83.79633],[34.410328,-83.79633],[34.410282,-83.796326],[34.41024,-83.79631],[34.410206,-83.79627],[34.410187,-83.79623],[34.41018,-83.79617],[34.410187,-83.79611],[34.410194,-83.79606],[34.41019,-83.796005],[34.410183,-83.795944],[34.4102,-83.79589],[34.41023,-83.795845],[34.410255,-83.79579],[34.41027,-83.795746],[34.410263,-83.795685],[34.410225,-83.795654],[34.41018,-83.79567],[34.410133,-83.795685],[34.410088,-83.79569],[34.41004,-83.79569],[34.409992,-83.795685],[34.40995,-83.795654],[34.409912,-83.79562],[34.409874,-83.79566],[34.409843,-83.7957],[34.40981,-83.79573],[34.409767,-83.79576],[34.40973,-83.7958],[34.40968,-83.795815],[34.409634,-83.7958],[34.409588,-83.795784],[34.409542,-83.79579],[34.409492,-83.7958],[34.409447,-83.79581],[34.4094,-83.795815],[34.40936,-83.79579],[34.409313,-83.7958],[34.409267,-83.795815],[34.409245,-83.79586],[34.409286,-83.79588],[34.409336,-83.79589],[34.40938,-83.7959],[34.40943,-83.7959],[34.409473,-83.7959],[34.40952,-83.79588],[34.409565,-83.7959],[34.409607,-83.79592],[34.409653,-83.79592],[34.409695,-83.79594],[34.40973,-83.795975],[34.409763,-83.79602],[34.409794,-83.79606],[34.40983,-83.796104],[34.409863,-83.79614],[34.409878,-83.796196],[34.409897,-83.79625],[34.409916,-83.796295],[34.40992,-83.79636],[34.409935,-83.79641],[34.409946,-83.79646],[34.40997,-83.79652],[34.41,-83.79656],[34.41003,-83.796616],[34.410046,-83.79667],[34.410057,-83.79673],[34.410076,-83.79678],[34.410095,-83.79683],[34.410114,-83.79688],[34.41013,-83.796936],[34.410152,-83.79699],[34.41018,-83.797035],[34.410217,-83.79707],[34.410244,-83.79711],[34.41028,-83.79715],[34.410313,-83.797195],[34.410343,-83.79724],[34.410378,-83.79728],[34.41041,-83.79732],[34.41044,-83.79736],[34.410473,-83.7974],[34.410515,-83.79743],[34.410557,-83.797455],[34.41059,-83.79749],[34.41063,-83.79753],[34.41066,-83.79758],[34.410675,-83.79763],[34.410706,-83.797676],[34.410755,-83.79769],[34.41079,-83.79772],[34.41082,-83.79777],[34.410828,-83.79782],[34.41084,-83.79788],[34.41086,-83.79794],[34.410877,-83.79799],[34.410896,-83.79804],[34.410915,-83.79809],[34.41092,-83.79815],[34.410927,-83.7982],[34.410934,-83.79826],[34.410973,-83.7983],[34.411,-83.79835],[34.411,-83.79841],[34.411034,-83.79844],[34.411022,-83.79849],[34.41102,-83.79855],[34.410973,-83.79859],[34.410973,-83.79865],[34.410984,-83.798706],[34.410984,-83.79877],[34.410965,-83.79882],[34.410946,-83.798874],[34.41093,-83.79893],[34.410904,-83.798965],[34.41087,-83.798935],[34.410877,-83.79888],[34.410892,-83.79883],[34.410908,-83.798775],[34.41091,-83.79871],[34.410896,-83.79866],[34.410873,-83.79861],[34.410877,-83.798546],[34.410904,-83.7985],[34.41091,-83.79845],[34.410892,-83.79839],[34.410885,-83.79834],[34.41085,-83.7983],[34.41082,-83.798256],[34.410816,-83.7982],[34.41085,-83.79816],[34.41084,-83.798096],[34.41081,-83.79805],[34.41077,-83.79803],[34.410732,-83.79798],[34.410706,-83.79793],[34.410694,-83.797874],[34.41069,-83.79782],[34.41066,-83.79778],[34.41063,-83.79774],[34.41059,-83.7977],[34.410553,-83.79766],[34.41051,-83.79763],[34.410473,-83.79761],[34.41043,-83.79758],[34.410397,-83.79755],[34.41037,-83.7975],[34.410336,-83.797455],[34.410297,-83.797424],[34.41026,-83.79739],[34.41022,-83.79735],[34.410202,-83.7973],[34.410183,-83.79725],[34.410152,-83.7972],[34.410122,-83.79716],[34.41009,-83.79711],[34.41008,-83.79706],[34.410065,-83.797005],[34.410034,-83.79696],[34.410007,-83.79691],[34.409973,-83.796875],[34.409943,-83.79683],[34.409916,-83.79678],[34.4099,-83.79673],[34.409874,-83.796684],[34.40986,-83.79663],[34.40986,-83.79657],[34.409836,-83.796524],[34.4098,-83.796486],[34.409756,-83.79647],[34.40971,-83.796455],[34.409668,-83.796425],[34.409626,-83.796394],[34.409588,-83.796364],[34.409546,-83.79634],[34.409508,-83.79631],[34.409466,-83.79628],[34.409424,-83.796265],[34.409378,-83.79626],[34.409325,-83.79627],[34.40929,-83.79632],[34.40929,-83.79638],[34.409256,-83.79641]]
+    }
+  ];
+
+  const trailLayers = {};
+  trails.forEach(t => {
+    const line = L.polyline(t.coords, {
+      color: t.color,
+      weight: 3,
+      opacity: 0.9,
+      dashArray: "4,5",
+      lineJoin: "round"
+    });
+    line.bindTooltip(`${t.name} (${t.distance})`, { sticky: true });
+    line.addTo(map);
+    trailLayers[t.name] = line;
+    layerControl.addOverlay(line, `Trail: ${t.name} (${t.distance})`);
+  });
+
+  const trailsListEl = document.getElementById('trails-list');
+  trailsListEl.innerHTML = trails.map(t => `
+    <div class="trail-item">
+      <div class="trail-name">${t.name}</div>
+      <div class="trail-stats">${t.distance} \u00b7 ${t.elevGain} elevation gain \u00b7 ${t.elevRange}</div>
+    </div>
+  `).join('');
+
+  // ---- ZONES ----
+  // Shaded, labeled areas -- for boundaries of a place (a garden, a habitat
+  // zone, a field) rather than a walked path. Add new zones the same way:
+  // a name, a color, and a closed array of [lat, lng] boundary points.
+  const zones = [
+    {
+      name: "Pollinator Garden",
+      color: "#ffd400",
+      coords: [[34.407036,-83.798325],[34.407093,-83.79832],[34.40713,-83.79829],[34.407177,-83.79827],[34.407223,-83.79828],[34.40727,-83.79831],[34.407307,-83.798355],[34.40734,-83.7984],[34.407368,-83.79845],[34.4074,-83.7985],[34.407433,-83.79855],[34.407467,-83.79861],[34.40749,-83.79866],[34.40752,-83.79871],[34.40755,-83.79876],[34.407578,-83.798805],[34.407616,-83.79884],[34.407616,-83.79885],[34.40762,-83.79886],[34.407574,-83.7989],[34.407562,-83.798965],[34.40753,-83.79901],[34.40749,-83.79899],[34.40746,-83.798935],[34.40743,-83.79889],[34.407394,-83.79884],[34.407364,-83.7988],[34.407333,-83.798744],[34.40731,-83.7987],[34.40728,-83.79865],[34.407246,-83.79861],[34.40722,-83.79855],[34.40719,-83.79851],[34.407158,-83.79846],[34.407127,-83.798416],[34.407093,-83.79837],[34.40706,-83.798325]]
+    }
+  ];
+
+  zones.forEach(z => {
+    const polygon = L.polygon(z.coords, {
+      color: z.color,
+      weight: 2.5,
+      opacity: 0.95,
+      fillColor: z.color,
+      fillOpacity: 0.35
+    });
+    polygon.addTo(map);
+    layerControl.addOverlay(polygon, `Area: ${z.name}`);
+  });
+
+  const areasListEl = document.getElementById('areas-list');
+  areasListEl.innerHTML = zones.map(z => `
+    <div class="trail-item" style="border-left-color:${z.color}">
+      <div class="trail-name">${z.name}</div>
+    </div>
+  `).join('');
+
   // ---- SIDEBAR BUILD ----
   const container = document.getElementById('sidebar-categories');
 
@@ -1209,7 +1753,13 @@
 
   function applyCombinedFilters() {
     species.forEach(s => {
-      const visible = categoryState[s.category] && habitatState[s.habitat] && statusState[s.status];
+      // Habitat/status filters only apply to entries that actually have those
+      // fields -- a landmark with no habitat or status should never be hidden
+      // by those filters, only by its own category checkbox.
+      const categoryOk = categoryState[s.category];
+      const habitatOk = !s.habitat || habitatState[s.habitat];
+      const statusOk = !s.status || statusState[s.status];
+      const visible = categoryOk && habitatOk && statusOk;
       if (visible) {
         markerById[s.id].addTo(map);
         rowById[s.id].style.display = '';
@@ -1233,6 +1783,7 @@
     head.innerHTML = `
       <input type="checkbox" checked autocomplete="off" data-category="${cat}">
       <span class="dot" style="background:${meta.color}"></span>
+      <span class="category-icon">${meta.icon}</span>
       <span class="label">${meta.label}</span>
       <span class="count">${items.length}</span>
     `;
@@ -1343,9 +1894,10 @@
       key: 'overview',
       label: 'Overview',
       html: `
+        ${getCurrentPhenologyLabel(s) ? `<div class="in-season-badge">\uD83C\uDF31 In season now: ${getCurrentPhenologyLabel(s)}</div>` : ''}
         <p>${s.overview}</p>
         ${s.funFact ? `<p><strong>Fun fact:</strong> ${s.funFact}</p>` : ''}
-        <div class="season">\u{1F553} ${s.season}</div>
+        ${s.season ? `<div class="season">\u{1F553} ${s.season}</div>` : ''}
       `
     });
 
@@ -1358,6 +1910,14 @@
         key: 'ecology',
         label: 'Ecology',
         html: ecologyHtml
+      });
+    }
+
+    if (s.significance) {
+      tabs.push({
+        key: 'significance',
+        label: 'History',
+        html: `<p>${s.significance}</p>`
       });
     }
 
@@ -1378,6 +1938,24 @@
       });
     }
 
+    if (s.connections && s.connections.length) {
+      const itemsHtml = s.connections.map(c => {
+        const target = species.find(sp => sp.id === c.id);
+        if (!target) return '';
+        return `
+          <button type="button" class="connection-item" data-target="${target.id}">
+            <div class="connection-target">${target.name} <span class="connection-arrow">\u2192</span></div>
+            <div class="connection-desc">${c.relationship}</div>
+          </button>
+        `;
+      }).join('');
+      tabs.push({
+        key: 'connections',
+        label: 'Connections',
+        html: `<div class="connections-list">${itemsHtml}</div>`
+      });
+    }
+
     const tabButtons = tabs.map((t, i) => `
       <button type="button" class="info-tab-btn ${i === 0 ? 'active' : ''} ${t.isCaution ? 'is-caution' : ''}" data-tab="${t.key}">${t.label}</button>
     `).join('');
@@ -1386,22 +1964,29 @@
       <div class="info-tab-panel ${i === 0 ? 'active' : ''}" data-tab-panel="${t.key}">${t.html}</div>
     `).join('');
 
+    const badgeRowHtml = (s.habitat && s.status) ? `
+        <div class="badge-row">
+          <div class="habitat-badge" style="background:${habitatMeta[s.habitat].color}22; color:${habitatMeta[s.habitat].color};">${habitatMeta[s.habitat].label}</div>
+          <div class="habitat-badge" style="background:${statusMeta[s.status].color}22; color:${statusMeta[s.status].color};">${statusMeta[s.status].label}</div>
+        </div>` : '';
+
     infoPanel.innerHTML = `
       <div class="info-content">
         <button type="button" class="info-close-btn" id="info-close-btn">Close &#10005;</button>
         <div class="category-tag" style="color:${meta.color}">${meta.label.replace(/s$/, '')}</div>
         <h2>${s.name}</h2>
         <p class="sci-name">${s.sciName}</p>
-        <div class="badge-row">
-          <div class="habitat-badge" style="background:${habitatMeta[s.habitat].color}22; color:${habitatMeta[s.habitat].color};">${habitatMeta[s.habitat].label}</div>
-          <div class="habitat-badge" style="background:${statusMeta[s.status].color}22; color:${statusMeta[s.status].color};">${statusMeta[s.status].label}</div>
-        </div>
+        ${badgeRowHtml}
         <div class="info-tabs">${tabButtons}</div>
         <div class="info-tab-body">${tabPanels}</div>
       </div>
     `;
 
     infoPanel.querySelector('#info-close-btn').addEventListener('click', clearSelection);
+
+    infoPanel.querySelectorAll('.connection-item').forEach(btn => {
+      btn.addEventListener('click', () => selectSpecies(btn.dataset.target));
+    });
 
     infoPanel.querySelectorAll('.info-tab-btn').forEach(btn => {
       btn.addEventListener('click', () => {
@@ -1413,6 +1998,9 @@
       });
     });
   }
+
+  // ---- INIT ----
+  buildSeasonalWidget();
 </script>
 
 </body>
