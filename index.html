@@ -2142,8 +2142,31 @@
     }
   ];
 
+  // Softens sharp polygon corners into gentle curves using Chaikin's
+  // corner-cutting algorithm -- works on any closed shape, whether it's a
+  // simple 4-corner boundary or a fully-traced 37-point walked perimeter.
+  // Each pass replaces every corner with two points pulled slightly toward
+  // its neighbors; more passes = rounder, but also slightly smaller.
+  function smoothClosedShape(points, iterations = 2, ratio = 0.2) {
+    let pts = points;
+    for (let iter = 0; iter < iterations; iter++) {
+      const next = [];
+      const n = pts.length;
+      for (let i = 0; i < n; i++) {
+        const p0 = pts[i];
+        const p1 = pts[(i + 1) % n];
+        next.push(
+          [p0[0] + (p1[0] - p0[0]) * ratio, p0[1] + (p1[1] - p0[1]) * ratio],
+          [p0[0] + (p1[0] - p0[0]) * (1 - ratio), p0[1] + (p1[1] - p0[1]) * (1 - ratio)]
+        );
+      }
+      pts = next;
+    }
+    return pts;
+  }
+
   zones.forEach(z => {
-    const polygon = L.polygon(z.coords, {
+    const polygon = L.polygon(smoothClosedShape(z.coords), {
       color: z.color,
       weight: 2.5,
       opacity: 0.95,
