@@ -788,6 +788,148 @@
     color: var(--parchment);
   }
 
+  .mobile-btn {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    font-size: 0.82rem;
+    font-weight: 500;
+    background: rgba(255,255,255,0.14);
+    color: var(--parchment);
+    border: none;
+    border-radius: 6px;
+    padding: 8px 12px;
+    cursor: pointer;
+  }
+
+  .help-trigger-btn {
+    display: inline-block;
+    margin-top: 10px;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    font-size: 0.8rem;
+    font-weight: 500;
+    background: rgba(224,172,79,0.16);
+    color: #e0ac4f;
+    border: 1px solid rgba(224,172,79,0.4);
+    border-radius: 6px;
+    padding: 7px 12px;
+    cursor: pointer;
+  }
+
+  .help-trigger-btn:hover {
+    background: rgba(224,172,79,0.26);
+  }
+
+  .help-backdrop {
+    position: fixed;
+    inset: 0;
+    background: rgba(20,38,29,0.55);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.22s cubic-bezier(0.16, 1, 0.3, 1);
+    z-index: 1200;
+  }
+
+  .help-backdrop.visible {
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  .help-modal {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(0.96);
+    width: 90%;
+    max-width: 480px;
+    max-height: 80vh;
+    overflow-y: auto;
+    background: var(--card);
+    border-radius: 12px;
+    padding: 26px 26px 22px 26px;
+    box-shadow: 0 12px 40px rgba(0,0,0,0.4);
+    z-index: 1300;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.2s ease, transform 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .help-modal.open {
+    opacity: 1;
+    pointer-events: auto;
+    transform: translate(-50%, -50%) scale(1);
+  }
+
+  .help-close-btn {
+    position: absolute;
+    top: 14px;
+    right: 16px;
+    background: none;
+    border: none;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    font-size: 0.85rem;
+    color: #8a8272;
+    cursor: pointer;
+    padding: 6px 8px;
+  }
+
+  .help-title {
+    font-family: 'Fraunces', Georgia, 'Times New Roman', serif;
+    font-size: 1.4rem;
+    color: var(--forest-deep);
+    margin: 0 0 16px 0;
+  }
+
+  .help-modal h4 {
+    font-family: 'Fraunces', Georgia, 'Times New Roman', serif;
+    font-size: 1.02rem;
+    color: var(--forest-deep);
+    margin: 20px 0 6px 0;
+  }
+
+  .help-modal h4:first-of-type {
+    margin-top: 0;
+  }
+
+  .help-modal p {
+    font-size: 0.88rem;
+    line-height: 1.55;
+    color: var(--ink);
+    margin: 0 0 8px 0;
+  }
+
+  .mypin-section-divider {
+    height: 1px;
+    background: rgba(255,255,255,0.15);
+    margin: 16px 0 14px 0;
+  }
+
+  .mypin-section-label {
+    font-size: 0.78rem;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    font-weight: 600;
+    color: #dbe4d3;
+    margin: 0 0 4px 0;
+  }
+
+  .mypin-data-actions {
+    display: flex;
+    gap: 8px;
+    margin-top: 10px;
+    flex-wrap: wrap;
+  }
+
+  .mypin-upload-status {
+    font-size: 0.78rem;
+    line-height: 1.5;
+    color: #a9baa1;
+    font-style: italic;
+    margin: 8px 0 0 0;
+  }
+
+  .mypin-upload-status.is-error {
+    color: #e0a58f;
+  }
+
   .leaflet-popup-content-wrapper {
     background: var(--card);
     border-radius: 6px;
@@ -1110,6 +1252,37 @@
   </div>
 </div>
 
+<div class="help-backdrop" id="help-backdrop"></div>
+<div class="help-modal" id="help-modal">
+  <button type="button" class="help-close-btn" id="help-close-btn">Close &#10005;</button>
+  <h2 class="help-title">Help &amp; Instructions</h2>
+
+  <h4>Getting around the map</h4>
+  <p>Pan by dragging and zoom with the +/\u2212 buttons or a pinch gesture. The layer switcher in the top-right corner of the map lets you change the base map between Satellite, OpenTopoMap, USGS Topo, and Street map \u2014 the same panel also has checkboxes for Trails, Areas, and Community Sightings.</p>
+
+  <h4>Exploring species</h4>
+  <p>Pins are grouped into Trees, Plants &amp; Wildflowers, Animals, and Landmarks in the menu. Tap a pin on the map or a name in the list to open its field notes, organized into tabs \u2014 Overview, Ecology, Uses (edible/medicinal, where relevant), Caution (only shown when there's a genuine hazard), and Connections (links to ecologically related species you can tap through to). Each card also shows a Habitat badge and a Native/Introduced/Invasive status badge.</p>
+  <p>The Habitat and Native Status filters in the menu work alongside the Trees/Plants/Animals filters \u2014 a pin only shows when all of its relevant filters are checked.</p>
+
+  <h4>Trails &amp; areas</h4>
+  <p>Recorded trails appear as green dashed lines with their distance and elevation gain listed under "Trails" in the menu. Shaded areas (like the Pollinator Garden) mark the boundary of a specific place rather than a walking path, listed under "Areas." Both can be toggled on or off from the map's layer switcher.</p>
+
+  <h4>Community sightings</h4>
+  <p>This optional layer pulls in real, community-submitted observations from iNaturalist near the park \u2014 a separate thing from the curated species pins above, since these are individual sightings rather than field-guide writeups. Turn it on from the menu, then use the sub-filters to show just birds, plants, insects, and so on. Tap any dot to see the photo, date, and a link back to the original observation.</p>
+
+  <h4>Finding your location</h4>
+  <p>The crosshair button near the zoom controls shows your position on the map and follows you as you walk. This needs your permission the first time, only works on the live, secure website (not a locally saved file), and works best on a phone with GPS \u2014 accuracy will vary, especially under heavy tree cover.</p>
+
+  <h4>Saving your own pins</h4>
+  <p>Long-press anywhere on the map to drop a personal pin for something you've found \u2014 pick Plant, Animal, or Not Sure, add a name or guess and any notes. These show up as dashed circles, distinct from the official pins, and are saved privately on this device.</p>
+  <p>From the "My Pins" section of the menu, you can:</p>
+  <p><strong>Download for email</strong> \u2014 exports one pin (or all of them) as a text file to send to the park guide's maintainer for consideration, along with your own photo attached separately.</p>
+  <p><strong>Export/Upload My Data</strong> \u2014 a different pair of buttons for your own continuity: Export saves everything to a file you keep, and Upload reads that file back in later, on this device or another one, adding anything new without creating duplicates.</p>
+
+  <h4>This month at the park</h4>
+  <p>The highlighted box near the top of the menu shows whatever's currently flowering, fruiting, or otherwise in season, based on your device's own clock \u2014 tap an entry to jump straight to that species.</p>
+</div>
+
 <div class="layout">
   <aside class="sidebar">
     <div class="sidebar-mobile-header">
@@ -1131,6 +1304,7 @@
         </span>
       </h1>
       <p class="subtitle">An interactive record of the trees, plants, and animals found along the trails of North Hall Park, Gainesville, GA.</p>
+      <button type="button" id="open-help-btn" class="help-trigger-btn">\u2753 Help &amp; Instructions</button>
     </div>
 
     <div class="seasonal-widget" id="seasonal-widget"></div>
@@ -1171,9 +1345,20 @@
     <details class="about-details">
       <summary>My Pins</summary>
       <div class="about-content">
-        <p>Long-press anywhere on the map to drop a personal pin for something you've spotted. These are saved only on this device \u2014 to have one considered for the official guide, download it and email it to the park guide's maintainer along with a photo.</p>
+        <p>Long-press anywhere on the map to drop a personal pin for something you've spotted. These are saved only on this device.</p>
         <div class="trails-list" id="mypins-list" style="margin-top: 12px;"></div>
         <button type="button" id="mypins-export-all-btn" class="mobile-btn" style="margin-top: 10px; display: none;">Download All for Email</button>
+
+        <div class="mypin-section-divider"></div>
+
+        <p class="mypin-section-label">Save &amp; continue later</p>
+        <p style="font-size: 0.82rem;">Export everything to a file you can keep, then upload it again next time \u2014 on this device or a different one \u2014 to pick up where you left off.</p>
+        <div class="mypin-data-actions">
+          <button type="button" id="mypins-export-data-btn" class="mobile-btn">Export My Data</button>
+          <button type="button" id="mypins-upload-data-btn" class="mobile-btn">Upload My Data</button>
+          <input type="file" id="mypins-upload-input" accept=".json" style="display: none;">
+        </div>
+        <p class="mypin-upload-status" id="mypins-upload-status"></p>
       </div>
     </details>
 
@@ -2226,7 +2411,7 @@
     ].join('\n');
   }
 
-  async function downloadTextFile(filename, text) {
+  async function downloadFile(filename, content, mimeType, typeDescription, extensions) {
     // Chromium browsers (Chrome, Edge) support a real "choose where to save"
     // dialog. Safari and Firefox don't implement this API at all, so we
     // feature-detect and fall back to a normal download for everyone else.
@@ -2234,10 +2419,10 @@
       try {
         const handle = await window.showSaveFilePicker({
           suggestedName: filename,
-          types: [{ description: 'Text file', accept: { 'text/plain': ['.txt'] } }]
+          types: [{ description: typeDescription, accept: { [mimeType]: extensions } }]
         });
         const writable = await handle.createWritable();
-        await writable.write(text);
+        await writable.write(content);
         await writable.close();
         return;
       } catch (err) {
@@ -2248,7 +2433,7 @@
       }
     }
 
-    const blob = new Blob([text], { type: 'text/plain' });
+    const blob = new Blob([content], { type: mimeType });
     const url = URL.createObjectURL(blob);
     const a = document.createElement('a');
     a.href = url;
@@ -2257,6 +2442,10 @@
     a.click();
     document.body.removeChild(a);
     URL.revokeObjectURL(url);
+  }
+
+  function downloadTextFile(filename, text) {
+    return downloadFile(filename, text, 'text/plain', 'Text file', ['.txt']);
   }
 
   function exportSinglePin(id) {
@@ -2342,6 +2531,92 @@
   }
 
   document.getElementById('mypins-export-all-btn').addEventListener('click', exportAllPins);
+
+  // ---- SAVE & CONTINUE LATER (JSON round-trip, separate from the email export) ----
+  const mypinsUploadStatus = document.getElementById('mypins-upload-status');
+
+  function showUploadStatus(message, isError) {
+    mypinsUploadStatus.textContent = message;
+    mypinsUploadStatus.classList.toggle('is-error', !!isError);
+  }
+
+  function exportMyDataFile() {
+    const payload = {
+      app: "North Hall Park Field Guide",
+      exportedAt: new Date().toISOString(),
+      pins: myPins
+    };
+    downloadFile(
+      'north-hall-park-my-pins.json',
+      JSON.stringify(payload, null, 2),
+      'application/json',
+      'JSON save file',
+      ['.json']
+    );
+  }
+
+  function handleMyDataUpload(file) {
+    const reader = new FileReader();
+    reader.onload = (e) => {
+      let data;
+      try {
+        data = JSON.parse(e.target.result);
+      } catch (err) {
+        showUploadStatus('Could not read that file \u2014 make sure it\'s a save file exported from this app.', true);
+        return;
+      }
+      const incoming = Array.isArray(data.pins) ? data.pins : (Array.isArray(data) ? data : null);
+      if (!incoming) {
+        showUploadStatus('That file doesn\'t look like a North Hall Park save file.', true);
+        return;
+      }
+      const existingIds = new Set(myPins.map(p => p.id));
+      let addedCount = 0;
+      incoming.forEach(p => {
+        if (p && p.id && !existingIds.has(p.id) && typeof p.lat === 'number' && typeof p.lng === 'number') {
+          myPins.push(p);
+          existingIds.add(p.id);
+          addedCount++;
+        }
+      });
+      saveMyPinsToStorage();
+      renderMyPins();
+      const skipped = incoming.length - addedCount;
+      showUploadStatus(
+        `Added ${addedCount} pin${addedCount === 1 ? '' : 's'}.` +
+        (skipped > 0 ? ` ${skipped} were already saved and skipped.` : '')
+      );
+    };
+    reader.readAsText(file);
+  }
+
+  document.getElementById('mypins-export-data-btn').addEventListener('click', exportMyDataFile);
+
+  const mypinsUploadInput = document.getElementById('mypins-upload-input');
+  document.getElementById('mypins-upload-data-btn').addEventListener('click', () => mypinsUploadInput.click());
+  mypinsUploadInput.addEventListener('change', (e) => {
+    const file = e.target.files[0];
+    if (file) handleMyDataUpload(file);
+    e.target.value = ''; // allow re-uploading the same file again later
+  });
+
+  // ---- HELP MODAL ----
+  const helpModal = document.getElementById('help-modal');
+  const helpBackdrop = document.getElementById('help-backdrop');
+
+  function openHelpModal() {
+    helpModal.classList.add('open');
+    helpBackdrop.classList.add('visible');
+  }
+
+  function closeHelpModal() {
+    helpModal.classList.remove('open');
+    helpBackdrop.classList.remove('visible');
+  }
+
+  document.getElementById('open-help-btn').addEventListener('click', openHelpModal);
+  document.getElementById('help-close-btn').addEventListener('click', closeHelpModal);
+  helpBackdrop.addEventListener('click', closeHelpModal);
 
   // ---- ADD-PIN MODAL ----
   let pendingPinLatLng = null;
