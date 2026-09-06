@@ -1225,6 +1225,12 @@
 <div class="mypin-backdrop" id="mypin-backdrop"></div>
 <div class="mypin-modal" id="mypin-modal">
   <h3>Save a Personal Pin</h3>
+
+  <label class="mypin-label">Location</label>
+  <div class="mypin-category-choices" id="mypin-location-choices">
+    <button type="button" class="mypin-cat-btn active" data-loc="longpress">Where I Pressed</button>
+    <button type="button" class="mypin-cat-btn" data-loc="gps">My GPS Location</button>
+  </div>
   <p class="mypin-coords" id="mypin-coords"></p>
 
   <label class="mypin-label">What is it?</label>
@@ -1252,29 +1258,29 @@
   <h2 class="help-title">Help &amp; Instructions</h2>
 
   <h4>Getting around the map</h4>
-  <p>Pan by dragging and zoom with the +/&minus; buttons or a pinch gesture. The layer switcher in the top-right corner of the map lets you change the base map between Satellite, OpenTopoMap, USGS Topo, and Street map &mdash; the same panel also has checkboxes for Trails, Areas, and Community Sightings.</p>
+  <p>Pan by dragging and zoom with the +/&minus; buttons or a pinch gesture. The layer switcher in the top-right corner of the map lets you change the base map between Satellite, OpenTopoMap, USGS Topo, and Street map: the same panel also has checkboxes for Trails, Areas, and Community Sightings.</p>
 
   <h4>Exploring species</h4>
-  <p>Pins are grouped into Trees, Plants &amp; Wildflowers, Animals, and Landmarks in the menu. Tap a pin on the map or a name in the list to open its field notes, organized into tabs &mdash; Overview, Ecology, Uses (edible/medicinal, where relevant), Caution (only shown when there's a genuine hazard), and Connections (links to ecologically related species you can tap through to). Each card also shows a Habitat badge and a Native/Introduced/Invasive status badge.</p>
-  <p>The Habitat and Native Status filters in the menu work alongside the Trees/Plants/Animals filters &mdash; a pin only shows when all of its relevant filters are checked.</p>
+  <p>Pins are grouped into Trees, Plants &amp; Wildflowers, Animals, and Landmarks in the menu. Tap a pin on the map or a name in the list to open its field notes, organized into tabs: Overview, Ecology, Uses (edible/medicinal, where relevant), Caution (only shown when there's a genuine hazard), and Connections (links to ecologically related species you can tap through to). Each card also shows a Habitat badge and a Native/Introduced/Invasive status badge.</p>
+  <p>The Habitat and Native Status filters in the menu work alongside the Trees/Plants/Animals filters: a pin only shows when all of its relevant filters are checked.</p>
 
   <h4>Trails &amp; areas</h4>
   <p>Recorded trails appear as green dashed lines with their distance and elevation gain listed under "Trails" in the menu. Shaded areas (like the Pollinator Garden) mark the boundary of a specific place rather than a walking path, listed under "Areas." Both can be toggled on or off from the map's layer switcher.</p>
 
   <h4>Community sightings</h4>
-  <p>This optional layer pulls in real, community-submitted observations from iNaturalist near the park &mdash; a separate thing from the curated species pins above, since these are individual sightings rather than field-guide writeups. Turn it on from the menu, then use the sub-filters to show just birds, plants, insects, and so on. Tap any dot to see the photo, date, and a link back to the original observation.</p>
+  <p>This optional layer pulls in real, community-submitted observations from iNaturalist near the park - a separate thing from the curated species pins above, since these are individual sightings rather than field-guide writeups. Turn it on from the menu, then use the sub-filters to show just birds, plants, insects, and so on. Tap any dot to see the photo, date, and a link back to the original observation.</p>
 
   <h4>Finding your location</h4>
-  <p>The crosshair button near the zoom controls shows your position on the map and follows you as you walk. This needs your permission the first time, only works on the live, secure website (not a locally saved file), and works best on a phone with GPS &mdash; accuracy will vary, especially under heavy tree cover.</p>
+  <p>The crosshair button near the zoom controls shows your position on the map and follows you as you walk. This needs your permission the first time, only works on the live, secure website (not a locally saved file), and works best on a phone with GPS: accuracy will vary, especially under heavy tree cover.</p>
 
   <h4>Saving your own pins</h4>
-  <p>Long-press anywhere on the map to drop a personal pin for something you've found &mdash; pick Plant, Animal, or Not Sure, add a name or guess and any notes. These show up as dashed circles, distinct from the official pins, and are saved privately on this device.</p>
+  <p>Long-press anywhere on the map to drop a personal pin for something you've found: pick Plant, Animal, or Not Sure, add a name or guess and any notes. These show up as dashed circles, distinct from the official pins, and are saved privately on this device.</p>
   <p>From the "My Pins" section of the menu, you can:</p>
-  <p><strong>Download for email</strong> &mdash; exports one pin (or all of them) as a text file to send to the park guide's maintainer for consideration, along with your own photo attached separately.</p>
-  <p><strong>Export/Upload My Data</strong> &mdash; a different pair of buttons for your own continuity: Export saves everything to a file you keep, and Upload reads that file back in later, on this device or another one, adding anything new without creating duplicates.</p>
+  <p><strong>Download for email</strong>: exports one pin (or all of them) as a text file to send to the park guide's maintainer for consideration, along with your own photo attached separately.</p>
+  <p><strong>Export/Upload My Data</strong>: a different pair of buttons for your own continuity: Export saves everything to a file you keep, and Upload reads that file back in later, on this device or another one, adding anything new without creating duplicates.</p>
 
   <h4>This month at the park</h4>
-  <p>The highlighted box near the top of the menu shows whatever's currently flowering, fruiting, or otherwise in season, based on your device's own clock &mdash; tap an entry to jump straight to that species.</p>
+  <p>The highlighted box near the top of the menu shows whatever's currently flowering, fruiting, or otherwise in season, based on your device's own clock: tap an entry to jump straight to that species.</p>
 </div>
 
 <div class="layout">
@@ -1307,10 +1313,10 @@
     <details class="about-details">
       <summary>About &amp; Visiting Info</summary>
       <div class="about-content">
-        <p>North Hall Park is a 123-acre Hall County park and recreation complex in the Appalachian foothills north of Gainesville. Alongside its ballfields, walking track, and community center, the park's multi-use hiking trails wind through mixed hardwood forest, edge habitat, and wetland areas &mdash; home to the plants, trees, and animals featured on this map.</p>
+        <p>North Hall Park is a 123-acre Hall County park and recreation complex in the Appalachian foothills north of Gainesville. Alongside its ballfields, walking track, and community center, the park's multi-use hiking trails wind through mixed hardwood forest, edge habitat, and wetland areas - home to the plants, trees, and animals featured on this map.</p>
         <dl class="visit-info">
           <dt>Address</dt>
-          <dd>4175 Nopone Road, Gainesville, GA 30506 &mdash; <a href="https://www.google.com/maps/search/?api=1&query=4175+Nopone+Road,+Gainesville,+GA+30506" target="_blank" rel="noopener">Get directions</a></dd>
+          <dd>4175 Nopone Road, Gainesville, GA 30506 - <a href="https://www.google.com/maps/search/?api=1&query=4175+Nopone+Road,+Gainesville,+GA+30506" target="_blank" rel="noopener">Get directions</a></dd>
           <dt>Phone</dt>
           <dd>(770) 535-8280</dd>
           <dt>Trails &amp; Grounds</dt>
@@ -1347,7 +1353,7 @@
         <div class="mypin-section-divider"></div>
 
         <p class="mypin-section-label">Save &amp; continue later</p>
-        <p style="font-size: 0.82rem;">Export everything to a file you can keep, then upload it again next time &mdash; on this device or a different one &mdash; to pick up where you left off.</p>
+        <p style="font-size: 0.82rem;">Export everything to a file you can keep, then upload it again next time - on this device or a different one - to pick up where you left off.</p>
         <div class="mypin-data-actions">
           <button type="button" id="mypins-export-data-btn" class="mobile-btn">Export My Data</button>
           <button type="button" id="mypins-upload-data-btn" class="mobile-btn">Upload My Data</button>
@@ -1400,8 +1406,8 @@
     <details class="about-details">
       <summary>Native vs. Invasive at This Park</summary>
       <div class="about-content">
-        <p>Like much of the Southeast, North Hall Park's woods carry the fingerprints of centuries of human movement. Species introduced from Asia and Europe &mdash; often planted intentionally for ornamental beauty or erosion control &mdash; found conditions here that let them spread far beyond where they were planted. Two of the most common trailside plants on this map, Mimosa and Autumn Olive, are both examples: attractive and resilient, but now classified as invasive in Georgia because they outcompete the native plants local wildlife evolved alongside.</p>
-        <p>That doesn't mean these species are without any value &mdash; Mimosa's flowers feed pollinators, and Autumn Olive's berries feed birds &mdash; but a landscape dominated by a few aggressive newcomers supports less overall biodiversity than one built on a full community of native species.</p>
+        <p>Like much of the Southeast, North Hall Park's woods carry the fingerprints of centuries of human movement. Species introduced from Asia and Europe - often planted intentionally for ornamental beauty or erosion control - found conditions here that let them spread far beyond where they were planted. Two of the most common trailside plants on this map, Mimosa and Autumn Olive, are both examples: attractive and resilient, but now classified as invasive in Georgia because they outcompete the native plants local wildlife evolved alongside.</p>
+        <p>That doesn't mean these species are without any value - Mimosa's flowers feed pollinators, and Autumn Olive's berries feed birds - but a landscape dominated by a few aggressive newcomers supports less overall biodiversity than one built on a full community of native species.</p>
         <div class="status-legend">
           <span class="legend-chip" style="background:#3f7d4f22; color:#3f7d4f;">Native</span>
           <span class="legend-chip" style="background:#5a6b7a22; color:#5a6b7a;">Introduced</span>
@@ -1467,10 +1473,10 @@
         { id: "s5", relationship: "This tree's summer flowers are a major nectar source for the honeybees kept in the hives near the pollinator garden." }
       ],
       overview: "A small-to-medium tree with fern-like, feathery, doubly-compound leaves and fluffy pink-and-white powder-puff flowers. Bark is smooth and grayish-brown. Often found along trail edges, clearings, and sunny disturbed ground.",
-      ecology: "Native to Asia (from Iran to Japan), introduced to the U.S. in the 1700s as an ornamental. It's now naturalized across the Southeast and is listed as invasive in Georgia \u2014 it spreads aggressively from long-lived seed pods and resprouts vigorously when cut, often outcompeting native trees along stream banks and forest edges. That said, its flowers are a strong nectar source for hummingbirds, bees, and butterflies during summer.",
+      ecology: "Native to Asia (from Iran to Japan), introduced to the U.S. in the 1700s as an ornamental. It's now naturalized across the Southeast and is listed as invasive in Georgia: it spreads aggressively from long-lived seed pods and resprouts vigorously when cut, often outcompeting native trees along stream banks and forest edges. That said, its flowers are a strong nectar source for hummingbirds, bees, and butterflies during summer.",
       edible: "The flowers are edible and can be eaten raw, tossed in salads, or dried for tea. They have a mildly sweet, slightly astringent flavor.",
-      medicinal: "In Traditional Chinese Medicine, the flower (he huan hua) and bark (he huan pi) are known as \"collective happiness bark\" and have long been used in teas and tinctures associated with easing occasional stress and supporting restful sleep. Modern herbalists still use it this way, though rigorous clinical research is limited \u2014 treat this as traditional use, not a medical claim.",
-      funFact: "The leaflets fold up at night or when touched \u2014 the genus name Albizia and common nickname \"sleeping tree\" both nod to this movement.",
+      medicinal: "In Traditional Chinese Medicine, the flower (he huan hua) and bark (he huan pi) are known as \"collective happiness bark\" and have long been used in teas and tinctures associated with easing occasional stress and supporting restful sleep. Modern herbalists still use it this way, though rigorous clinical research is limited: treat this as traditional use, not a medical claim.",
+      funFact: "The leaflets fold up at night or when touched: the genus name Albizia and common nickname \"sleeping tree\" both nod to this movement.",
       season: "Blooms mid-summer (June\u2013August); seed pods persist on the tree into winter.",
       phenology: [
         { months: [6, 7, 8], label: "Flowering" }
@@ -1487,14 +1493,14 @@
       status: "invasive",
       nativeAlternative: "American Beautyberry (Callicarpa americana) or Elderberry (Sambucus canadensis) offer similarly bird-friendly berries from shrubs native to Georgia.",
       connections: [
-        { id: "s1", relationship: "Grows alongside Mimosa in trail-edge habitat \u2014 together these two invasive species dominate much of the park's disturbed edge." },
+        { id: "s1", relationship: "Grows alongside Mimosa in trail-edge habitat: together these two invasive species dominate much of the park's disturbed edge." },
         { id: "s3", relationship: "Competes with native Mulberry for the same fruit-eating birds, redirecting seed dispersal toward an invasive species instead of a native one." }
       ],
       overview: "A deciduous shrub with silvery-scaled undersides on its oval leaves, small pale-yellow tubular flowers in spring, and clusters of small red berries speckled with tiny silver dots. Common along sunny trail margins and disturbed ground.",
-      ecology: "Native to East Asia, introduced to the U.S. in the 1830s and widely planted through the mid-1900s for erosion control and wildlife food plots. It's now classified as invasive in Georgia: its roots fix nitrogen in the soil, which changes soil chemistry in ways that favor more invasion, and birds spread its seeds widely after eating the berries \u2014 letting it outcompete native shrubs in open and edge habitats.",
-      edible: "The ripe (fully red, slightly soft) berries are edible raw and are notably high in lycopene \u2014 by some measurements more concentrated than tomatoes. They're tart-sweet and commonly made into jam, fruit leather, or sauce. Unripe berries are green-silver and very astringent; they aren't toxic, just unpleasant, and soften and sweeten as they ripen.",
+      ecology: "Native to East Asia, introduced to the U.S. in the 1830s and widely planted through the mid-1900s for erosion control and wildlife food plots. It's now classified as invasive in Georgia: its roots fix nitrogen in the soil, which changes soil chemistry in ways that favor more invasion, and birds spread its seeds widely after eating the berries: letting it outcompete native shrubs in open and edge habitats.",
+      edible: "The ripe (fully red, slightly soft) berries are edible raw and are notably high in lycopene: by some measurements more concentrated than tomatoes. They're tart-sweet and commonly made into jam, fruit leather, or sauce. Unripe berries are green-silver and very astringent; they aren't toxic, just unpleasant, and soften and sweeten as they ripen.",
       medicinal: "No well-established traditional medicinal use beyond being valued as an antioxidant-rich food source.",
-      funFact: "One mature shrub can produce tens of thousands of berries in a single season \u2014 part of why it spreads so effectively once established.",
+      funFact: "One mature shrub can produce tens of thousands of berries in a single season: part of why it spreads so effectively once established.",
       season: "Flowers in April\u2013May (fragrant); berries ripen and are most visible September\u2013October.",
       phenology: [
         { months: [4, 5], label: "Flowering" },
@@ -1516,8 +1522,8 @@
       overview: "A medium-to-large tree with alternate leaves that vary from simple heart shapes to mitten- or hand-shaped lobes, even on the same branch. Leaf surfaces have a rough, sandpapery texture. Fruit resembles an elongated blackberry, ripening from green to red to a deep purple-black.",
       ecology: "Red mulberry is native to the eastern U.S. and is an important food source for more than 30 species of birds and numerous mammals when fruiting. It's worth noting that native red mulberry is increasingly hybridizing with the introduced white mulberry (Morus alba), which some conservationists see as a long-term concern for the genetic distinctiveness of native populations.",
       edible: "Ripe (dark purple-black) fruit is sweet and safe to eat raw, and is popular in pies, jams, and homemade wine. Young, tender leaves can also be cooked and eaten as a green in some culinary traditions, and are the primary food source for silkworms.",
-      medicinal: "Various parts of mulberry trees have a history of use in folk medicine \u2014 for example, mulberry leaf tea has traditionally been used in parts of Asia as a mild digestive aid. Evidence for these uses is mostly traditional rather than clinical.",
-      caution: "Unripe fruit (still green or red rather than dark purple) can cause mild stomach upset if eaten in quantity. The tree's milky white sap can also mildly irritate skin \u2014 wash your hands after handling broken stems or unripe fruit.",
+      medicinal: "Various parts of mulberry trees have a history of use in folk medicine: for example, mulberry leaf tea has traditionally been used in parts of Asia as a mild digestive aid. Evidence for these uses is mostly traditional rather than clinical.",
+      caution: "Unripe fruit (still green or red rather than dark purple) can cause mild stomach upset if eaten in quantity. The tree's milky white sap can also mildly irritate skin: wash your hands after handling broken stems or unripe fruit.",
       funFact: "Native red mulberry can be distinguished from introduced white mulberry by its rougher, more textured leaf surface and its fruit, which stays deep red-purple rather than turning pale white or pink.",
       season: "Fruit ripens late spring into early summer (May\u2013June).",
       phenology: [
@@ -1534,11 +1540,11 @@
       habitat: "wetland",
       status: "native",
       overview: "A tall, all-white wading bird (also called the Great Egret) with a long S-curved neck, a long yellow bill, and dark legs and feet. Stands 3\u20134 feet tall with a wingspan over 4 feet. Look for it standing motionless near water, waiting to strike.",
-      ecology: "As a top predator of small aquatic life \u2014 fish, frogs, crayfish, and large insects \u2014 the Great Egret is considered an indicator species for wetland health: their presence generally signals a healthy population of prey species and reasonably clean water. They were hunted nearly to extinction in the late 1800s and early 1900s for their long breeding plumes, prized for women's hats; public outcry over this drove the founding of the National Audubon Society and helped spur some of the earliest U.S. wildlife protection laws.",
+      ecology: "As a top predator of small aquatic life - fish, frogs, crayfish, and large insects - the Great Egret is considered an indicator species for wetland health: their presence generally signals a healthy population of prey species and reasonably clean water. They were hunted nearly to extinction in the late 1800s and early 1900s for their long breeding plumes, prized for women's hats; public outcry over this drove the founding of the National Audubon Society and helped spur some of the earliest U.S. wildlife protection laws.",
       connections: [
         { id: "s6", relationship: "The still, shallow pond behind this dam is exactly the kind of hunting ground egrets rely on for fish and frogs." }
       ],
-      funFact: "The Great Egret's comeback from near-extinction is considered one of the earliest major success stories of the American conservation movement \u2014 it's the symbol still used in the National Audubon Society's logo.",
+      funFact: "The Great Egret's comeback from near-extinction is considered one of the earliest major success stories of the American conservation movement: it's the symbol still used in the National Audubon Society's logo.",
       season: "Present year-round in Georgia; most active hunting at dawn and dusk."
     },
     {
@@ -1551,11 +1557,11 @@
       habitat: "openField",
       status: "introduced",
       overview: "A fuzzy, golden-brown and black-striped insect usually seen visiting flowers in steady numbers near the hives kept beside the pollinator garden. Unlike solitary native bees, honeybees live in large colonies of tens of thousands, all descended from a single queen.",
-      ecology: "Honeybees aren't native to North America \u2014 they were brought over by European colonists in the 1600s for honey and wax, and have since become the continent's most widely managed pollinator. They're vital for pollinating a huge share of food crops, and flowers like Mimosa's growing nearby are an important nectar source for the hives kept here. Worth noting: honeybees can also compete with native, solitary bee species for the same flowers, since they forage in such large numbers.",
+      ecology: "Honeybees aren't native to North America: they were brought over by European colonists in the 1600s for honey and wax, and have since become the continent's most widely managed pollinator. They're vital for pollinating a huge share of food crops, and flowers like Mimosa's growing nearby are an important nectar source for the hives kept here. Worth noting: honeybees can also compete with native, solitary bee species for the same flowers, since they forage in such large numbers.",
       connections: [
         { id: "s1", relationship: "Mimosa's summer flowers are a major nectar source for the honeybees kept in the hives here." }
       ],
-      funFact: "A single hive can hold 20,000\u201360,000 bees. A healthy colony produces far more honey than it needs to survive winter \u2014 which is what allows beekeepers to harvest the surplus without harming the hive.",
+      funFact: "A single hive can hold 20,000\u201360,000 bees. A healthy colony produces far more honey than it needs to survive winter: which is what allows beekeepers to harvest the surplus without harming the hive.",
       season: "Most active spring through fall, especially during Mimosa's summer bloom; colonies cluster together inside the hive through winter rather than hibernating."
     },
     {
@@ -1567,7 +1573,7 @@
       lng: -83.798012,
       habitat: "wetland",
       status: "native",
-      overview: "North America's largest rodent, recognized by a broad, flat, paddle-shaped tail and continuously growing orange-tinted incisors used for gnawing through wood. Beavers themselves are rarely seen \u2014 they're most active at dawn, dusk, and overnight \u2014 but their handiwork is unmistakable: this dam is built from felled branches, mud, and stones, raising the water level of the creek around their lodge.",
+      overview: "North America's largest rodent, recognized by a broad, flat, paddle-shaped tail and continuously growing orange-tinted incisors used for gnawing through wood. Beavers themselves are rarely seen - they're most active at dawn, dusk, and overnight - but their handiwork is unmistakable: this dam is built from felled branches, mud, and stones, raising the water level of the creek around their lodge.",
       ecology: "Beavers are considered a keystone species and \"ecosystem engineer\": by damming streams, they create and maintain wetland ponds that dozens of other species depend on, from fish and amphibians to wading birds like the park's Great Egret, which hunts the slower, shallower water these dams create. Beaver-engineered wetlands also help filter sediment, recharge groundwater, and reduce downstream flooding.",
       connections: [
         { id: "s4", relationship: "The pond this dam creates provides the still, shallow water egrets need for hunting fish and frogs." }
@@ -1594,9 +1600,9 @@
       lng: -83.798676,
       habitat: "wetland",
       status: "native",
-      overview: "A tall herbaceous perennial with deep red, star-shaped flowers made of narrow, widely separated petals \u2014 quite different from the overlapping, rounded petals of many garden hibiscus. Leaves are green and palmately lobed, resembling a spread hand. Can reach 4\u20138 feet tall by late summer. Here, it grows wild at the water's edge in an area otherwise heavily overtaken by kudzu \u2014 its bright red flowers are one of the few visible signs of the native plant life still holding on underneath.",
+      overview: "A tall herbaceous perennial with deep red, star-shaped flowers made of narrow, widely separated petals: quite different from the overlapping, rounded petals of many garden hibiscus. Leaves are green and palmately lobed, resembling a spread hand. Can reach 4\u20138 feet tall by late summer. Here, it grows wild at the water's edge in an area otherwise heavily overtaken by kudzu: its bright red flowers are one of the few visible signs of the native plant life still holding on underneath.",
       ecology: "Native to marshes and wetland margins across the southeastern coastal plain, including Georgia. Its large, showy flowers are a strong draw for hummingbirds, swallowtail butterflies, and large native bees. Being herbaceous, it dies back completely to the ground each winter and re-sprouts from its rootstock the following spring. Its presence here, pushing up through a kudzu-dominated area, is a good reminder that even heavily invaded ground can still support native species holding their footing.",
-      edible: "The flower petals are edible and can be eaten fresh in salads or dried for a mild infusion. Note this is a different plant from Roselle (Hibiscus sabdariffa), the tropical hibiscus most commercial \"hibiscus tea\" is made from \u2014 this native rosemallow's petals give a milder, less tart result.",
+      edible: "The flower petals are edible and can be eaten fresh in salads or dried for a mild infusion. Note this is a different plant from Roselle (Hibiscus sabdariffa), the tropical hibiscus most commercial \"hibiscus tea\" is made from - this native rosemallow's petals give a milder, less tart result.",
       funFact: "Its bold red, star-shaped bloom is why it's also commonly called \"Texas Star Hibiscus,\" even though it's native well beyond Texas, across southeastern wetlands.",
       season: "Blooms mid-to-late summer (roughly July\u2013September); dies back to the ground in winter and re-emerges from the roots each spring.",
       phenology: [
@@ -1606,10 +1612,10 @@
   ];
 
   const categoryMeta = {
-    tree:   { label: "Trees",               color: "#4f7a4a" },
-    plant:  { label: "Plants & Wildflowers", color: "#b8862b" },
-    animal: { label: "Animals",             color: "#a0522d" },
-    landmark: { label: "Landmarks",          color: "#8b6f9e" }
+    tree:   { label: "Trees",               color: "#5fae55" },
+    plant:  { label: "Plants & Wildflowers", color: "#dba53a" },
+    animal: { label: "Animals",             color: "#c96a3f" },
+    landmark: { label: "Landmarks",          color: "#a37fc4" }
   };
 
   const habitatMeta = {
@@ -1652,7 +1658,7 @@
     if (matches.length === 0) {
       widget.innerHTML = `
         <div class="seasonal-title">This Month at North Hall Park</div>
-        <p class="seasonal-empty">Nothing on the map is flagged as especially active in ${monthName} yet \u2014 explore the full field guide below.</p>
+        <p class="seasonal-empty">Nothing on the map is flagged as especially active in ${monthName} yet: explore the full field guide below.</p>
       `;
       return;
     }
@@ -1664,7 +1670,7 @@
     `).join('');
 
     widget.innerHTML = `
-      <div class="seasonal-title">This Month at North Hall Park \u2014 ${monthName}</div>
+      <div class="seasonal-title">This Month at North Hall Park: ${monthName}</div>
       <div class="seasonal-items">${itemsHtml}</div>
     `;
 
@@ -1714,7 +1720,7 @@
   // rather than a stylized street map.
   const satelliteLayer = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
     maxZoom: 19,
-    attribution: 'Tiles &copy; Esri &mdash; Source: Esri, Maxar, Earthstar Geographics'
+    attribution: 'Tiles &copy; Esri - Source: Esri, Maxar, Earthstar Geographics'
   });
 
   // Thin white place-name/road labels drawn on top of the satellite layer,
@@ -1895,7 +1901,7 @@
         }
       })
       .catch(err => {
-        showStatus('Could not load community sightings \u2014 check your connection and try again.', true);
+        showStatus('Could not load community sightings: check your connection and try again.', true);
       });
   }
 
@@ -2322,7 +2328,7 @@
       let usesHtml = '';
       if (s.edible) usesHtml += `<h4>Edible uses</h4><p>${s.edible}</p>`;
       if (s.medicinal) usesHtml += `<h4>Medicinal / traditional uses</h4><p>${s.medicinal}</p>`;
-      usesHtml += `<div class="id-warning">Always be 100% certain of your identification before eating or preparing any wild plant \u2014 some species have toxic lookalikes. This information is for educational purposes only and isn't medical advice; check with a knowledgeable forager's guide or a healthcare provider before use.</div>`;
+      usesHtml += `<div class="id-warning">Always be 100% certain of your identification before eating or preparing any wild plant: some species have toxic lookalikes. This information is for educational purposes only and isn't medical advice; check with a knowledgeable forager's guide or a healthcare provider before use.</div>`;
       tabs.push({ key: 'uses', label: 'Uses', html: usesHtml });
     }
 
@@ -2426,19 +2432,18 @@
   };
 
   function makeMyPinIcon(category) {
-    const color = (myPinCategoryMeta[category] || myPinCategoryMeta.unsure).color;
     return L.divIcon({
       className: '',
       html: `<div style="
-        width: 20px; height: 20px;
+        width: 16px; height: 16px;
+        background: #e8342a;
+        border: 2.5px solid #faf7ef;
         border-radius: 50%;
-        background: rgba(255,255,255,0.2);
-        border: 2.5px dashed ${color};
-        box-shadow: 0 2px 6px rgba(0,0,0,0.4);
+        box-shadow: 0 0 0 1.5px rgba(0,0,0,0.25), 0 2px 6px rgba(0,0,0,0.45);
       "></div>`,
-      iconSize: [20, 20],
-      iconAnchor: [10, 10],
-      popupAnchor: [0, -10]
+      iconSize: [16, 16],
+      iconAnchor: [8, 8],
+      popupAnchor: [0, -8]
     });
   }
 
@@ -2516,7 +2521,7 @@
     const meta = myPinCategoryMeta[p.category] || myPinCategoryMeta.unsure;
     return `
       <div class="popup-card">
-        <div class="category" style="color:${meta.color}">Your Pin \u2014 Unverified</div>
+        <div class="category" style="color:${meta.color}">Your Pin - Unverified</div>
         <h3>${p.name || 'Unnamed'}</h3>
         <p class="sci-name">${meta.label}</p>
         ${p.notes ? `<p>${p.notes}</p>` : ''}
@@ -2609,7 +2614,7 @@
       try {
         data = JSON.parse(e.target.result);
       } catch (err) {
-        showUploadStatus('Could not read that file \u2014 make sure it\'s a save file exported from this app.', true);
+        showUploadStatus('Could not read that file: make sure it\'s a save file exported from this app.', true);
         return;
       }
       const incoming = Array.isArray(data.pins) ? data.pins : (Array.isArray(data) ? data : null);
@@ -2667,6 +2672,8 @@
 
   // ---- ADD-PIN MODAL ----
   let pendingPinLatLng = null;
+  let pendingPinGpsLatLng = null;
+  let pinLocationMode = 'longpress';
   let selectedMyPinCategory = 'unsure';
 
   const mypinModal = document.getElementById('mypin-modal');
@@ -2674,7 +2681,8 @@
   const mypinCoordsEl = document.getElementById('mypin-coords');
   const mypinNameInput = document.getElementById('mypin-name-input');
   const mypinNotesInput = document.getElementById('mypin-notes-input');
-  const mypinCatButtons = document.querySelectorAll('.mypin-cat-btn');
+  const mypinCatButtons = document.querySelectorAll('#mypin-category-choices .mypin-cat-btn');
+  const mypinLocButtons = document.querySelectorAll('#mypin-location-choices .mypin-cat-btn');
 
   function updateMyPinCategoryButtons() {
     mypinCatButtons.forEach(btn => {
@@ -2689,11 +2697,62 @@
     });
   });
 
+  function updateMyPinLocationButtons() {
+    mypinLocButtons.forEach(btn => {
+      btn.classList.toggle('active', btn.dataset.loc === pinLocationMode);
+    });
+  }
+
+  function refreshMyPinCoordsDisplay() {
+    if (pinLocationMode === 'gps') {
+      if (pendingPinGpsLatLng) {
+        mypinCoordsEl.textContent = `${pendingPinGpsLatLng.lat.toFixed(5)}, ${pendingPinGpsLatLng.lng.toFixed(5)} (your GPS location)`;
+      } else {
+        mypinCoordsEl.textContent = 'Getting your GPS location\u2026';
+      }
+    } else {
+      mypinCoordsEl.textContent = `${pendingPinLatLng.lat.toFixed(5)}, ${pendingPinLatLng.lng.toFixed(5)} (where you pressed)`;
+    }
+  }
+
+  mypinLocButtons.forEach(btn => {
+    btn.addEventListener('click', () => {
+      pinLocationMode = btn.dataset.loc;
+      updateMyPinLocationButtons();
+      if (pinLocationMode === 'gps' && !pendingPinGpsLatLng) {
+        refreshMyPinCoordsDisplay();
+        if (!navigator.geolocation) {
+          mypinCoordsEl.textContent = 'GPS isn\'t available in this browser - using where you pressed instead.';
+          pinLocationMode = 'longpress';
+          updateMyPinLocationButtons();
+          return;
+        }
+        navigator.geolocation.getCurrentPosition(
+          (pos) => {
+            pendingPinGpsLatLng = { lat: pos.coords.latitude, lng: pos.coords.longitude };
+            if (pinLocationMode === 'gps') refreshMyPinCoordsDisplay();
+          },
+          () => {
+            mypinCoordsEl.textContent = 'Could not get your GPS location - using where you pressed instead.';
+            pinLocationMode = 'longpress';
+            updateMyPinLocationButtons();
+          },
+          { enableHighAccuracy: true, timeout: 10000 }
+        );
+      } else {
+        refreshMyPinCoordsDisplay();
+      }
+    });
+  });
+
   function openMyPinModal(latlng) {
     pendingPinLatLng = latlng;
+    pendingPinGpsLatLng = null;
+    pinLocationMode = 'longpress';
+    updateMyPinLocationButtons();
     selectedMyPinCategory = 'unsure';
     updateMyPinCategoryButtons();
-    mypinCoordsEl.textContent = `${latlng.lat.toFixed(5)}, ${latlng.lng.toFixed(5)}`;
+    refreshMyPinCoordsDisplay();
     mypinNameInput.value = '';
     mypinNotesInput.value = '';
     mypinModal.classList.add('open');
@@ -2704,20 +2763,23 @@
     mypinModal.classList.remove('open');
     mypinBackdrop.classList.remove('visible');
     pendingPinLatLng = null;
+    pendingPinGpsLatLng = null;
   }
 
   document.getElementById('mypin-cancel-btn').addEventListener('click', closeMyPinModal);
   mypinBackdrop.addEventListener('click', closeMyPinModal);
 
   document.getElementById('mypin-save-btn').addEventListener('click', () => {
-    if (!pendingPinLatLng) return;
+    const useGps = pinLocationMode === 'gps' && pendingPinGpsLatLng;
+    const finalLatLng = useGps ? pendingPinGpsLatLng : pendingPinLatLng;
+    if (!finalLatLng) return;
     const pin = {
       id: `mypin_${Date.now()}`,
       category: selectedMyPinCategory,
       name: mypinNameInput.value.trim(),
       notes: mypinNotesInput.value.trim(),
-      lat: pendingPinLatLng.lat,
-      lng: pendingPinLatLng.lng,
+      lat: finalLatLng.lat,
+      lng: finalLatLng.lng,
       createdAt: new Date().toISOString()
     };
     myPins.push(pin);
