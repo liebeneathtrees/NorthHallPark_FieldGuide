@@ -140,12 +140,6 @@
     flex-shrink: 0;
   }
 
-  .category-icon {
-    display: flex;
-    align-items: center;
-    flex-shrink: 0;
-  }
-
   .category-head .label {
     font-size: 0.78rem;
     text-transform: uppercase;
@@ -1258,29 +1252,29 @@
   <h2 class="help-title">Help &amp; Instructions</h2>
 
   <h4>Getting around the map</h4>
-  <p>Pan by dragging and zoom with the +/\u2212 buttons or a pinch gesture. The layer switcher in the top-right corner of the map lets you change the base map between Satellite, OpenTopoMap, USGS Topo, and Street map \u2014 the same panel also has checkboxes for Trails, Areas, and Community Sightings.</p>
+  <p>Pan by dragging and zoom with the +/&minus; buttons or a pinch gesture. The layer switcher in the top-right corner of the map lets you change the base map between Satellite, OpenTopoMap, USGS Topo, and Street map &mdash; the same panel also has checkboxes for Trails, Areas, and Community Sightings.</p>
 
   <h4>Exploring species</h4>
-  <p>Pins are grouped into Trees, Plants &amp; Wildflowers, Animals, and Landmarks in the menu. Tap a pin on the map or a name in the list to open its field notes, organized into tabs \u2014 Overview, Ecology, Uses (edible/medicinal, where relevant), Caution (only shown when there's a genuine hazard), and Connections (links to ecologically related species you can tap through to). Each card also shows a Habitat badge and a Native/Introduced/Invasive status badge.</p>
-  <p>The Habitat and Native Status filters in the menu work alongside the Trees/Plants/Animals filters \u2014 a pin only shows when all of its relevant filters are checked.</p>
+  <p>Pins are grouped into Trees, Plants &amp; Wildflowers, Animals, and Landmarks in the menu. Tap a pin on the map or a name in the list to open its field notes, organized into tabs &mdash; Overview, Ecology, Uses (edible/medicinal, where relevant), Caution (only shown when there's a genuine hazard), and Connections (links to ecologically related species you can tap through to). Each card also shows a Habitat badge and a Native/Introduced/Invasive status badge.</p>
+  <p>The Habitat and Native Status filters in the menu work alongside the Trees/Plants/Animals filters &mdash; a pin only shows when all of its relevant filters are checked.</p>
 
   <h4>Trails &amp; areas</h4>
   <p>Recorded trails appear as green dashed lines with their distance and elevation gain listed under "Trails" in the menu. Shaded areas (like the Pollinator Garden) mark the boundary of a specific place rather than a walking path, listed under "Areas." Both can be toggled on or off from the map's layer switcher.</p>
 
   <h4>Community sightings</h4>
-  <p>This optional layer pulls in real, community-submitted observations from iNaturalist near the park \u2014 a separate thing from the curated species pins above, since these are individual sightings rather than field-guide writeups. Turn it on from the menu, then use the sub-filters to show just birds, plants, insects, and so on. Tap any dot to see the photo, date, and a link back to the original observation.</p>
+  <p>This optional layer pulls in real, community-submitted observations from iNaturalist near the park &mdash; a separate thing from the curated species pins above, since these are individual sightings rather than field-guide writeups. Turn it on from the menu, then use the sub-filters to show just birds, plants, insects, and so on. Tap any dot to see the photo, date, and a link back to the original observation.</p>
 
   <h4>Finding your location</h4>
-  <p>The crosshair button near the zoom controls shows your position on the map and follows you as you walk. This needs your permission the first time, only works on the live, secure website (not a locally saved file), and works best on a phone with GPS \u2014 accuracy will vary, especially under heavy tree cover.</p>
+  <p>The crosshair button near the zoom controls shows your position on the map and follows you as you walk. This needs your permission the first time, only works on the live, secure website (not a locally saved file), and works best on a phone with GPS &mdash; accuracy will vary, especially under heavy tree cover.</p>
 
   <h4>Saving your own pins</h4>
-  <p>Long-press anywhere on the map to drop a personal pin for something you've found \u2014 pick Plant, Animal, or Not Sure, add a name or guess and any notes. These show up as dashed circles, distinct from the official pins, and are saved privately on this device.</p>
+  <p>Long-press anywhere on the map to drop a personal pin for something you've found &mdash; pick Plant, Animal, or Not Sure, add a name or guess and any notes. These show up as dashed circles, distinct from the official pins, and are saved privately on this device.</p>
   <p>From the "My Pins" section of the menu, you can:</p>
-  <p><strong>Download for email</strong> \u2014 exports one pin (or all of them) as a text file to send to the park guide's maintainer for consideration, along with your own photo attached separately.</p>
-  <p><strong>Export/Upload My Data</strong> \u2014 a different pair of buttons for your own continuity: Export saves everything to a file you keep, and Upload reads that file back in later, on this device or another one, adding anything new without creating duplicates.</p>
+  <p><strong>Download for email</strong> &mdash; exports one pin (or all of them) as a text file to send to the park guide's maintainer for consideration, along with your own photo attached separately.</p>
+  <p><strong>Export/Upload My Data</strong> &mdash; a different pair of buttons for your own continuity: Export saves everything to a file you keep, and Upload reads that file back in later, on this device or another one, adding anything new without creating duplicates.</p>
 
   <h4>This month at the park</h4>
-  <p>The highlighted box near the top of the menu shows whatever's currently flowering, fruiting, or otherwise in season, based on your device's own clock \u2014 tap an entry to jump straight to that species.</p>
+  <p>The highlighted box near the top of the menu shows whatever's currently flowering, fruiting, or otherwise in season, based on your device's own clock &mdash; tap an entry to jump straight to that species.</p>
 </div>
 
 <div class="layout">
@@ -1304,15 +1298,16 @@
         </span>
       </h1>
       <p class="subtitle">An interactive record of the trees, plants, and animals found along the trails of North Hall Park, Gainesville, GA.</p>
-      <button type="button" id="open-help-btn" class="help-trigger-btn">\u2753 Help &amp; Instructions</button>
     </div>
+
+    <button type="button" id="open-help-btn" class="help-trigger-btn">Help &amp; Instructions</button>
 
     <div class="seasonal-widget" id="seasonal-widget"></div>
 
     <details class="about-details">
       <summary>About &amp; Visiting Info</summary>
       <div class="about-content">
-        <p>North Hall Park is a 123-acre Hall County park and recreation complex in the Appalachian foothills north of Gainesville. Alongside its ballfields, walking track, and community center, the park's multi-use hiking trails wind through mixed hardwood forest, edge habitat, and wetland areas \u2014 home to the plants, trees, and animals featured on this map.</p>
+        <p>North Hall Park is a 123-acre Hall County park and recreation complex in the Appalachian foothills north of Gainesville. Alongside its ballfields, walking track, and community center, the park's multi-use hiking trails wind through mixed hardwood forest, edge habitat, and wetland areas &mdash; home to the plants, trees, and animals featured on this map.</p>
         <dl class="visit-info">
           <dt>Address</dt>
           <dd>4175 Nopone Road, Gainesville, GA 30506 &mdash; <a href="https://www.google.com/maps/search/?api=1&query=4175+Nopone+Road,+Gainesville,+GA+30506" target="_blank" rel="noopener">Get directions</a></dd>
@@ -1352,7 +1347,7 @@
         <div class="mypin-section-divider"></div>
 
         <p class="mypin-section-label">Save &amp; continue later</p>
-        <p style="font-size: 0.82rem;">Export everything to a file you can keep, then upload it again next time \u2014 on this device or a different one \u2014 to pick up where you left off.</p>
+        <p style="font-size: 0.82rem;">Export everything to a file you can keep, then upload it again next time &mdash; on this device or a different one &mdash; to pick up where you left off.</p>
         <div class="mypin-data-actions">
           <button type="button" id="mypins-export-data-btn" class="mobile-btn">Export My Data</button>
           <button type="button" id="mypins-upload-data-btn" class="mobile-btn">Upload My Data</button>
@@ -1361,6 +1356,26 @@
         <p class="mypin-upload-status" id="mypins-upload-status"></p>
       </div>
     </details>
+
+    <hr class="divider">
+
+    <div class="category-block" id="sightings-block">
+      <label class="category-head">
+        <input type="checkbox" id="sightings-master-toggle" autocomplete="off">
+        <span class="dot" style="background:#3d6b8a"></span>
+        <span class="label">Community Sightings</span>
+      </label>
+      <div class="sightings-sub-filters" id="sightings-sub-filters">
+        <label class="filter-check"><input type="checkbox" checked autocomplete="off" data-bucket="plants"> Plants</label>
+        <label class="filter-check"><input type="checkbox" checked autocomplete="off" data-bucket="fungi"> Fungi &amp; Lichens</label>
+        <label class="filter-check"><input type="checkbox" checked autocomplete="off" data-bucket="birds"> Birds</label>
+        <label class="filter-check"><input type="checkbox" checked autocomplete="off" data-bucket="mammals"> Mammals</label>
+        <label class="filter-check"><input type="checkbox" checked autocomplete="off" data-bucket="herps"> Reptiles &amp; Amphibians</label>
+        <label class="filter-check"><input type="checkbox" checked autocomplete="off" data-bucket="insects"> Insects &amp; Spiders</label>
+        <label class="filter-check"><input type="checkbox" checked autocomplete="off" data-bucket="other"> Other Wildlife</label>
+      </div>
+      <p class="sightings-note" id="sightings-note">Real sightings logged by naturalists near the park, via iNaturalist.</p>
+    </div>
 
     <hr class="divider">
 
@@ -1385,8 +1400,8 @@
     <details class="about-details">
       <summary>Native vs. Invasive at This Park</summary>
       <div class="about-content">
-        <p>Like much of the Southeast, North Hall Park's woods carry the fingerprints of centuries of human movement. Species introduced from Asia and Europe \u2014 often planted intentionally for ornamental beauty or erosion control \u2014 found conditions here that let them spread far beyond where they were planted. Two of the most common trailside plants on this map, Mimosa and Autumn Olive, are both examples: attractive and resilient, but now classified as invasive in Georgia because they outcompete the native plants local wildlife evolved alongside.</p>
-        <p>That doesn't mean these species are without any value \u2014 Mimosa's flowers feed pollinators, and Autumn Olive's berries feed birds \u2014 but a landscape dominated by a few aggressive newcomers supports less overall biodiversity than one built on a full community of native species.</p>
+        <p>Like much of the Southeast, North Hall Park's woods carry the fingerprints of centuries of human movement. Species introduced from Asia and Europe &mdash; often planted intentionally for ornamental beauty or erosion control &mdash; found conditions here that let them spread far beyond where they were planted. Two of the most common trailside plants on this map, Mimosa and Autumn Olive, are both examples: attractive and resilient, but now classified as invasive in Georgia because they outcompete the native plants local wildlife evolved alongside.</p>
+        <p>That doesn't mean these species are without any value &mdash; Mimosa's flowers feed pollinators, and Autumn Olive's berries feed birds &mdash; but a landscape dominated by a few aggressive newcomers supports less overall biodiversity than one built on a full community of native species.</p>
         <div class="status-legend">
           <span class="legend-chip" style="background:#3f7d4f22; color:#3f7d4f;">Native</span>
           <span class="legend-chip" style="background:#5a6b7a22; color:#5a6b7a;">Introduced</span>
@@ -1395,26 +1410,6 @@
         <p>Look for this status badge on each species card, and a small warning dot on invasive species' map pins. Where relevant, we've noted a native alternative that fills a similar role. You can help track the spread of invasive species through Georgia's <a href="https://www.eddmaps.org/" target="_blank" rel="noopener">Early Detection &amp; Distribution Mapping System (EDDMapS)</a>.</p>
       </div>
     </details>
-
-    <hr class="divider">
-
-    <div class="category-block" id="sightings-block">
-      <label class="category-head">
-        <input type="checkbox" id="sightings-master-toggle" autocomplete="off">
-        <span class="dot" style="background:#3d6b8a"></span>
-        <span class="label">Community Sightings</span>
-      </label>
-      <div class="sightings-sub-filters" id="sightings-sub-filters">
-        <label class="filter-check"><input type="checkbox" checked autocomplete="off" data-bucket="plants"> Plants</label>
-        <label class="filter-check"><input type="checkbox" checked autocomplete="off" data-bucket="fungi"> Fungi &amp; Lichens</label>
-        <label class="filter-check"><input type="checkbox" checked autocomplete="off" data-bucket="birds"> Birds</label>
-        <label class="filter-check"><input type="checkbox" checked autocomplete="off" data-bucket="mammals"> Mammals</label>
-        <label class="filter-check"><input type="checkbox" checked autocomplete="off" data-bucket="herps"> Reptiles &amp; Amphibians</label>
-        <label class="filter-check"><input type="checkbox" checked autocomplete="off" data-bucket="insects"> Insects &amp; Spiders</label>
-        <label class="filter-check"><input type="checkbox" checked autocomplete="off" data-bucket="other"> Other Wildlife</label>
-      </div>
-      <p class="sightings-note" id="sightings-note">Real sightings logged by naturalists near the park, via iNaturalist.</p>
-    </div>
 
     <hr class="divider">
 
@@ -1611,10 +1606,10 @@
   ];
 
   const categoryMeta = {
-    tree:   { label: "Trees",               color: "#4f7a4a", icon: '<svg width="14" height="14" viewBox="0 0 16 16" aria-hidden="true"><circle cx="8" cy="6" r="5" fill="#b7c4ae"/><rect x="7" y="10" width="2" height="5" fill="#b7c4ae"/></svg>' },
-    plant:  { label: "Plants & Wildflowers", color: "#b8862b", icon: '<svg width="14" height="14" viewBox="0 0 16 16" aria-hidden="true"><circle cx="8" cy="4" r="2" fill="#b7c4ae"/><circle cx="4.5" cy="7" r="2" fill="#b7c4ae"/><circle cx="11.5" cy="7" r="2" fill="#b7c4ae"/><circle cx="8" cy="8.5" r="2" fill="#b7c4ae"/><rect x="7.3" y="9" width="1.4" height="6" fill="#b7c4ae"/></svg>' },
-    animal: { label: "Animals",             color: "#a0522d", icon: '<svg width="14" height="14" viewBox="0 0 16 16" aria-hidden="true"><ellipse cx="8" cy="11" rx="4" ry="3.2" fill="#b7c4ae"/><ellipse cx="4" cy="6" rx="1.6" ry="2" fill="#b7c4ae"/><ellipse cx="8" cy="4.5" rx="1.6" ry="2" fill="#b7c4ae"/><ellipse cx="12" cy="6" rx="1.6" ry="2" fill="#b7c4ae"/></svg>' },
-    landmark: { label: "Landmarks",          color: "#8b6f9e", icon: '<svg width="14" height="14" viewBox="0 0 16 16" aria-hidden="true"><rect x="3" y="2" width="1.5" height="12" fill="#b7c4ae"/><path d="M4.5 2.5 L13 4.5 L4.5 7 Z" fill="#b7c4ae"/></svg>' }
+    tree:   { label: "Trees",               color: "#4f7a4a" },
+    plant:  { label: "Plants & Wildflowers", color: "#b8862b" },
+    animal: { label: "Animals",             color: "#a0522d" },
+    landmark: { label: "Landmarks",          color: "#8b6f9e" }
   };
 
   const habitatMeta = {
@@ -1777,7 +1772,6 @@
       });
     }
   });
-  sightingsLayer.addTo(map);
 
   let sightingsLoaded = false;
   let sightingsEnabled = false;
@@ -1921,14 +1915,15 @@
     sightingBucketState[cb.dataset.bucket] = true;
   });
 
+  // The sidebar checkbox just changes actual layer presence on the map --
+  // all the real logic (fetching, sub-filter visibility, syncing the layer
+  // control's own checkbox) happens in the overlayadd/overlayremove
+  // handlers below, so both entry points stay in sync automatically.
   sightingsMasterToggle.addEventListener('change', (e) => {
-    sightingsEnabled = e.target.checked;
-    sightingsSubFilters.classList.toggle('visible', sightingsEnabled);
-    if (sightingsEnabled && !sightingsLoaded) {
-      fetchCommunitySightings();
+    if (e.target.checked) {
+      map.addLayer(sightingsLayer);
     } else {
-      applySightingFilters();
-      if (!sightingsEnabled) hideStatus();
+      map.removeLayer(sightingsLayer);
     }
   });
 
@@ -1945,6 +1940,32 @@
     "USGS Topo": usgsTopoLayer,
     "Street map": streetLayer
   }, null, { position: 'topright', collapsed: window.matchMedia('(max-width: 760px)').matches }).addTo(map);
+
+  // Registered here, before the Trails/Areas overlays are added further
+  // down, so it appears between the base layers and those in the control.
+  layerControl.addOverlay(sightingsLayer, "Community Sightings (iNaturalist)");
+
+  map.on('overlayadd', (e) => {
+    if (e.layer !== sightingsLayer) return;
+    sightingsEnabled = true;
+    sightingsMasterToggle.checked = true;
+    sightingsSubFilters.classList.add('visible');
+    if (!sightingsLoaded) {
+      fetchCommunitySightings();
+    } else {
+      applySightingFilters();
+    }
+  });
+
+  map.on('overlayremove', (e) => {
+    if (e.layer !== sightingsLayer) return;
+    sightingsEnabled = false;
+    sightingsMasterToggle.checked = false;
+    sightingsSubFilters.classList.remove('visible');
+    hideStatus();
+    applySightingFilters();
+  });
+
 
   // ---- MOBILE DRAWER / BOTTOM SHEET ----
   const sidebarEl = document.querySelector('.sidebar');
@@ -1968,13 +1989,13 @@
 
   function makeIcon(category, active, status) {
     const color = categoryMeta[category].color;
-    const size = active ? 28 : 22;
+    const size = active ? 22 : 16;
     const invasiveDot = status === 'invasive'
       ? `<div style="
           position: absolute; top: -2px; right: -2px;
-          width: 11px; height: 11px;
+          width: 9px; height: 9px;
           background: ${statusMeta.invasive.color};
-          border: 2px solid #faf7ef;
+          border: 1.5px solid #faf7ef;
           border-radius: 50%;
           box-shadow: 0 0 0 1px rgba(0,0,0,0.3);
         "></div>`
@@ -1985,7 +2006,7 @@
         <div style="
           width: 100%; height: 100%;
           background: ${color};
-          border: 2.5px solid #faf7ef;
+          border: 2px solid #faf7ef;
           border-radius: 50% 50% 50% 0;
           transform: rotate(-45deg);
           box-shadow: 0 0 0 1.5px rgba(0,0,0,0.3), 0 3px 8px rgba(0,0,0,0.5);
@@ -2002,10 +2023,37 @@
   const rowById = {};
   let activeId = null;
 
+  // Curated species pins cluster together at low zoom, same behavior as the
+  // Community Sightings layer, so the map isn't overwhelmed with icons when
+  // zoomed out. Uses the site's forest green so these clusters read as
+  // "official guide" content, distinct from the blue Community Sightings
+  // clusters.
+  const speciesClusterGroup = L.markerClusterGroup({
+    maxClusterRadius: 45,
+    iconCreateFunction: function (cluster) {
+      const count = cluster.getChildCount();
+      return L.divIcon({
+        className: '',
+        html: `<div style="
+          width: 30px; height: 30px;
+          background: var(--forest);
+          color: #faf7ef;
+          border-radius: 50%;
+          border: 2px solid #faf7ef;
+          display: flex; align-items: center; justify-content: center;
+          font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; font-weight: 600; font-size: 0.8rem;
+          box-shadow: 0 0 0 2px rgba(255,255,255,0.9), 0 0 0 3.5px rgba(0,0,0,0.25), 0 3px 8px rgba(0,0,0,0.5);
+        ">${count}</div>`,
+        iconSize: [30, 30]
+      });
+    }
+  });
+  speciesClusterGroup.addTo(map);
+
   species.forEach(s => {
     const marker = L.marker([s.lat, s.lng], { icon: makeIcon(s.category, false, s.status) });
     marker.on('click', () => selectSpecies(s.id));
-    marker.addTo(map);
+    speciesClusterGroup.addLayer(marker);
     markerById[s.id] = marker;
   });
 
@@ -2111,10 +2159,10 @@
       const statusOk = !s.status || statusState[s.status];
       const visible = categoryOk && habitatOk && statusOk;
       if (visible) {
-        markerById[s.id].addTo(map);
+        speciesClusterGroup.addLayer(markerById[s.id]);
         rowById[s.id].style.display = '';
       } else {
-        map.removeLayer(markerById[s.id]);
+        speciesClusterGroup.removeLayer(markerById[s.id]);
         rowById[s.id].style.display = 'none';
         if (activeId === s.id) clearSelection();
       }
@@ -2133,7 +2181,6 @@
     head.innerHTML = `
       <input type="checkbox" checked autocomplete="off" data-category="${cat}">
       <span class="dot" style="background:${meta.color}"></span>
-      <span class="category-icon">${meta.icon}</span>
       <span class="label">${meta.label}</span>
       <span class="count">${items.length}</span>
     `;
