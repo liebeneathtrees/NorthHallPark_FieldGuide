@@ -573,6 +573,32 @@
     margin-bottom: 14px;
   }
 
+  .learn-more-row {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 10px;
+    margin-top: 16px;
+    padding-top: 14px;
+    border-top: 1px solid var(--line);
+    font-size: 0.85rem;
+  }
+
+  .learn-more-label {
+    font-weight: 600;
+    color: #6b6355;
+  }
+
+  .learn-more-row a {
+    color: #3d6b8a;
+    text-decoration: none;
+    font-weight: 500;
+  }
+
+  .learn-more-row a:hover {
+    text-decoration: underline;
+  }
+
   .habitat-badge {
     display: inline-block;
     font-size: 0.74rem;
@@ -871,6 +897,13 @@
     font-family: 'Fraunces', Georgia, 'Times New Roman', serif;
     font-size: 1.4rem;
     color: var(--forest-deep);
+    margin: 0 0 2px 0;
+  }
+
+  .help-updated {
+    font-size: 0.78rem;
+    color: #8a8272;
+    font-style: italic;
     margin: 0 0 16px 0;
   }
 
@@ -1226,7 +1259,7 @@
 
 <div class="mypin-backdrop" id="mypin-backdrop"></div>
 <div class="mypin-modal" id="mypin-modal">
-  <h3>Save a Personal Pin</h3>
+  <h3 id="mypin-modal-title">Save a Personal Pin</h3>
 
   <label class="mypin-label">Location</label>
   <div class="mypin-category-choices" id="mypin-location-choices">
@@ -1258,28 +1291,29 @@
 <div class="help-modal" id="help-modal">
   <button type="button" class="help-close-btn" id="help-close-btn">Close &#10005;</button>
   <h2 class="help-title">Help &amp; Instructions</h2>
+  <p class="help-updated">Last updated: September 6, 2026</p>
 
   <h4>Getting around the map</h4>
-  <p>Pan by dragging and zoom with the +/&minus; buttons or a pinch gesture. The layer switcher in the top-right corner of the map lets you change the base map between Satellite, OpenTopoMap, USGS Topo, and Street map: the same panel also has checkboxes for Trails, Areas, and Community Sightings.</p>
+  <p>Pan by dragging and zoom with the +/&minus; buttons or a pinch gesture. The layer switcher in the top-right corner of the map lets you change the base map between Satellite, OpenTopoMap, USGS Topo, and Street map: the same panel also has checkboxes for Community Sightings, Trails, and Areas. When you're zoomed out, nearby pins group into a numbered circle so the map doesn't get cluttered: zoom in, or tap the circle, to spread them back apart.</p>
 
   <h4>Exploring species</h4>
   <p>Pins are grouped into Trees, Plants &amp; Wildflowers, Animals, and Landmarks in the menu. Tap a pin on the map or a name in the list to open its field notes, organized into tabs: Overview, Ecology, Uses (edible/medicinal, where relevant), Caution (only shown when there's a genuine hazard), and Connections (links to ecologically related species you can tap through to). Each card also shows a Habitat badge and a Native/Introduced/Invasive status badge.</p>
   <p>The Habitat and Native Status filters in the menu work alongside the Trees/Plants/Animals filters: a pin only shows when all of its relevant filters are checked.</p>
 
   <h4>Trails &amp; areas</h4>
-  <p>Recorded trails appear as green dashed lines with their distance and elevation gain listed under "Trails" in the menu. Shaded areas (like the Pollinator Garden) mark the boundary of a specific place rather than a walking path, listed under "Areas." Both can be toggled on or off from the map's layer switcher.</p>
+  <p>Recorded trails appear as green dashed lines with their distance and elevation gain listed under "Trails" in the menu. Shaded areas (like the Pollinator Garden or the Wetland) mark the boundary of a specific place rather than a walking path, listed under "Areas." Both can be toggled on or off from the map's layer switcher.</p>
 
   <h4>Community sightings</h4>
-  <p>This optional layer pulls in real, community-submitted observations from iNaturalist near the park - a separate thing from the curated species pins above, since these are individual sightings rather than field-guide writeups. Turn it on from the menu, then use the sub-filters to show just birds, plants, insects, and so on. Tap any dot to see the photo, date, and a link back to the original observation.</p>
+  <p>This optional layer pulls in real, community-submitted observations from iNaturalist near the park - a separate thing from the curated species pins above, since these are individual sightings rather than field-guide writeups. Turn it on from the menu (or the map's layer switcher), then use the sub-filters to show just birds, plants, insects, and so on. Tap any dot to see the photo, date, and a link back to the original observation.</p>
 
   <h4>Finding your location</h4>
-  <p>The crosshair button near the zoom controls shows your position on the map and follows you as you walk. This needs your permission the first time, only works on the live, secure website (not a locally saved file), and works best on a phone with GPS: accuracy will vary, especially under heavy tree cover.</p>
+  <p>The navigation arrow button near the zoom controls shows your position on the map and follows you as you walk. This needs your permission the first time, only works on the live, secure website (not a locally saved file), and works best on a phone with GPS: accuracy will vary, especially under heavy tree cover.</p>
 
   <h4>Saving your own pins</h4>
-  <p>Long-press anywhere on the map to drop a personal pin for something you've found: pick Plant, Animal, or Not Sure, add a name or guess and any notes. These show up as dashed circles, distinct from the official pins, and are saved privately on this device.</p>
+  <p>Long-press anywhere on the map to drop a personal pin for something you've found. First, choose whether the pin should sit exactly where you pressed, or at your live GPS location instead (useful if your press was a rough guess but your actual position is more precise). Then pick Plant, Animal, or Not Sure, and add a name or guess and any notes. These show up as solid red circles, the same size as Community Sightings dots but a different color, and are saved privately on this device.</p>
   <p>From the "My Pins" section of the menu, you can:</p>
   <p><strong>Download for email</strong>: exports one pin (or all of them) as a text file to send to the park guide's maintainer for consideration, along with your own photo attached separately.</p>
-  <p><strong>Export/Upload My Data</strong>: a different pair of buttons for your own continuity: Export saves everything to a file you keep, and Upload reads that file back in later, on this device or another one, adding anything new without creating duplicates.</p>
+  <p><strong>Export/Upload My Data</strong>: a different pair of buttons for your own continuity. Export saves everything to a file you keep, and Upload reads that file back in later, on this device or another one, adding anything new without creating duplicates.</p>
 
   <h4>This month at the park</h4>
   <p>The highlighted box near the top of the menu shows whatever's currently flowering, fruiting, or otherwise in season, based on your device's own clock: tap an entry to jump straight to that species.</p>
@@ -1470,6 +1504,11 @@
   //                 (flowering, fruiting, migration, etc.) used to power the "This Month"
   //                 widget and in-season badge. Omit entirely for species without a
   //                 meaningful seasonal spike (e.g. a bird present and active year-round).
+  //   learnMoreLinks -- optional array of { label, url }. Shown as a small link row below
+  //                 the tabs, always visible regardless of which tab is open. Only link to
+  //                 real, verified pages -- iNaturalist's taxon search is a safe general
+  //                 option since it needs no species-specific ID: 
+  //                 https://www.inaturalist.org/taxa/search?q=<scientific+name>
   const species = [
     {
       id: "s1",
@@ -1493,6 +1532,9 @@
       season: "Blooms mid-summer (June\u2013August); seed pods persist on the tree into winter.",
       phenology: [
         { months: [6, 7, 8], label: "Flowering" }
+      ],
+      learnMoreLinks: [
+        { label: "iNaturalist", url: "https://www.inaturalist.org/taxa/search?q=Albizia+julibrissin" }
       ]
     },
     {
@@ -1518,6 +1560,9 @@
       phenology: [
         { months: [4, 5], label: "Flowering" },
         { months: [9, 10], label: "Berries ripening" }
+      ],
+      learnMoreLinks: [
+        { label: "iNaturalist", url: "https://www.inaturalist.org/taxa/search?q=Elaeagnus+umbellata" }
       ]
     },
     {
@@ -1541,6 +1586,9 @@
       season: "Fruit ripens late spring into early summer (May\u2013June).",
       phenology: [
         { months: [5, 6], label: "Fruit ripening" }
+      ],
+      learnMoreLinks: [
+        { label: "iNaturalist", url: "https://www.inaturalist.org/taxa/search?q=Morus+rubra" }
       ]
     },
     {
@@ -1558,7 +1606,11 @@
         { id: "s6", relationship: "The still, shallow pond behind this dam is exactly the kind of hunting ground egrets rely on for fish and frogs." }
       ],
       funFact: "The Great Egret's comeback from near-extinction is considered one of the earliest major success stories of the American conservation movement: it's the symbol still used in the National Audubon Society's logo.",
-      season: "Present year-round in Georgia; most active hunting at dawn and dusk."
+      season: "Present year-round in Georgia; most active hunting at dawn and dusk.",
+      learnMoreLinks: [
+        { label: "All About Birds", url: "https://www.allaboutbirds.org/guide/Great_Egret/overview" },
+        { label: "iNaturalist", url: "https://www.inaturalist.org/taxa/search?q=Ardea+alba" }
+      ]
     },
     {
       id: "s5",
@@ -1575,7 +1627,10 @@
         { id: "s1", relationship: "Mimosa's summer flowers are a major nectar source for the honeybees kept in the hives here." }
       ],
       funFact: "A single hive can hold 20,000\u201360,000 bees. A healthy colony produces far more honey than it needs to survive winter: which is what allows beekeepers to harvest the surplus without harming the hive.",
-      season: "Most active spring through fall, especially during Mimosa's summer bloom; colonies cluster together inside the hive through winter rather than hibernating."
+      season: "Most active spring through fall, especially during Mimosa's summer bloom; colonies cluster together inside the hive through winter rather than hibernating.",
+      learnMoreLinks: [
+        { label: "iNaturalist", url: "https://www.inaturalist.org/taxa/search?q=Apis+mellifera" }
+      ]
     },
     {
       id: "s6",
@@ -1592,7 +1647,10 @@
         { id: "s4", relationship: "The pond this dam creates provides the still, shallow water egrets need for hunting fish and frogs." }
       ],
       funFact: "A single beaver family can fell hundreds of trees in a year, and some dams are maintained and expanded by successive generations of beavers for decades.",
-      season: "Most active dawn, dusk, and overnight, year-round; dam maintenance is nearly constant."
+      season: "Most active dawn, dusk, and overnight, year-round; dam maintenance is nearly constant.",
+      learnMoreLinks: [
+        { label: "iNaturalist", url: "https://www.inaturalist.org/taxa/search?q=Castor+canadensis" }
+      ]
     },
     {
       id: "s7",
@@ -1620,6 +1678,63 @@
       season: "Blooms mid-to-late summer (roughly July\u2013September); dies back to the ground in winter and re-emerges from the roots each spring.",
       phenology: [
         { months: [7, 8, 9], label: "Flowering" }
+      ],
+      connections: [
+        { id: "s9", relationship: "Grows in the same kudzu-overtaken ground; a visible sign of native plant life persisting despite the invasive vine crowding in around it." }
+      ],
+      learnMoreLinks: [
+        { label: "iNaturalist", url: "https://www.inaturalist.org/taxa/search?q=Hibiscus+coccineus" }
+      ]
+    },
+    {
+      id: "s9",
+      category: "plant",
+      name: "Kudzu",
+      sciName: "Pueraria montana var. lobata",
+      lat: 34.408153,
+      lng: -83.798757,
+      habitat: "wetland",
+      status: "invasive",
+      overview: "A fast-growing, climbing and trailing vine with large, three-part compound leaves (each leaflet 4\u20138 inches, sometimes lobed) and hairy stems. In late summer it produces fragrant, grape-scented purple flower clusters, though these are often hidden beneath the vine's own dense leaf cover. At this spot, kudzu blankets the ground and climbs over shrubs and trees, smothering nearly everything beneath it.",
+      ecology: "Kudzu is native to East Asia (China, Japan, and Korea) and is now one of the most infamous invasive plants in the United States, sometimes called \"the vine that ate the South.\" It spreads both by seed and by rooting wherever its trailing stems touch the ground, and under good summer conditions can grow up to a foot in a single day. Dense kudzu cover blocks sunlight to everything underneath, eventually killing shrubs and even mature trees. Its extensive root system also makes it very difficult to eradicate: cutting the vines back isn't enough, since the roots resprout unless removed or repeatedly exhausted over several growing seasons.",
+      nativeAlternative: "Native vines that fill a similar climbing role without the ecological damage include Trumpet Creeper (Campsis radicans), Virginia Creeper (Parthenocissus quinquefolia), Crossvine (Bignonia capreolata), and Coral Honeysuckle (Lonicera sempervirens).",
+      edible: "Kudzu is genuinely edible, and has been used in East Asian cooking for centuries: young leaves can be cooked like spinach, the flowers can be made into jelly or syrup, and the starchy root can be processed into a flour (kudzu starch, sold in some Asian grocery and health food stores) used to thicken sauces and desserts.",
+      medicinal: "Kudzu root has a long history of use in Traditional Chinese Medicine, where it's known as ge gen, traditionally used for fever and other ailments. Modern research has also studied kudzu root extract for reducing alcohol cravings, though this remains an area of ongoing study rather than settled medical fact: treat it as traditional use, not a medical claim.",
+      caution: "Because kudzu is a widespread target of invasive species control efforts, patches are sometimes deliberately sprayed with herbicide. Never eat kudzu from a patch whose treatment history you don't know: stick to areas you're confident haven't been chemically treated, or ask local land managers first.",
+      connections: [
+        { id: "s8", relationship: "This vine has overtaken much of the surrounding ground, though Scarlet Rosemallow still manages to bloom nearby." }
+      ],
+      funFact: "Kudzu arrived in the U.S. in 1876 as an ornamental display at the Philadelphia Centennial Exposition. Decades later, during the Dust Bowl era, the federal government did an about-face and actively promoted planting it for erosion control: paying farmers to plant it and having the Civilian Conservation Corps put in millions of seedlings, before its unstoppable spread became clear and it was reclassified as a noxious weed.",
+      season: "Grows most rapidly June through September; purple flowers appear in late summer (August\u2013September); dies back to the root with the first hard frost, then resprouts vigorously the following year.",
+      phenology: [
+        { months: [8, 9], label: "Flowering" }
+      ],
+      learnMoreLinks: [
+        { label: "EDDMapS", url: "https://www.eddmaps.org/distribution/uscounty.cfm?sub=2425" },
+        { label: "iNaturalist", url: "https://www.inaturalist.org/taxa/search?q=Pueraria+montana" }
+      ]
+    },
+    {
+      id: "s10",
+      category: "plant",
+      name: "Kudzu",
+      sciName: "Pueraria montana var. lobata",
+      lat: 34.407168,
+      lng: -83.798192,
+      habitat: "wetland",
+      status: "invasive",
+      overview: "Another patch of the same fast-spreading vine documented nearby: see the other Kudzu pin at this park for full identification notes, history, and uses. Kudzu's ability to root wherever its trailing stems touch the ground means a single infestation often shows up as multiple separate-looking patches that are, underground, part of the same spreading colony.",
+      ecology: "Native to East Asia and now widespread across the southeastern U.S., kudzu smothers native vegetation by blocking sunlight and outcompeting nearly everything it grows over. Its presence at more than one spot in this area is a good illustration of just how far a single planting can spread over time.",
+      connections: [
+        { id: "s8", relationship: "This vine has overtaken much of the surrounding ground, though Scarlet Rosemallow still manages to bloom nearby." }
+      ],
+      season: "Grows most rapidly June through September; dies back to the root with the first hard frost.",
+      phenology: [
+        { months: [8, 9], label: "Flowering" }
+      ],
+      learnMoreLinks: [
+        { label: "EDDMapS", url: "https://www.eddmaps.org/distribution/uscounty.cfm?sub=2425" },
+        { label: "iNaturalist", url: "https://www.inaturalist.org/taxa/search?q=Pueraria+montana" }
       ]
     }
   ];
@@ -2416,6 +2531,12 @@
           <div class="habitat-badge" style="background:${statusMeta[s.status].color}22; color:${statusMeta[s.status].color};">${statusMeta[s.status].label}</div>
         </div>` : '';
 
+    const learnMoreHtml = (s.learnMoreLinks && s.learnMoreLinks.length) ? `
+        <div class="learn-more-row">
+          <span class="learn-more-label">Learn more:</span>
+          ${s.learnMoreLinks.map(l => `<a href="${l.url}" target="_blank" rel="noopener">${l.label} \u2197</a>`).join('')}
+        </div>` : '';
+
     infoPanel.innerHTML = `
       <div class="info-content">
         <button type="button" class="info-close-btn" id="info-close-btn">Close &#10005;</button>
@@ -2425,6 +2546,7 @@
         ${badgeRowHtml}
         <div class="info-tabs">${tabButtons}</div>
         <div class="info-tab-body">${tabPanels}</div>
+        ${learnMoreHtml}
       </div>
     `;
 
@@ -2446,10 +2568,9 @@
   }
 
   // ---- MY PINS (visitor-saved, local to this device) ----
-  // NOTE TO SITE OWNER: replace this with your real email address before
-  // publishing -- it's shown in the exported text file so visitors know
-  // where to send a submission.
-  const SUBMISSION_EMAIL = "your-email@example.com";
+  // Shown in the exported text file so visitors know where to send a
+  // submission for consideration.
+  const SUBMISSION_EMAIL = "overalls2@protonmail.com";
 
   const MY_PINS_KEY = 'nhp_my_pins';
 
@@ -2569,6 +2690,8 @@
         <p class="sci-name">${meta.label}</p>
         ${p.notes ? `<p>${p.notes}</p>` : ''}
         <div class="season">
+          <a href="#" class="mypin-popup-edit" data-id="${p.id}">Edit</a>
+          &nbsp;&middot;&nbsp;
           <a href="#" class="mypin-popup-export" data-id="${p.id}">Download for email</a>
           &nbsp;&middot;&nbsp;
           <a href="#" class="mypin-popup-delete" data-id="${p.id}">Delete</a>
@@ -2583,6 +2706,9 @@
       const marker = L.marker([p.lat, p.lng], { icon: makeMyPinIcon(p.category) });
       marker.bindPopup(myPinPopupHTML(p));
       marker.on('popupopen', () => {
+        document.querySelectorAll('.mypin-popup-edit').forEach(el => {
+          el.addEventListener('click', (e) => { e.preventDefault(); map.closePopup(); openEditPinModal(el.dataset.id); });
+        });
         document.querySelectorAll('.mypin-popup-export').forEach(el => {
           el.addEventListener('click', (e) => { e.preventDefault(); exportSinglePin(el.dataset.id); });
         });
@@ -2610,6 +2736,7 @@
         <div class="trail-item" style="border-left-color:${meta.color}">
           <div class="trail-name">${p.name || 'Unnamed'} <span style="font-weight:400; font-style:italic; color:#a9baa1;">(${meta.label})</span></div>
           <div class="trail-stats" style="display:flex; gap:12px; margin-top:5px;">
+            <button type="button" class="mypin-list-edit" data-id="${p.id}" style="background:none; border:none; color:#b7c4ae; cursor:pointer; padding:0; font-size:0.78rem; text-decoration:underline;">Edit</button>
             <button type="button" class="mypin-list-export" data-id="${p.id}" style="background:none; border:none; color:#e0ac4f; cursor:pointer; padding:0; font-size:0.78rem; text-decoration:underline;">Download</button>
             <button type="button" class="mypin-list-delete" data-id="${p.id}" style="background:none; border:none; color:#e0a58f; cursor:pointer; padding:0; font-size:0.78rem; text-decoration:underline;">Delete</button>
           </div>
@@ -2617,6 +2744,9 @@
       `;
     }).join('');
 
+    el.querySelectorAll('.mypin-list-edit').forEach(btn => {
+      btn.addEventListener('click', () => openEditPinModal(btn.dataset.id));
+    });
     el.querySelectorAll('.mypin-list-export').forEach(btn => {
       btn.addEventListener('click', () => exportSinglePin(btn.dataset.id));
     });
@@ -2788,7 +2918,12 @@
     });
   });
 
+  let editingPinId = null;
+  const mypinModalTitle = document.getElementById('mypin-modal-title');
+
   function openMyPinModal(latlng) {
+    editingPinId = null;
+    mypinModalTitle.textContent = 'Save a Personal Pin';
     pendingPinLatLng = latlng;
     pendingPinGpsLatLng = null;
     pinLocationMode = 'longpress';
@@ -2802,11 +2937,30 @@
     mypinBackdrop.classList.add('visible');
   }
 
+  function openEditPinModal(id) {
+    const pin = myPins.find(p => p.id === id);
+    if (!pin) return;
+    editingPinId = id;
+    mypinModalTitle.textContent = 'Edit Personal Pin';
+    pendingPinLatLng = { lat: pin.lat, lng: pin.lng };
+    pendingPinGpsLatLng = null;
+    pinLocationMode = 'longpress';
+    updateMyPinLocationButtons();
+    selectedMyPinCategory = pin.category;
+    updateMyPinCategoryButtons();
+    refreshMyPinCoordsDisplay();
+    mypinNameInput.value = pin.name || '';
+    mypinNotesInput.value = pin.notes || '';
+    mypinModal.classList.add('open');
+    mypinBackdrop.classList.add('visible');
+  }
+
   function closeMyPinModal() {
     mypinModal.classList.remove('open');
     mypinBackdrop.classList.remove('visible');
     pendingPinLatLng = null;
     pendingPinGpsLatLng = null;
+    editingPinId = null;
   }
 
   document.getElementById('mypin-cancel-btn').addEventListener('click', closeMyPinModal);
@@ -2816,16 +2970,27 @@
     const useGps = pinLocationMode === 'gps' && pendingPinGpsLatLng;
     const finalLatLng = useGps ? pendingPinGpsLatLng : pendingPinLatLng;
     if (!finalLatLng) return;
-    const pin = {
-      id: `mypin_${Date.now()}`,
-      category: selectedMyPinCategory,
-      name: mypinNameInput.value.trim(),
-      notes: mypinNotesInput.value.trim(),
-      lat: finalLatLng.lat,
-      lng: finalLatLng.lng,
-      createdAt: new Date().toISOString()
-    };
-    myPins.push(pin);
+
+    if (editingPinId) {
+      const pin = myPins.find(p => p.id === editingPinId);
+      if (pin) {
+        pin.category = selectedMyPinCategory;
+        pin.name = mypinNameInput.value.trim();
+        pin.notes = mypinNotesInput.value.trim();
+        pin.lat = finalLatLng.lat;
+        pin.lng = finalLatLng.lng;
+      }
+    } else {
+      myPins.push({
+        id: `mypin_${Date.now()}`,
+        category: selectedMyPinCategory,
+        name: mypinNameInput.value.trim(),
+        notes: mypinNotesInput.value.trim(),
+        lat: finalLatLng.lat,
+        lng: finalLatLng.lng,
+        createdAt: new Date().toISOString()
+      });
+    }
     saveMyPinsToStorage();
     renderMyPins();
     closeMyPinModal();
