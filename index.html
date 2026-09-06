@@ -1778,9 +1778,15 @@
     const widget = document.getElementById('seasonal-widget');
 
     const matches = [];
+    const seenNames = new Set();
     species.forEach(s => {
       const label = getCurrentPhenologyLabel(s);
-      if (label) matches.push({ id: s.id, name: s.name, label });
+      // Skip if we've already listed this species from a different pin --
+      // e.g. two Kudzu pins shouldn't produce two identical entries here.
+      if (label && !seenNames.has(s.name)) {
+        matches.push({ id: s.id, name: s.name, label });
+        seenNames.add(s.name);
+      }
     });
 
     if (matches.length === 0) {
