@@ -2147,7 +2147,7 @@
   // simple 4-corner boundary or a fully-traced 37-point walked perimeter.
   // Each pass replaces every corner with two points pulled slightly toward
   // its neighbors; more passes = rounder, but also slightly smaller.
-  function smoothClosedShape(points, iterations = 2, ratio = 0.2) {
+  function smoothClosedShape(points, iterations = 2, ratio = 0.1) {
     let pts = points;
     for (let iter = 0; iter < iterations; iter++) {
       const next = [];
