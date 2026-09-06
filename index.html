@@ -63,6 +63,8 @@
 
   .logo-icon { flex-shrink: 0; }
 
+  .sidebar-mobile-header .site-logo { margin: 0; }
+
   .logo-eyebrow {
     display: block;
     font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
@@ -1286,7 +1288,18 @@
 <div class="layout">
   <aside class="sidebar">
     <div class="sidebar-mobile-header">
-      <span>Field Guide</span>
+      <div class="site-logo">
+        <svg class="logo-icon" width="26" height="30" viewBox="0 0 38 42" aria-hidden="true">
+          <rect x="16" y="34" width="6" height="7" fill="#e0ac4f"/>
+          <polygon points="19,2 30,20 8,20" fill="#e0ac4f"/>
+          <polygon points="19,11 32,27 6,27" fill="#e0ac4f"/>
+          <polygon points="19,19 34,36 4,36" fill="#e0ac4f"/>
+        </svg>
+        <span>
+          <span class="logo-eyebrow">North Hall Park</span>
+          <span class="logo-title-sm">Field Guide</span>
+        </span>
+      </div>
       <button type="button" id="close-list-btn" class="mobile-btn">Close &#10005;</button>
     </div>
 
@@ -2113,12 +2126,19 @@
   // ---- ZONES ----
   // Shaded, labeled areas -- for boundaries of a place (a garden, a habitat
   // zone, a field) rather than a walked path. Add new zones the same way:
-  // a name, a color, and a closed array of [lat, lng] boundary points.
+  // a name, a border color, an optional fillColor (defaults to the border
+  // color if omitted), and a closed array of [lat, lng] boundary points.
   const zones = [
     {
       name: "Pollinator Garden",
       color: "#ffd400",
       coords: [[34.407036,-83.798325],[34.407093,-83.79832],[34.40713,-83.79829],[34.407177,-83.79827],[34.407223,-83.79828],[34.40727,-83.79831],[34.407307,-83.798355],[34.40734,-83.7984],[34.407368,-83.79845],[34.4074,-83.7985],[34.407433,-83.79855],[34.407467,-83.79861],[34.40749,-83.79866],[34.40752,-83.79871],[34.40755,-83.79876],[34.407578,-83.798805],[34.407616,-83.79884],[34.407616,-83.79885],[34.40762,-83.79886],[34.407574,-83.7989],[34.407562,-83.798965],[34.40753,-83.79901],[34.40749,-83.79899],[34.40746,-83.798935],[34.40743,-83.79889],[34.407394,-83.79884],[34.407364,-83.7988],[34.407333,-83.798744],[34.40731,-83.7987],[34.40728,-83.79865],[34.407246,-83.79861],[34.40722,-83.79855],[34.40719,-83.79851],[34.407158,-83.79846],[34.407127,-83.798416],[34.407093,-83.79837],[34.40706,-83.798325]]
+    },
+    {
+      name: "Wetland",
+      color: "#1565c0",
+      fillColor: "#a3d0f5",
+      coords: [[34.408943,-83.796435],[34.408155,-83.795673],[34.406607,-83.796500],[34.407975,-83.798357]]
     }
   ];
 
@@ -2127,7 +2147,7 @@
       color: z.color,
       weight: 2.5,
       opacity: 0.95,
-      fillColor: z.color,
+      fillColor: z.fillColor || z.color,
       fillOpacity: 0.35
     });
     polygon.addTo(map);
