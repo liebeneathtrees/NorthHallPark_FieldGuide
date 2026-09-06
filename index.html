@@ -656,6 +656,138 @@
 
   .leaflet-div-icon { background: none; border: none; }
 
+  .mypin-backdrop {
+    position: fixed;
+    inset: 0;
+    background: rgba(20,38,29,0.55);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.22s cubic-bezier(0.16, 1, 0.3, 1);
+    z-index: 1200;
+  }
+
+  .mypin-backdrop.visible {
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  .mypin-modal {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(0.96);
+    width: 90%;
+    max-width: 360px;
+    max-height: 85vh;
+    overflow-y: auto;
+    background: var(--card);
+    border-radius: 12px;
+    padding: 22px 22px 18px 22px;
+    box-shadow: 0 12px 40px rgba(0,0,0,0.4);
+    z-index: 1300;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.2s ease, transform 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .mypin-modal.open {
+    opacity: 1;
+    pointer-events: auto;
+    transform: translate(-50%, -50%) scale(1);
+  }
+
+  .mypin-modal h3 {
+    font-family: 'Fraunces', Georgia, 'Times New Roman', serif;
+    font-size: 1.2rem;
+    color: var(--forest-deep);
+    margin: 0 0 4px 0;
+  }
+
+  .mypin-coords {
+    font-size: 0.78rem;
+    color: #8a8272;
+    margin: 0 0 16px 0;
+  }
+
+  .mypin-label {
+    display: block;
+    font-size: 0.78rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    font-weight: 600;
+    color: #6b6355;
+    margin: 14px 0 6px 0;
+  }
+
+  .mypin-category-choices {
+    display: flex;
+    gap: 8px;
+  }
+
+  .mypin-cat-btn {
+    flex: 1;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    font-size: 0.82rem;
+    font-weight: 500;
+    padding: 9px 6px;
+    border-radius: 6px;
+    border: 1.5px solid var(--line);
+    background: #f5f2e8;
+    color: var(--ink);
+    cursor: pointer;
+  }
+
+  .mypin-cat-btn.active {
+    background: var(--forest);
+    border-color: var(--forest);
+    color: var(--parchment);
+  }
+
+  .mypin-input {
+    width: 100%;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    font-size: 0.9rem;
+    padding: 9px 10px;
+    border-radius: 6px;
+    border: 1.5px solid var(--line);
+    background: #fff;
+    color: var(--ink);
+  }
+
+  .mypin-textarea {
+    min-height: 70px;
+    resize: vertical;
+    font-family: inherit;
+  }
+
+  .mypin-modal-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    margin-top: 20px;
+  }
+
+  .mypin-btn-secondary,
+  .mypin-btn-primary {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    font-size: 0.85rem;
+    font-weight: 500;
+    padding: 9px 16px;
+    border-radius: 6px;
+    cursor: pointer;
+    border: none;
+  }
+
+  .mypin-btn-secondary {
+    background: none;
+    color: #8a8272;
+  }
+
+  .mypin-btn-primary {
+    background: var(--forest);
+    color: var(--parchment);
+  }
+
   .leaflet-popup-content-wrapper {
     background: var(--card);
     border-radius: 6px;
@@ -954,6 +1086,30 @@
 
 <div class="drawer-backdrop" id="drawer-backdrop"></div>
 
+<div class="mypin-backdrop" id="mypin-backdrop"></div>
+<div class="mypin-modal" id="mypin-modal">
+  <h3>Save a Personal Pin</h3>
+  <p class="mypin-coords" id="mypin-coords"></p>
+
+  <label class="mypin-label">What is it?</label>
+  <div class="mypin-category-choices" id="mypin-category-choices">
+    <button type="button" class="mypin-cat-btn" data-cat="plant">Plant</button>
+    <button type="button" class="mypin-cat-btn" data-cat="animal">Animal</button>
+    <button type="button" class="mypin-cat-btn" data-cat="unsure">Not Sure</button>
+  </div>
+
+  <label class="mypin-label" for="mypin-name-input">Name or guess</label>
+  <input type="text" id="mypin-name-input" class="mypin-input" placeholder="e.g. Might be a type of fern">
+
+  <label class="mypin-label" for="mypin-notes-input">Notes</label>
+  <textarea id="mypin-notes-input" class="mypin-input mypin-textarea" placeholder="Anything else worth remembering..."></textarea>
+
+  <div class="mypin-modal-actions">
+    <button type="button" id="mypin-cancel-btn" class="mypin-btn-secondary">Cancel</button>
+    <button type="button" id="mypin-save-btn" class="mypin-btn-primary">Save Pin</button>
+  </div>
+</div>
+
 <div class="layout">
   <aside class="sidebar">
     <div class="sidebar-mobile-header">
@@ -1009,6 +1165,15 @@
       <div class="about-content">
         <div class="trails-list" id="areas-list"></div>
         <p style="margin-top: 12px;">Toggle any shaded area on or off from the map layers menu in the top-right corner of the map.</p>
+      </div>
+    </details>
+
+    <details class="about-details">
+      <summary>My Pins</summary>
+      <div class="about-content">
+        <p>Long-press anywhere on the map to drop a personal pin for something you've spotted. These are saved only on this device \u2014 to have one considered for the official guide, download it and email it to the park guide's maintainer along with a photo.</p>
+        <div class="trails-list" id="mypins-list" style="margin-top: 12px;"></div>
+        <button type="button" id="mypins-export-all-btn" class="mobile-btn" style="margin-top: 10px; display: none;">Download All for Email</button>
       </div>
     </details>
 
@@ -1998,6 +2163,254 @@
       });
     });
   }
+
+  // ---- MY PINS (visitor-saved, local to this device) ----
+  // NOTE TO SITE OWNER: replace this with your real email address before
+  // publishing -- it's shown in the exported text file so visitors know
+  // where to send a submission.
+  const SUBMISSION_EMAIL = "your-email@example.com";
+
+  const MY_PINS_KEY = 'nhp_my_pins';
+
+  function loadMyPins() {
+    try {
+      return JSON.parse(localStorage.getItem(MY_PINS_KEY)) || [];
+    } catch (e) {
+      return [];
+    }
+  }
+
+  function saveMyPinsToStorage() {
+    localStorage.setItem(MY_PINS_KEY, JSON.stringify(myPins));
+  }
+
+  let myPins = loadMyPins();
+  const myPinsLayer = L.layerGroup().addTo(map);
+
+  const myPinCategoryMeta = {
+    plant:  { label: "Plant",    color: categoryMeta.plant.color },
+    animal: { label: "Animal",   color: categoryMeta.animal.color },
+    unsure: { label: "Not Sure", color: "#8a8272" }
+  };
+
+  function makeMyPinIcon(category) {
+    const color = (myPinCategoryMeta[category] || myPinCategoryMeta.unsure).color;
+    return L.divIcon({
+      className: '',
+      html: `<div style="
+        width: 20px; height: 20px;
+        border-radius: 50%;
+        background: rgba(255,255,255,0.2);
+        border: 2.5px dashed ${color};
+        box-shadow: 0 2px 6px rgba(0,0,0,0.4);
+      "></div>`,
+      iconSize: [20, 20],
+      iconAnchor: [10, 10],
+      popupAnchor: [0, -10]
+    });
+  }
+
+  function pinToText(p) {
+    const meta = myPinCategoryMeta[p.category] || myPinCategoryMeta.unsure;
+    return [
+      "North Hall Park Field Guide -- Visitor Pin Submission",
+      "------------------------------------------------------",
+      `Name/Guess: ${p.name || '(not provided)'}`,
+      `Category: ${meta.label}`,
+      `Notes: ${p.notes || '(none)'}`,
+      `Coordinates: ${p.lat.toFixed(6)}, ${p.lng.toFixed(6)}`,
+      `Date saved: ${new Date(p.createdAt).toLocaleString()}`,
+      "",
+      "If you have a photo, please attach it to your email along with this file.",
+      `Send to: ${SUBMISSION_EMAIL}`
+    ].join('\n');
+  }
+
+  async function downloadTextFile(filename, text) {
+    // Chromium browsers (Chrome, Edge) support a real "choose where to save"
+    // dialog. Safari and Firefox don't implement this API at all, so we
+    // feature-detect and fall back to a normal download for everyone else.
+    if (window.showSaveFilePicker) {
+      try {
+        const handle = await window.showSaveFilePicker({
+          suggestedName: filename,
+          types: [{ description: 'Text file', accept: { 'text/plain': ['.txt'] } }]
+        });
+        const writable = await handle.createWritable();
+        await writable.write(text);
+        await writable.close();
+        return;
+      } catch (err) {
+        // AbortError means the person canceled the picker themselves --
+        // respect that and don't force a fallback download on top of it.
+        if (err.name === 'AbortError') return;
+        // Any other error (rare): fall through to the standard approach below.
+      }
+    }
+
+    const blob = new Blob([text], { type: 'text/plain' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = filename;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+  }
+
+  function exportSinglePin(id) {
+    const p = myPins.find(pin => pin.id === id);
+    if (!p) return;
+    downloadTextFile(`north-hall-park-pin-${id}.txt`, pinToText(p));
+  }
+
+  function exportAllPins() {
+    const text = myPins.map(pinToText).join('\n\n========================================\n\n');
+    downloadTextFile('north-hall-park-pins-all.txt', text);
+  }
+
+  function deleteMyPin(id) {
+    myPins = myPins.filter(p => p.id !== id);
+    saveMyPinsToStorage();
+    renderMyPins();
+  }
+
+  function myPinPopupHTML(p) {
+    const meta = myPinCategoryMeta[p.category] || myPinCategoryMeta.unsure;
+    return `
+      <div class="popup-card">
+        <div class="category" style="color:${meta.color}">Your Pin \u2014 Unverified</div>
+        <h3>${p.name || 'Unnamed'}</h3>
+        <p class="sci-name">${meta.label}</p>
+        ${p.notes ? `<p>${p.notes}</p>` : ''}
+        <div class="season">
+          <a href="#" class="mypin-popup-export" data-id="${p.id}">Download for email</a>
+          &nbsp;&middot;&nbsp;
+          <a href="#" class="mypin-popup-delete" data-id="${p.id}">Delete</a>
+        </div>
+      </div>
+    `;
+  }
+
+  function renderMyPins() {
+    myPinsLayer.clearLayers();
+    myPins.forEach(p => {
+      const marker = L.marker([p.lat, p.lng], { icon: makeMyPinIcon(p.category) });
+      marker.bindPopup(myPinPopupHTML(p));
+      marker.on('popupopen', () => {
+        document.querySelectorAll('.mypin-popup-export').forEach(el => {
+          el.addEventListener('click', (e) => { e.preventDefault(); exportSinglePin(el.dataset.id); });
+        });
+        document.querySelectorAll('.mypin-popup-delete').forEach(el => {
+          el.addEventListener('click', (e) => { e.preventDefault(); map.closePopup(); deleteMyPin(el.dataset.id); });
+        });
+      });
+      marker.addTo(myPinsLayer);
+    });
+    renderMyPinsList();
+  }
+
+  function renderMyPinsList() {
+    const el = document.getElementById('mypins-list');
+    const exportAllBtn = document.getElementById('mypins-export-all-btn');
+    if (myPins.length === 0) {
+      el.innerHTML = '<p class="info-empty">No personal pins saved yet.</p>';
+      exportAllBtn.style.display = 'none';
+      return;
+    }
+    exportAllBtn.style.display = myPins.length > 1 ? 'inline-block' : 'none';
+    el.innerHTML = myPins.map(p => {
+      const meta = myPinCategoryMeta[p.category] || myPinCategoryMeta.unsure;
+      return `
+        <div class="trail-item" style="border-left-color:${meta.color}">
+          <div class="trail-name">${p.name || 'Unnamed'} <span style="font-weight:400; font-style:italic; color:#a9baa1;">(${meta.label})</span></div>
+          <div class="trail-stats" style="display:flex; gap:12px; margin-top:5px;">
+            <button type="button" class="mypin-list-export" data-id="${p.id}" style="background:none; border:none; color:#e0ac4f; cursor:pointer; padding:0; font-size:0.78rem; text-decoration:underline;">Download</button>
+            <button type="button" class="mypin-list-delete" data-id="${p.id}" style="background:none; border:none; color:#e0a58f; cursor:pointer; padding:0; font-size:0.78rem; text-decoration:underline;">Delete</button>
+          </div>
+        </div>
+      `;
+    }).join('');
+
+    el.querySelectorAll('.mypin-list-export').forEach(btn => {
+      btn.addEventListener('click', () => exportSinglePin(btn.dataset.id));
+    });
+    el.querySelectorAll('.mypin-list-delete').forEach(btn => {
+      btn.addEventListener('click', () => deleteMyPin(btn.dataset.id));
+    });
+  }
+
+  document.getElementById('mypins-export-all-btn').addEventListener('click', exportAllPins);
+
+  // ---- ADD-PIN MODAL ----
+  let pendingPinLatLng = null;
+  let selectedMyPinCategory = 'unsure';
+
+  const mypinModal = document.getElementById('mypin-modal');
+  const mypinBackdrop = document.getElementById('mypin-backdrop');
+  const mypinCoordsEl = document.getElementById('mypin-coords');
+  const mypinNameInput = document.getElementById('mypin-name-input');
+  const mypinNotesInput = document.getElementById('mypin-notes-input');
+  const mypinCatButtons = document.querySelectorAll('.mypin-cat-btn');
+
+  function updateMyPinCategoryButtons() {
+    mypinCatButtons.forEach(btn => {
+      btn.classList.toggle('active', btn.dataset.cat === selectedMyPinCategory);
+    });
+  }
+
+  mypinCatButtons.forEach(btn => {
+    btn.addEventListener('click', () => {
+      selectedMyPinCategory = btn.dataset.cat;
+      updateMyPinCategoryButtons();
+    });
+  });
+
+  function openMyPinModal(latlng) {
+    pendingPinLatLng = latlng;
+    selectedMyPinCategory = 'unsure';
+    updateMyPinCategoryButtons();
+    mypinCoordsEl.textContent = `${latlng.lat.toFixed(5)}, ${latlng.lng.toFixed(5)}`;
+    mypinNameInput.value = '';
+    mypinNotesInput.value = '';
+    mypinModal.classList.add('open');
+    mypinBackdrop.classList.add('visible');
+  }
+
+  function closeMyPinModal() {
+    mypinModal.classList.remove('open');
+    mypinBackdrop.classList.remove('visible');
+    pendingPinLatLng = null;
+  }
+
+  document.getElementById('mypin-cancel-btn').addEventListener('click', closeMyPinModal);
+  mypinBackdrop.addEventListener('click', closeMyPinModal);
+
+  document.getElementById('mypin-save-btn').addEventListener('click', () => {
+    if (!pendingPinLatLng) return;
+    const pin = {
+      id: `mypin_${Date.now()}`,
+      category: selectedMyPinCategory,
+      name: mypinNameInput.value.trim(),
+      notes: mypinNotesInput.value.trim(),
+      lat: pendingPinLatLng.lat,
+      lng: pendingPinLatLng.lng,
+      createdAt: new Date().toISOString()
+    };
+    myPins.push(pin);
+    saveMyPinsToStorage();
+    renderMyPins();
+    closeMyPinModal();
+  });
+
+  // Long-press (mobile) and right-click (desktop) both fire Leaflet's
+  // "contextmenu" event, so this single handler covers both.
+  map.on('contextmenu', (e) => {
+    openMyPinModal(e.latlng);
+  });
+
+  renderMyPins();
 
   // ---- INIT ----
   buildSeasonalWidget();
