@@ -925,6 +925,11 @@
     margin: 0 0 8px 0;
   }
 
+  .contact-block p {
+    margin: 0 0 8px 0;
+    line-height: 1.5;
+  }
+
   .mypin-section-divider {
     height: 1px;
     background: rgba(255,255,255,0.15);
@@ -1291,7 +1296,7 @@
 <div class="help-modal" id="help-modal">
   <button type="button" class="help-close-btn" id="help-close-btn">Close &#10005;</button>
   <h2 class="help-title">Help &amp; Instructions</h2>
-  <p class="help-updated">Last updated: September 6, 2026</p>
+  <p class="help-updated">Last updated: September 7, 2026</p>
 
   <h4>Getting around the map</h4>
   <p>Pan by dragging and zoom with the +/&minus; buttons or a pinch gesture. The layer switcher in the top-right corner of the map lets you change the base map between Satellite, OpenTopoMap, USGS Topo, and Street map: the same panel also has checkboxes for Community Sightings, Trails, and Areas. When you're zoomed out, nearby pins group into a numbered circle so the map doesn't get cluttered: zoom in, or tap the circle, to spread them back apart.</p>
@@ -1317,6 +1322,9 @@
 
   <h4>This month at the park</h4>
   <p>The highlighted box near the top of the menu shows whatever's currently flowering, fruiting, or otherwise in season, based on your device's own clock: tap an entry to jump straight to that species.</p>
+
+  <h4>Questions, comments, or suggestions</h4>
+  <p>A "Questions, Comments &amp; Suggestions" section near the bottom of the menu has a direct email link for general feedback. If you'd like to suggest a specific plant or animal be added to the guide, use a personal pin's Download option instead, so your coordinates and notes come through with it.</p>
 </div>
 
 <div class="layout">
@@ -1467,6 +1475,14 @@
     <hr class="divider">
 
     <p class="how-to"><strong>How to use:</strong> Tap a pin on the map or a species name here to open its field notes below the map.</p>
+
+    <hr class="divider">
+
+    <div class="contact-block">
+      <p class="filter-section-title" style="margin-bottom: 6px;">Questions, Comments &amp; Suggestions</p>
+      <p style="font-size: 0.85rem;">For general questions or feedback, email us directly at <a href="#" id="contact-email-link"></a>.</p>
+      <p style="font-size: 0.82rem; color: #a9baa1;">To suggest a specific plant or animal for the guide, save a personal pin instead (see "My Pins" above) and use its Download option to send it along with a photo.</p>
+    </div>
   </aside>
 
   <div class="main">
@@ -2703,6 +2719,10 @@
   // Shown in the exported text file so visitors know where to send a
   // submission for consideration.
   const SUBMISSION_EMAIL = "overalls2@protonmail.com";
+
+  const contactEmailLink = document.getElementById('contact-email-link');
+  contactEmailLink.href = `mailto:${SUBMISSION_EMAIL}`;
+  contactEmailLink.textContent = SUBMISSION_EMAIL;
 
   const MY_PINS_KEY = 'nhp_my_pins';
 
